@@ -1,0 +1,7 @@
+{
+	"Name": "Acid scorch",
+	"Description": "EXRILLs Notes: By turbo charging the capacitors in the Ronins sword per Iniquity´s specifications a strong signature purple glow emits from the sword this will indeed set him part on the battlefield and might aswell be the last thing many pilots see before thier demise.",
+	"LoadPriority": 4,
+	"RequiredOnClient": true,
+	"Version": "1.0.0"
+}
