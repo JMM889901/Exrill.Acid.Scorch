@@ -13,24 +13,24 @@ const asset ACID_WALL_FX = $"P_wpn_meteor_wall"
 const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s"
 const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2"
 
-const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
+const string ACID_WALL_PROJECTILE_SFX = "flamewall_ACID_start"
 const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
-const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
-const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
-const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_ACID_burn_front"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_ACID_burn_middle"
+const string ACID_WALL_GROUND_END_SFX = "flamewall_ACID_burn_end"
 
-global const float ACID_WALL_THERMITE_DURATION = 5.2
-global const float PAS_VENOM_ACIDWALL_DURATION = 5.2
+global const float ACID_WALL_THERMITE_DURATION = 8.2
+global const float PAS_VENOM_ACIDWALL_DURATION = 8.2
 global const float SP_ACID_WALL_DURATION_SCALE = 1.75
 
 void function MpTitanweaponAcidWall_Init()
 {
-	PrecacheParticleSystem( FLAME_WALL_FX )
-	PrecacheParticleSystem( FLAME_WALL_CHARGED_ADD_FX )
+	PrecacheParticleSystem( ACID_WALL_FX )
+	PrecacheParticleSystem( ACID_WALL_CHARGED_ADD_FX )
 
 	if ( GetMapName() == "sp_s2s" )
 	{
-		PrecacheParticleSystem( FLAME_WALL_FX_S2S )
+		PrecacheParticleSystem( ACID_WALL_FX_S2S )
 	}
 
 	#if SERVER
@@ -38,7 +38,7 @@ void function MpTitanweaponAcidWall_Init()
 	#endif
 }
 
-
+void function OnWeaponActivate_titancore_Acid_wall(entity weapon){}
 var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	entity weaponOwner = weapon.GetOwner()
@@ -108,9 +108,9 @@ void function OnPoisonWallPlanted( entity projectile )
 		angles = < angles.x , angles.y, angles.z >
 		projectile.SetOrigin(< origin.x, origin.y, origin.z+100 >)
 		origin = projectile.GetOrigin()
-		float duration = FLAME_WALL_THERMITE_DURATION
+		float duration = ACID_WALL_THERMITE_DURATION
 		if ( GAMETYPE == GAMEMODE_SP )
-			duration *= SP_FLAME_WALL_DURATION_SCALE
+			duration *= SP_ACID_WALL_DURATION_SCALE
 		entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
 		inflictor.SetOrigin( origin )
 		entity _parent = projectile.GetParent()
@@ -138,13 +138,13 @@ void function OnPoisonWallPlanted( entity projectile )
 }
 
 #if SERVER
-var function OnWeaponNpcPrimaryAttack_FlameWall( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function OnWeaponNpcPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
-	return OnWeaponPrimaryAttack_FlameWall( weapon, attackParams )
+	return OnWeaponPrimaryAttack_AcidWall( weapon, attackParams )
 }
 #endif
 
-void function OnProjectileCollision_FlameWall( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+void function OnProjectileCollision_AcidWall( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
 {
 }
 
@@ -177,20 +177,20 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 		int damageSource
 		if ( mods.contains( "pas_scorch_flamecore" ) )
 		{
-			damageSource = eDamageSourceId.mp_titancore_flame_wave_secondary
+			damageSource = eDamageSourceId.mp_titancore_ACID_wave_secondary
 			duration = 1.5
 		}
 		else
 		{
 			damageSource = eDamageSourceId.mp_titanweapon_flame_wall
-			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_SCORCH_FIREWALL_DURATION : FLAME_WALL_THERMITE_DURATION
+			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_SCORCH_FIREWALL_DURATION : ACID_WALL_THERMITE_DURATION
 		}
 
 		if ( IsSingleplayer() )
 		{
 			if ( owner.IsPlayer() || Flag( "SP_MeteorIncreasedDuration" ) )
 			{
-				duration *= SP_FLAME_WALL_DURATION_SCALE
+				duration *= SP_ACID_WALL_DURATION_SCALE
 			}
 		}
 
@@ -198,7 +198,7 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 		//regular script path
 		if ( !movingGeo )
 		{
-			thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX, damageSource )
+			thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
 			EffectSetControlPointVector( thermiteParticle, 1, projectile.proj.savedOrigin )
 			AI_CreateDangerousArea_Static( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true, pos )
 		}
@@ -207,11 +207,11 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 			if ( GetMapName() == "sp_s2s" )
 			{
 				angles = <0,90,0>//wind dir
-				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_S2S, damageSource )
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX_S2S, damageSource )
 			}
 			else
 			{
-				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX, damageSource )
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
 			}
 
 			if ( movingGeo == projectile.proj.savedMovingGeo )
@@ -225,15 +225,15 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 			AI_CreateDangerousArea( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true )
 		}
 
-		//EmitSoundOnEntity( thermiteParticle, FLAME_WALL_GROUND_SFX )
+		//EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_SFX )
 		int maxSegments = expect int( projectile.ProjectileGetWeaponInfoFileKeyField( "wave_max_count" ) )
 		//figure out why it's starting at 1 but ending at 14.
 		if ( waveCount == 1 )
-			EmitSoundOnEntity( thermiteParticle, FLAME_WALL_GROUND_BEGINNING_SFX )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_BEGINNING_SFX )
 		else if ( waveCount == ( maxSegments - 1 ) )
-			EmitSoundOnEntity( thermiteParticle, FLAME_WALL_GROUND_END_SFX )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
 		else if ( waveCount == maxSegments / 2  )
-			EmitSoundOnEntity( thermiteParticle, FLAME_WALL_GROUND_MIDDLE_SFX )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
 	}
 
 	projectile.proj.savedOrigin = pos

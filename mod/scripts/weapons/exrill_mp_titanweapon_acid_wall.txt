@@ -14,9 +14,9 @@ WeaponData
 	"fire_mode"   									"offhand"
 	"minimap_reveal_distance"						"32000"
 
-	"OnWeaponActivate"								"OnWeaponActivate_titancore_flame_wall"
-	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_FlameWall"
-	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_FlameWall"
+	"OnWeaponActivate"								"OnWeaponActivate_titancore_Acid_wall"
+	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_AcidWall"
+	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_AcidWall"
 	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
 	"projectile_ignores_vortex"						"mirror"
 
@@ -25,7 +25,12 @@ WeaponData
 	"charge_wave_max_count"							"15"
 	"charge_wave_step_dist"							"100.0"
 
-
+    "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
+    "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto"
+    "grenade_arc_indicator_show_from_hip"			"1"
+	"grenade_arc_indicator_bounce_count"			"1"
+	"grenade_bounce_vel_frac_shallow"				"0.5"
+	"grenade_bounce_vel_frac_sharp"					"0.3"
 	// Models
       "viewmodel"                                                      "models/weapons/titan_bt_rocket_pod/atpov_titan_bt_laser_pod.mdl"
 	"projectilemodel" 								"models/dev/empty_model.mdl"
