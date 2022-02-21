@@ -1,29 +1,29 @@
-global function MpTitanweaponFlameWall_Init
+global function MpTitanweaponAcidWall_Init
 
-global function OnWeaponPrimaryAttack_FlameWall
-global function OnProjectileCollision_FlameWall
-global function OnWeaponActivate_titancore_flame_wall
+global function OnWeaponPrimaryAttack_AcidWall
+global function OnProjectileCollision_AcidWall
+global function OnWeaponActivate_titancore_Acid_wall
 
 #if SERVER
-global function OnWeaponNpcPrimaryAttack_FlameWall
-global function CreateThermiteWallSegment
+global function OnWeaponNpcPrimaryAttack_AcidWall
+global function CreateAcidWallSegment
 #endif
 
-const asset FLAME_WALL_FX = $"P_wpn_meteor_wall"
-const asset FLAME_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s"
-const asset FLAME_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2"
+const asset ACID_WALL_FX = $"P_wpn_meteor_wall"
+const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s"
+const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2"
 
-const string FLAME_WALL_PROJECTILE_SFX = "flamewall_flame_start"
-const string FLAME_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
-const string FLAME_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
-const string FLAME_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
-const string FLAME_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
+const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
+const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
+const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
 
-global const float FLAME_WALL_THERMITE_DURATION = 5.2
-global const float PAS_SCORCH_FIREWALL_DURATION = 5.2
-global const float SP_FLAME_WALL_DURATION_SCALE = 1.75
+global const float ACID_WALL_THERMITE_DURATION = 5.2
+global const float PAS_VENOM_ACIDWALL_DURATION = 5.2
+global const float SP_ACID_WALL_DURATION_SCALE = 1.75
 
-void function MpTitanweaponFlameWall_Init()
+void function MpTitanweaponAcidWall_Init()
 {
 	PrecacheParticleSystem( FLAME_WALL_FX )
 	PrecacheParticleSystem( FLAME_WALL_CHARGED_ADD_FX )
@@ -34,16 +34,12 @@ void function MpTitanweaponFlameWall_Init()
 	}
 
 	#if SERVER
-	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_flame_wall, FlameWall_DamagedTarget )
+	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_flame_wall, AcidWall_DamagedTarget )
 	#endif
 }
 
-void function OnWeaponActivate_titancore_flame_wall( entity weapon )
-{
-	weapon.EmitWeaponSound_1p3p( "flamewall_start_1p", "flamewall_start_3p" )
-}
 
-var function OnWeaponPrimaryAttack_FlameWall( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	entity weaponOwner = weapon.GetOwner()
 	if ( weaponOwner.IsPlayer() )
@@ -153,20 +149,7 @@ void function OnProjectileCollision_FlameWall( entity projectile, vector pos, ve
 }
 
 #if SERVER
-void function BeginFlameWave( entity projectile, int projectileCount, entity inflictor, WeaponPrimaryAttackParams attackParams, vector direction )
-{
-	projectile.EndSignal( "OnDestroy" )
-	projectile.SetAbsOrigin( projectile.GetOrigin() )
-	projectile.SetAbsAngles( projectile.GetAngles() )
-	projectile.SetVelocity( Vector( 0, 0, 0 ) )
-	projectile.StopPhysics()
-	projectile.SetTakeDamageType( DAMAGE_NO )
-	projectile.Hide()
-	projectile.NotSolid()
-	projectile.proj.savedOrigin = < -999999.0, -999999.0, -999999.0 >
-	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, attackParams.pos + direction * 25.0, direction, CreateThermiteWallSegment )
-	projectile.Destroy()
-}
+
 void function SpawnPoisonWave( entity projectile, int projectileCount, entity inflictor, vector origin, vector direction )
 {
 	projectile.EndSignal( "OnDestroy" )
@@ -178,11 +161,11 @@ void function SpawnPoisonWave( entity projectile, int projectileCount, entity in
 	projectile.Hide()
 	projectile.NotSolid()
 	projectile.proj.savedOrigin = < -999999.0, -999999.0, -999999.0 >
-	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, origin, direction, CreateThermiteWallSegment )
+	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, origin, direction, CreateAcidWallSegment )
 	projectile.Destroy()
 }
 
-bool function CreateThermiteWallSegment( entity projectile, int projectileCount, entity inflictor, entity movingGeo, vector pos, vector angles, int waveCount )
+bool function CreateAcidWallSegment( entity projectile, int projectileCount, entity inflictor, entity movingGeo, vector pos, vector angles, int waveCount )
 {
 	projectile.SetOrigin( pos )
 	entity owner = projectile.GetOwner()
@@ -276,7 +259,7 @@ void function EffectUpdateControlPointVectorOnMovingGeo( entity thermiteParticle
 	}
 }
 
-void function FlameWall_DamagedTarget( entity ent, var damageInfo )
+void function AcidWall_DamagedTarget( entity ent, var damageInfo )
 {
 	if ( !IsValid( ent ) )
 		return
