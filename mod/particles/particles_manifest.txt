@@ -187,6 +187,10 @@ particles_manifest
 	"file"		"particles/zipline_fx.pcf"
 	"file"		"particles/wpn_railgun_lvl_fx.pcf"
 	"file"		"particles/wpn_laser_scan.pcf"
+      "file"		"particles/wpn_arc_cannon_acid.pcf"
+      "file"            "particles/wpn_rocket_fx_mod_acid.pcf"
+      "file"            "particles/wpn_xo_meteor_acid.pcf"
+
 
 	//Particles Called By Code Entities
 	"file"		"particles/code_error.pcf"
@@ -381,8 +385,11 @@ particles_manifest
 	"file"		"particles/wpn_xo_lasertrip.pcf"
 	"file"		"particles/wpn_xo_meteor.pcf"
 	"file"		"particles/wpn_xo_meteor_fist.pcf"
+      "file"		"particles/wpn_xo_meteor_fist_acid.pcf"
 	"file"		"particles/wpn_xo_meteor_trap.pcf"
+      "file"		"particles/wpn_xo_meteor_trap_acid.pcf"
 	"file"		"particles/wpn_xo_meteor_wall.pcf"
+      "file"		"particles/wpn_xo_meteor_wall_acid.pcf"
 	"file"		"particles/wpn_xo_sword.pcf"
 	"file"		"particles/wpn_vortex_titan_heat.pcf"
 	"file"		"particles/xo_core_lasercannon.pcf"
