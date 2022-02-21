@@ -9,15 +9,15 @@ global function OnWeaponNpcPrimaryAttack_AcidWall
 global function CreateAcidWallSegment
 #endif
 
-const asset ACID_WALL_FX = $"P_wpn_meteor_wall"
-const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s"
-const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2"
+const asset ACID_WALL_FX = $"P_wpn_meteor_wall_acid"
+const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s_acid"
+const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2_acid"
 
-const string ACID_WALL_PROJECTILE_SFX = "flamewall_ACID_start"
+const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
 const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
-const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_ACID_burn_front"
-const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_ACID_burn_middle"
-const string ACID_WALL_GROUND_END_SFX = "flamewall_ACID_burn_end"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
+const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
 
 global const float ACID_WALL_THERMITE_DURATION = 8.2
 global const float PAS_VENOM_ACIDWALL_DURATION = 8.2
