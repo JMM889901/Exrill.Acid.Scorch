@@ -1,4 +1,5 @@
-global function OnAbilityCharge_HybridLauncher
+untyped
+global function exrill_OnAbilityCharge_HybridLauncher
 const SEVERITY_SLOWTURN_LASERCORE = 0.1
 const SEVERITY_SLOWMOVE_LASERCORE = 0.1
 const FX_LASERCANNON_AIM = $"P_wpn_lasercannon_aim"
@@ -7,7 +8,252 @@ const FX_LASERCANNON_MUZZLEFLASH = $"P_handlaser_charge"
 
 const LASER_MODEL = $"models/weapons/empty_handed/w_laser_cannon.mdl"
 
-bool function OnAbilityCharge_HybridLauncher( entity weapon )
+
+
+global function exrill_OnWeaponActivate_titanweapon_hybidlauncher
+global function exrill_OnWeaponPrimaryAttack_titanweapon_hybidlauncher
+global function exrill_OnWeaponChargeLevelIncreased_titanweapon_hybidlauncher
+global function exrill_GethybidlauncherChargeLevel
+global function exrill_MpTitanWeapon_hybidlauncherInit
+global function exrill_OnWeaponStartZoomIn_titanweapon_hybidlauncher
+global function exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher
+global function exrill_OnWeaponOwnerChanged_titanweapon_hybidlauncher
+
+#if SERVER
+global function exrill_OnWeaponNpcPrimaryAttack_titanweapon_hybidlauncher
+#endif // #if SERVER
+
+const INSTANT_SHOT_DAMAGE 				= 1200
+//const INSTANT_SHOT_MAX_CHARGES		= 2 // can't change this without updating crosshair
+//const INSTANT_SHOT_TIME_PER_CHARGE	= 0
+const SNIPER_PROJECTILE_SPEED			= 10000
+
+struct {
+	float chargeDownSoundDuration = 1.0 //"charge_cooldown_time"
+} file
+
+void function exrill_OnWeaponActivate_titanweapon_hybidlauncher( entity weapon )
+{
+	file.chargeDownSoundDuration = expect float( weapon.GetWeaponInfoFileKeyField( "charge_cooldown_time" ) )
+}
+
+var function exrill_OnWeaponPrimaryAttack_titanweapon_hybidlauncher( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	return FireSniper( weapon, attackParams, true )
+}
+
+void function exrill_MpTitanWeapon_hybidlauncherInit()
+{
+	#if SERVER
+	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_sniper, OnHit_TitanWeaponSniper )
+	#endif
+}
+#if SERVER
+
+void function OnHit_TitanWeaponSniper( entity victim, var damageInfo )
+{
+	OnHit_TitanWeaponSniper_Internal( victim, damageInfo )
+}
+
+void function OnHit_TitanWeaponSniper_Internal( entity victim, var damageInfo )
+{
+	entity inflictor = DamageInfo_GetInflictor( damageInfo )
+	if ( !IsValid( inflictor ) )
+		return
+	if ( !inflictor.IsProjectile() )
+		return
+	int extraDamage = int( CalculateTitanSniperExtraDamage( inflictor, victim ) )
+	float damage = DamageInfo_GetDamage( damageInfo )
+
+	float f_extraDamage = float( extraDamage )
+
+	bool isCritical = IsCriticalHit( DamageInfo_GetAttacker( damageInfo ), victim, DamageInfo_GetHitBox( damageInfo ), damage, DamageInfo_GetDamageType( damageInfo ) )
+
+	if ( isCritical )
+	{
+		array<string> projectileMods = inflictor.ProjectileGetMods()
+		if ( projectileMods.contains( "fd_upgrade_crit" ) )
+			f_extraDamage *= 2.0
+		else
+			f_extraDamage *= expect float( inflictor.ProjectileGetWeaponInfoFileKeyField( "critical_hit_damage_scale" ) )
+	}
+
+	//Check to see if damage has been see to zero so we don't override it.
+	if ( damage > 0 && extraDamage > 0 )
+	{
+		damage += f_extraDamage
+		DamageInfo_SetDamage( damageInfo, damage )
+	}
+
+	float nearRange = 1000
+	float farRange = 1500
+	float nearScale = 0.5
+	float farScale = 0
+
+	if ( victim.IsTitan() )
+		PushEntWithDamageInfoAndDistanceScale( victim, damageInfo, nearRange, farRange, nearScale, farScale, 0.25 )
+}
+
+var function exrill_OnWeaponNpcPrimaryAttack_titanweapon_hybidlauncher( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	return FireSniper( weapon, attackParams, false )
+}
+#endif // #if SERVER
+
+
+bool function exrill_OnWeaponChargeLevelIncreased_titanweapon_hybidlauncher( entity weapon )
+{
+	#if CLIENT
+		if ( InPrediction() && !IsFirstTimePredicted() )
+			return true
+	#endif
+
+	int level = weapon.GetWeaponChargeLevel()
+	int maxLevel = weapon.GetWeaponChargeLevelMax()
+
+	if ( level == maxLevel )
+		weapon.EmitWeaponSound( "Weapon_Titan_Sniper_LevelTick_Final" )
+	else
+		weapon.EmitWeaponSound( "Weapon_Titan_Sniper_LevelTick_" + level )
+
+	return true
+}
+
+
+function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool playerFired )
+{
+	int chargeLevel = GetTitanSniperChargeLevel( weapon )
+	entity weaponOwner = weapon.GetWeaponOwner()
+	print(chargeLevel)
+	bool weaponHasInstantShotMod = weapon.HasMod( "instant_shot" )
+
+	//printt( "GetTitanSniperChargeLevel():", chargeLevel )
+
+
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 * chargeLevel )
+
+	bool shouldCreateProjectile = false
+	if ( IsServer() || weapon.ShouldPredictProjectiles() )
+		shouldCreateProjectile = true
+	#if CLIENT
+		if ( !playerFired )
+			shouldCreateProjectile = false
+	#endif
+
+	if ( !shouldCreateProjectile )
+		return 1
+
+	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir, SNIPER_PROJECTILE_SPEED, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
+	if ( bolt )
+	{
+		bolt.kv.gravity = 0.001
+		bolt.s.bulletsToFire <- chargeLevel
+
+		bolt.s.extraDamagePerBullet <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets )
+		bolt.s.extraDamagePerBullet_Titan <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets_titanarmor )
+		if ( weaponHasInstantShotMod )
+		{
+			local damage_far_value_titanarmor = weapon.GetWeaponSettingInt( eWeaponVar.damage_far_value_titanarmor )
+			Assert( INSTANT_SHOT_DAMAGE > damage_far_value_titanarmor )
+			bolt.s.extraDamagePerBullet_Titan = INSTANT_SHOT_DAMAGE - damage_far_value_titanarmor
+			bolt.s.bulletsToFire = 2
+		}
+
+		if ( chargeLevel > 4 )
+			bolt.SetProjectilTrailEffectIndex( 2 )
+		else if ( chargeLevel > 2 )
+			bolt.SetProjectilTrailEffectIndex( 1 )
+
+		#if SERVER
+			Assert( weaponOwner == weapon.GetWeaponOwner() )
+			bolt.SetOwner( weaponOwner )
+		#endif
+	}
+
+	return 1
+}
+
+int function exrill_GethybidlauncherChargeLevel( entity weapon )
+{
+	if ( !IsValid( weapon ) )
+		return 0
+
+	entity owner = weapon.GetWeaponOwner()
+	if ( !IsValid( owner ) )
+		return 0
+
+	if ( !owner.IsPlayer() )
+		return 3
+
+	if ( !weapon.IsReadyToFire() )
+		return 0
+
+	int charges = weapon.GetWeaponChargeLevel()
+	return (1 + charges)
+}
+
+void function exrill_OnWeaponStartZoomIn_titanweapon_hybidlauncher( entity weapon )
+{
+	#if SERVER
+	array<string> mods = weapon.GetMods()
+	if(weapon.GetWeaponClassName() == "exrill_mp_titanweapon_hybrid_launcher"){
+		mods.append("AcidCutter")
+		weapon.SetMods(mods)}
+	if ( weapon.HasMod( "pas_northstar_optics" ) )
+	{
+		entity weaponOwner = weapon.GetWeaponOwner()
+		if ( !IsValid( weaponOwner ) )
+			return
+		AddThreatScopeColorStatusEffect( weaponOwner )
+	}
+	#endif
+}
+
+void function exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher( entity weapon )
+{
+	array<string> mods = weapon.GetMods()
+	if(weapon.HasMod("AcidCutter")){
+		thread FixBeam(weapon, mods)}
+		#if SERVER
+		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
+		#endif
+		OnAbilityEnd_LaserCannon(weapon)
+		OnAbilityChargeEnd_LaserCannon(weapon)
+	#if SERVER
+	if ( weapon.HasMod( "pas_northstar_optics" ) )
+	{
+		entity weaponOwner = weapon.GetWeaponOwner()
+		if ( !IsValid( weaponOwner ) )
+			return
+		RemoveThreatScopeColorStatusEffect( weaponOwner )
+	}
+	#endif
+}
+void function FixBeam(entity weapon, array<string> mods){
+	#if SERVER
+	ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
+	print(weapon.IsSustainedDischargeWeapon())
+	print(weapon.IsDischarging())
+	if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
+		weapon.ForceSustainedDischargeEnd()
+		wait 0.2}
+	#endif
+	mods.remove(mods.find("AcidCutter"))
+	weapon.SetMods(mods)}
+void function exrill_OnWeaponOwnerChanged_titanweapon_hybidlauncher( entity weapon, WeaponOwnerChangedParams changeParams )
+{
+	#if SERVER
+	if ( IsValid( changeParams.oldOwner ) && changeParams.oldOwner.IsPlayer() )
+		RemoveThreatScopeColorStatusEffect( changeParams.oldOwner )
+	#endif
+}
+
+
+
+
+
+
+bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 {
 	OnAbilityCharge_TitanCore( weapon )
 
@@ -29,7 +275,6 @@ bool function OnAbilityCharge_HybridLauncher( entity weapon )
 	StatusEffect_AddTimed( soul, eStatusEffect.move_slow, 0.1, chargeTime, 0 )
 
 	weapon.w.laserWorldModel = CreatePropDynamic( LASER_MODEL )
-
 	int index = player.LookupAttachment( "PROPGUN" )
 	vector origin = player.GetAttachmentOrigin( index )
 	vector angles = player.GetAttachmentAngles( index )
@@ -42,10 +287,7 @@ bool function OnAbilityCharge_HybridLauncher( entity weapon )
 
 	weapon.w.laserWorldModel.SetParent( player, "PROPGUN", true, 0.0 )
 	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "muzzle_flash", null, null, 6, player )
-	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_1", null, null, 6, player )
-	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_2", null, null, 6, player )
-	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_3", null, null, 6, player )
-	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_4", null, null, 6, player )
+
 
 	weapon.w.laserWorldModel.Anim_Play( "charge_seq" )
 

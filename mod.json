@@ -28,7 +28,10 @@
 		},
 		{
 			"Path": "weapons/exrill_mp_titanweapon_hybridlauncher.gnut",
-			"RunOn": "SERVER || CLIENT"
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "exrill_MpTitanWeapon_hybidlauncherInit"
+            }
 		}
 	]
 }

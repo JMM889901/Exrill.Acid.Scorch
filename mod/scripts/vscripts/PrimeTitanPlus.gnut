@@ -6,6 +6,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_BT_eye_SM" )
 	PrecacheWeapon("exrill_mp_titancore_acid_river")
 	PrecacheWeapon("exrill_mp_titanweapon_acid_wall")
+	PrecacheWeapon("exrill_mp_titanweapon_hybrid_launcher")
 	
     #if SERVER
 
@@ -47,7 +48,7 @@ void function SetTitanLoadout( entity titan )
 				
 				//Weapon
 				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
-				titan.GiveWeapon ("mp_titanweapon_particle_accelerator")
+				titan.GiveWeapon ("exrill_mp_titanweapon_hybrid_launcher")
 				
 				//Titan Core
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
