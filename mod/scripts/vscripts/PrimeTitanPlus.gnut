@@ -1,0 +1,69 @@
+global function PrimeTitanPlus_Init
+
+void function PrimeTitanPlus_Init() {
+    PrecacheModel( $"models/titans/buddy/titan_buddy.mdl" )
+	PrecacheModel( $"models/weapons/arms/buddypov.mdl" )
+	PrecacheParticleSystem( $"P_BT_eye_SM" )
+	PrecacheWeapon("exrill_mp_titancore_acid_river")
+	PrecacheWeapon("exrill_mp_titanweapon_acid_wall")
+	
+    #if SERVER
+
+		AddSpawnCallback("npc_titan", SetTitanLoadout );
+		
+    #endif
+}
+
+//Apply loadout
+
+void function SetTitanLoadout( entity titan )
+{
+	#if SERVER
+	if (IsValid( titan )) //Anti Crash
+	{
+		entity player = GetPetTitanOwner( titan )
+		entity soul = titan.GetTitanSoul()
+		
+		if (IsValid( soul ) && IsValid( player )) //Anti Crash 2
+	
+		{
+			array<entity> weapons = titan.GetMainWeapons()
+			
+			//Ion Prime
+			if (titan.GetModelName() == $"models/titans/medium/titan_medium_ion_prime.mdl")
+			{
+				SendHudMessage(player, "Ion Prime Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+				
+				//Offence
+				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
+				titan.GiveOffhandWeapon("mp_titanability_slow_trap", OFFHAND_ANTIRODEO ) 
+				
+				
+				//Defence
+				titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
+				titan.GiveOffhandWeapon("exrill_mp_titanweapon_acid_wall", OFFHAND_SPECIAL )
+				
+				//Tactical
+				
+				//Weapon
+				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
+				titan.GiveWeapon ("mp_titanweapon_particle_accelerator")
+				
+				//Titan Core
+				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
+				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
+				
+			}
+		}
+			//Tone Prime
+	}
+	#endif
+}
+#if SERVER
+void function GuardianDamageReduction(entity guardian, var damageInfo){
+    print("testing")
+    if(guardian.GetOffhandWeapon(OFFHAND_MELEE).HasMod("BisonGuardian"))
+        DamageInfo_SetDamage(damageInfo, 0)
+        //DamageInfo_SetDamage(damageInfo, DamageInfo_GetDamage(damageInfo)*0.75)
+}
+#endif

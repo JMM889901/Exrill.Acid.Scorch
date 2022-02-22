@@ -22,7 +22,7 @@ WeaponData
 
 	"wave_max_count"								"15"
 	"wave_step_dist"								"100.0"
-	"charge_wave_max_count"							"15"
+	"charge_wave_max_count"							"30"
 	"charge_wave_step_dist"							"100.0"
 
     "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
