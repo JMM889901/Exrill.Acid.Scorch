@@ -18,6 +18,17 @@
 			"ServerCallback": {
                 "After": "MpTitanweaponAcidWall_Init"
             }
+		},
+		{
+			"Path": "PrimeTitanPlus.gnut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "PrimeTitanPlus_Init"
+            }
+		},
+		{
+			"Path": "weapons/exrill_mp_titanweapon_hybridlauncher.gnut",
+			"RunOn": "SERVER || CLIENT"
 		}
 	]
 }

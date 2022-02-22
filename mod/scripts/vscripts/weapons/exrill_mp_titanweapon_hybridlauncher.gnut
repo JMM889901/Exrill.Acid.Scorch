@@ -1,0 +1,62 @@
+global function OnAbilityCharge_HybridLauncher
+const SEVERITY_SLOWTURN_LASERCORE = 0.1
+const SEVERITY_SLOWMOVE_LASERCORE = 0.1
+const FX_LASERCANNON_AIM = $"P_wpn_lasercannon_aim"
+const FX_LASERCANNON_CORE = $"P_lasercannon_core"
+const FX_LASERCANNON_MUZZLEFLASH = $"P_handlaser_charge"
+
+const LASER_MODEL = $"models/weapons/empty_handed/w_laser_cannon.mdl"
+
+bool function OnAbilityCharge_HybridLauncher( entity weapon )
+{
+	OnAbilityCharge_TitanCore( weapon )
+
+#if CLIENT
+	if ( !InPrediction() || IsFirstTimePredicted() )
+	{
+		weapon.PlayWeaponEffectNoCull( FX_LASERCANNON_AIM, FX_LASERCANNON_AIM, "muzzle_flash" )
+		weapon.PlayWeaponEffect( FX_LASERCANNON_MUZZLEFLASH, FX_LASERCANNON_MUZZLEFLASH, "muzzle_flash" )
+	}
+#endif // #if CLIENT
+
+#if SERVER
+	entity player = weapon.GetWeaponOwner()
+	float chargeTime = weapon.GetWeaponSettingFloat( eWeaponVar.charge_time )
+	entity soul = player.GetTitanSoul()
+	if ( soul == null )
+		soul = player
+
+	StatusEffect_AddTimed( soul, eStatusEffect.move_slow, 0.1, chargeTime, 0 )
+
+	weapon.w.laserWorldModel = CreatePropDynamic( LASER_MODEL )
+
+	int index = player.LookupAttachment( "PROPGUN" )
+	vector origin = player.GetAttachmentOrigin( index )
+	vector angles = player.GetAttachmentAngles( index )
+
+	if ( player.IsPlayer() )
+		player.Server_TurnOffhandWeaponsDisabledOn()
+
+	weapon.w.laserWorldModel.SetOrigin( origin )
+	weapon.w.laserWorldModel.SetAngles( angles - Vector(90,0,0)  )
+
+	weapon.w.laserWorldModel.SetParent( player, "PROPGUN", true, 0.0 )
+	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "muzzle_flash", null, null, 6, player )
+	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_1", null, null, 6, player )
+	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_2", null, null, 6, player )
+	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_3", null, null, 6, player )
+	PlayFXOnEntity( FX_LASERCANNON_AIM, weapon.w.laserWorldModel, "laser_canon_4", null, null, 6, player )
+
+	weapon.w.laserWorldModel.Anim_Play( "charge_seq" )
+
+	if ( player.IsNPC() )
+	{
+		player.SetVelocity( <0,0,0> )
+		player.Anim_ScriptedPlayActivityByName( "ACT_SPECIAL_ATTACK_START", true, 0.0 )
+	}
+#endif // #if SERVER
+
+	weapon.EmitWeaponSound_1p3p( "Titan_Core_Laser_ChargeUp_1P", "Titan_Core_Laser_ChargeUp_3P" )
+
+	return true
+}
