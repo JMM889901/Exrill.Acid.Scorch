@@ -9,7 +9,13 @@ const FX_LASERCANNON_MUZZLEFLASH = $"P_handlaser_charge"
 const LASER_MODEL = $"models/weapons/empty_handed/w_laser_cannon.mdl"
 
 
+#if SP
+const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P_extended"
+#else
+const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P"
+#endif
 
+global function exrill_OnAbilityStart_hybridlauncher
 global function exrill_OnWeaponActivate_titanweapon_hybidlauncher
 global function exrill_OnWeaponPrimaryAttack_titanweapon_hybidlauncher
 global function exrill_OnWeaponChargeLevelIncreased_titanweapon_hybidlauncher
@@ -255,6 +261,22 @@ void function exrill_OnWeaponOwnerChanged_titanweapon_hybidlauncher( entity weap
 
 bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 {
+
+	entity weaponOwner = weapon.GetWeaponOwner()
+	print( weaponOwner.GetSharedEnergyCount())
+	if( weaponOwner.GetSharedEnergyCount() < 800){
+		#if SERVER
+		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
+		print(weapon.IsSustainedDischargeWeapon())
+		print(weapon.IsDischarging())
+		if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
+			weapon.ForceSustainedDischargeEnd()
+			wait 0.2}
+		#endif
+		OnAbilityEnd_LaserCannon(weapon)
+		OnAbilityChargeEnd_LaserCannon(weapon)
+		return false
+	}
 	OnAbilityCharge_TitanCore( weapon )
 
 #if CLIENT
@@ -299,6 +321,76 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 #endif // #if SERVER
 
 	weapon.EmitWeaponSound_1p3p( "Titan_Core_Laser_ChargeUp_1P", "Titan_Core_Laser_ChargeUp_3P" )
+
+	return true
+}
+
+
+bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
+{
+	entity weaponOwner = weapon.GetWeaponOwner()
+	print(weaponOwner.GetSharedEnergyCount())
+	OnAbilityStart_TitanCore( weapon )
+	if( weaponOwner.GetSharedEnergyCount() < 800){
+		#if SERVER
+		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
+		print(weapon.IsSustainedDischargeWeapon())
+		print(weapon.IsDischarging())
+		if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
+			weapon.ForceSustainedDischargeEnd()
+			wait 0.2}
+		#endif
+		OnAbilityEnd_LaserCannon(weapon)
+		OnAbilityChargeEnd_LaserCannon(weapon)
+		return false
+	}
+	weaponOwner.TakeSharedEnergy( 800 )
+	weaponOwner.SetSharedEnergyRegenDelay( 2 )
+	
+#if SERVER
+	weapon.e.onlyDamageEntitiesOncePerTick = true
+	entity player = weapon.GetWeaponOwner()
+	float stunDuration = weapon.GetSustainedDischargeDuration()
+	float fadetime = 2.0
+	entity soul = player.GetTitanSoul()
+	if ( soul == null )
+		soul = player
+
+	if ( !player.ContextAction_IsMeleeExecution() ) //don't do this during executions
+	{
+		StatusEffect_AddTimed( soul, eStatusEffect.turn_slow, SEVERITY_SLOWTURN_LASERCORE, stunDuration + fadetime, fadetime )
+		StatusEffect_AddTimed( soul, eStatusEffect.move_slow, SEVERITY_SLOWMOVE_LASERCORE, stunDuration + fadetime, fadetime )
+	}
+
+	if ( player.IsPlayer() )
+	{
+		player.Server_TurnDodgeDisabledOn()
+		player.Server_TurnOffhandWeaponsDisabledOn()
+		EmitSoundOnEntityOnlyToPlayer( player, player, "Titan_Core_Laser_FireStart_1P" )
+		EmitSoundOnEntityOnlyToPlayer( player, player, LASER_FIRE_SOUND_1P )
+		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireStart_3P" )
+		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireBeam_3P" )
+	}
+	else
+	{
+		EmitSoundOnEntity( player, "Titan_Core_Laser_FireStart_3P" )
+		EmitSoundOnEntity( player, "Titan_Core_Laser_FireBeam_3P" )
+	}
+
+	if ( player.IsNPC() )
+	{
+		player.SetVelocity( <0,0,0> )
+		player.Anim_ScriptedPlayActivityByName( "ACT_SPECIAL_ATTACK", true, 0.1 )
+	}
+
+	// thread LaserEndingWarningSound( weapon, player )
+
+	SetCoreEffect( player, CreateCoreEffect, FX_LASERCANNON_CORE )
+#endif
+
+	#if CLIENT
+	thread PROTO_SustainedDischargeShake( weapon )
+	#endif
 
 	return true
 }

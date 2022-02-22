@@ -27,8 +27,9 @@ WeaponData
 	"OnWeaponStartZoomIn"							"exrill_OnWeaponStartZoomIn_titanweapon_hybidlauncher"
 	"OnWeaponStartZoomOut"							"exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher"
 	"OnWeaponOwnerChanged"							"exrill_OnWeaponOwnerChanged_titanweapon_hybidlauncher"
-	"OnWeaponSustainedDischargeBegin"				"OnAbilityStart_LaserCannon"
+	"OnWeaponSustainedDischargeBegin"				"exrill_OnAbilityStart_hybridlauncher"
 	"OnWeaponSustainedDischargeEnd"					"OnAbilityEnd_LaserCannon"
+	"OnWeaponChargeBegin"							"exrill_OnAbilityCharge_HybridLauncher"
 	"OnWeaponChargeEnd"								"OnAbilityChargeEnd_LaserCannon"
 
 	"npc_use_check_type"							"shared_energy"
@@ -580,8 +581,8 @@ WeaponData
 			"sustained_laser_impact_effect"					"P_lasercannon_endglow"
 			"sustained_laser_impact_distance"				"50"
 			"sustained_laser_effect_loops"					"false"
-			"sustained_discharge_duration"					"1.5" // core duration
-			"core_duration"									"1.5"
+			"sustained_discharge_duration"					"2.5" // core duration
+			"core_duration"									"2.5"
 			// Behavior
 			"fire_rate"   									"8"
 			"zoom_fov"										"35"
@@ -590,22 +591,21 @@ WeaponData
 			"allow_headshots" 								"0"
 			"bypass_semiauto_hold_protection"				"1"
 			"vortex_drain"									"0.01"
-			"shared_energy_cost"							"10"
+			"shared_energy_cost"							"800"
 			"aimassist_disable_hipfire_humansonly"			"1"
 			"aimassist_disable_ads_humansonly"				"1"
 			"charge_time" 									"2.25"
-			"charge_levels"									"0"
+			"charge_levels"									"5"
 			"charge_cooldown_time"							"0.5"
 			"charge_cooldown_delay"   						"0.0"
 			"charge_is_triggered_by_ADS"					"0"
 			"charge_require_input"							"0"
-			"charge_end_forces_fire"						"1"
-			"damage_near_value"   							"1"
-			"damage_far_value"								"1"
-			"damage_near_value_titanarmor"					"1"
-			"damage_far_value_titanarmor" 					"1"
-			"explosion_damage"								"1"		// 150
-			"explosion_damage_heavy_armor"					"1"
+			"damage_near_value"   							"20"
+			"damage_far_value"								"20"
+			"damage_near_value_titanarmor"					"20"
+			"damage_far_value_titanarmor" 					"20"
+			"explosion_damage"								"20"		// 150
+			"explosion_damage_heavy_armor"					"20"
 		}
 		AcidCutterForcedEnd
 		{
