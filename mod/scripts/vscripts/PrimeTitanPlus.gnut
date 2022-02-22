@@ -56,15 +56,6 @@ void function SetTitanLoadout( entity titan )
 				
 			}
 		}
-			//Tone Prime
 	}
 	#endif
 }
-#if SERVER
-void function GuardianDamageReduction(entity guardian, var damageInfo){
-    print("testing")
-    if(guardian.GetOffhandWeapon(OFFHAND_MELEE).HasMod("BisonGuardian"))
-        DamageInfo_SetDamage(damageInfo, 0)
-        //DamageInfo_SetDamage(damageInfo, DamageInfo_GetDamage(damageInfo)*0.75)
-}
-#endif

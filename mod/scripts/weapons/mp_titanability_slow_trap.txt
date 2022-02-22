@@ -18,7 +18,8 @@ WeaponData
 	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_slow_trap"
 	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
 
-
+	"offhand_default_inventory_slot"				"1"
+	
     "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
     "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto"
     "grenade_arc_indicator_show_from_hip"			"1"

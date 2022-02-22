@@ -31,6 +31,9 @@ WeaponData
 	"OnWeaponSustainedDischargeEnd"					"OnAbilityEnd_LaserCannon"
 	"OnWeaponChargeEnd"								"OnAbilityChargeEnd_LaserCannon"
 
+	"npc_use_check_type"							"shared_energy"
+
+
 	// Menu Stats
 	"stat_damage" 									"95"
 	"stat_range"  									"98"
@@ -641,12 +644,12 @@ WeaponData
 			"charge_is_triggered_by_ADS"					"0"
 			"charge_require_input"							"0"
 			"charge_end_forces_fire"						"1"
-			"damage_near_value"   							"1"
-			"damage_far_value"								"1"
-			"damage_near_value_titanarmor"					"1"
-			"damage_far_value_titanarmor" 					"1"
-			"explosion_damage"								"1"		// 150
-			"explosion_damage_heavy_armor"					"1"
+			"damage_near_value"   							"70"
+			"damage_far_value"								"70"
+			"damage_near_value_titanarmor"					"70"
+			"damage_far_value_titanarmor" 					"70"
+			"explosion_damage"								"70"		// 150
+			"explosion_damage_heavy_armor"					"70"
 		}
 	}
 

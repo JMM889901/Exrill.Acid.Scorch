@@ -20,6 +20,8 @@ WeaponData
 	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
 	"projectile_ignores_vortex"						"mirror"
 
+	"offhand_default_inventory_slot"				"2"
+
 	"wave_max_count"								"15"
 	"wave_step_dist"								"100.0"
 	"charge_wave_max_count"							"30"

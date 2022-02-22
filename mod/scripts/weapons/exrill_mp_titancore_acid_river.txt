@@ -37,6 +37,8 @@ WeaponData
 	"OnWeaponChargeEnd"								"OnAbilityChargeEnd_FlameWave"
 	"OnWeaponAttemptOffhandSwitch"					"CheckCoreAvailable"
 
+	"offhand_default_inventory_slot"				"3"
+
 	"offhand_keep_primary_in_hand" 					"1"
 	"aimassist_disable_hipfire_humansonly"			"1"
 	"aimassist_disable_ads_humansonly"				"1"
