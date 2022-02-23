@@ -4,7 +4,6 @@ untyped
 
 global function MpTitanAbilityAcidPool_Init
 global function OnWeaponPrimaryAttack_titanweapon_acid_pool
-
 #if SERVER
 global function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool
 #endif
@@ -47,6 +46,8 @@ void function MpTitanAbilityAcidPool_Init()
 	#endif
 }
 
+
+
 #if SERVER
 var function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
@@ -66,7 +67,7 @@ var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponP
 	if ( IsValid( player ) )
 		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
 	vector angles = VectorToAngles( attackParams.dir )
-	attackPos.z = attackPos.z -25
+	attackPos.z = attackPos.z +25
 	vector angularVelocity = <0,0,0>
 	float fuseTime = 0.0
 	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
@@ -75,7 +76,6 @@ var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponP
 		speed = GraphCapped( forward.x, 0, 80, speed, speed * 3 )
 
 	vector velocity = forward * speed
-	weaponOwner.TakeSharedEnergy( 250 )
 	if((weapon.GetWeaponChargeLevel() > 0))
 		weaponOwner.TakeSharedEnergy( 250 )
 	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
@@ -105,7 +105,7 @@ vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
 {
 	if ( player.IsTitan() )
 	{
-		int attachID = player.LookupAttachment( "muzzle_flash" )
+		int attachID = player.LookupAttachment( "TITAN_GRENADE" )
 		vector attackPos = player.GetAttachmentOrigin( attachID )
 		vector attackDir = player.GetAttachmentForward( attachID )
 		return attackPos + ( attackDir * 50 )
@@ -129,7 +129,7 @@ void function OnPoisonWallPlanted( entity projectile )
 		
 		vector origin = OriginToGround( projectile.GetOrigin() )
 		projectile.SetOrigin(< origin.x, origin.y, origin.z+100 >)
-		origin = projectile.GetOrigin()
+		origin = <origin.x, origin.y, origin.z +100>
 		float duration = ACID_WALL_THERMITE_DURATION
 		if ( GAMETYPE == GAMEMODE_SP )
 			duration *= SP_ACID_WALL_DURATION_SCALE

@@ -3,7 +3,7 @@ global function MpTitanweaponAcidWall_Init
 global function OnWeaponPrimaryAttack_AcidWall
 global function OnProjectileCollision_AcidWall
 global function OnWeaponActivate_titancore_Acid_wall
-
+global function OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall
 #if SERVER
 global function OnWeaponNpcPrimaryAttack_AcidWall
 global function CreateAcidWallSegment
@@ -38,23 +38,35 @@ void function MpTitanweaponAcidWall_Init()
 	#endif
 }
 
+bool function OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall( entity weapon )
+{
+	entity owner = weapon.GetWeaponOwner()
+	int curCost = weapon.GetWeaponCurrentEnergyCost()
+	bool canUse = owner.CanUseSharedEnergy( curCost )
+
+	#if CLIENT
+		if ( !canUse )
+			FlashEnergyNeeded_Bar( curCost )
+	#endif
+	return canUse
+}
+
 void function OnWeaponActivate_titancore_Acid_wall(entity weapon){}
 var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	entity weaponOwner = weapon.GetOwner()
 	if ( weaponOwner.IsPlayer() )
 		PlayerUsedOffhand( weaponOwner, weapon )
-
+ 
 	//ThrowDeployable( weapon, attackParams, 0.63, OnSlowTrapPlanted, <90,0,0> )
 	entity player = weapon.GetWeaponOwner()
-	weaponOwner.TakeSharedEnergy( 250 )
 	if((weapon.GetWeaponChargeLevel() > 0))
 		weaponOwner.TakeSharedEnergy( 250 )
 	vector attackPos
 	if ( IsValid( player ) )
 		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
 	vector angles = VectorToAngles( attackParams.dir )
-	attackPos.z = attackPos.z
+	attackPos.z = attackPos.z +25
 	vector angularVelocity = <0,0,0>
 	float fuseTime = 0.0
 	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
@@ -92,7 +104,7 @@ vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
 {
 	if ( player.IsTitan() )
 	{
-		int attachID = player.LookupAttachment( "muzzle_flash" )
+		int attachID = player.LookupAttachment( "TITAN_GRENADE" )
 		vector attackPos = player.GetAttachmentOrigin( attachID )
 		vector attackDir = player.GetAttachmentForward( attachID )
 		return attackPos + ( attackDir * 50 )
@@ -133,6 +145,8 @@ void function OnPoisonWallPlanted( entity projectile )
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin-100*direction, direction )
+			entity Shield = CreateShieldWithSettings(origin, angles,1000,500,120,500,524200, $"P_pilot_cover_shield" )
+			Shield.SetParent( projectile )
 			direction = AnglesToForward( <angles.x,angles.y-90,angles.z> )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin-100*direction, direction )
 

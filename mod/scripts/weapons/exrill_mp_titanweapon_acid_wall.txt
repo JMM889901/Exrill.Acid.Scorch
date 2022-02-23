@@ -18,6 +18,8 @@ WeaponData
 	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_AcidWall"
 	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_AcidWall"
 	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
+	"OnWeaponAttemptOffhandSwitch" 					"OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall"
+
 	"projectile_ignores_vortex"						"mirror"
 
 	"offhand_default_inventory_slot"				"2"
@@ -26,7 +28,7 @@ WeaponData
 	"wave_step_dist"								"100.0"
 	"charge_wave_max_count"							"8"
 	"charge_wave_step_dist"							"100.0"
-	"shared_energy_cost"							"25"
+	"shared_energy_cost"							"250"
     "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
     "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto"
     "grenade_arc_indicator_show_from_hip"			"1"
@@ -91,17 +93,17 @@ WeaponData
 	"impulse_force"   								"15000"
 
 	// Ammo
-	"ammo_display"									"bar"
-	"ammo_stockpile_max"							"90"
-	"ammo_clip_size"   								"90"
-	"ammo_default_total"							"90"
-	"ammo_per_shot"									"45"
-	"ammo_min_to_fire"								"45"
-	"cooldown_type"                                 "ammo_instant"
+	//"ammo_display"									"bar"
+	"ammo_stockpile_max"							"45"
+	"ammo_clip_size"   								"45"
+	"ammo_default_total"							"45"
+	//"ammo_per_shot"									"45"
+	//"ammo_min_to_fire"								"45"
+	"cooldown_type"                                 "shared_energy"
 
 	//Regen Ammo
-	"regen_ammo_refill_rate"						"3"
-	"regen_ammo_refill_start_delay"					"0.0"
+	//"regen_ammo_refill_rate"						"3"
+	//"regen_ammo_refill_start_delay"					"0.0"
 
 	// Behavior
 	"fire_rate"   									"1.5"

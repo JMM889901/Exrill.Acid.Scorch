@@ -135,7 +135,7 @@ void function OnPoisonWallPlanted( entity projectile )
 		
 		vector origin = OriginToGround( projectile.GetOrigin() )
 		projectile.SetOrigin(< origin.x, origin.y, origin.z+250 >)
-		origin = projectile.GetOrigin()
+		origin = <origin.x, origin.y, origin.z +250>
 		float duration = 20
 		if ( GAMETYPE == GAMEMODE_SP )
 			duration *= 1.5
@@ -154,7 +154,6 @@ void function OnPoisonWallPlanted( entity projectile )
 			for ( int i = 0; i < 24; i++ )
 			{
 				vector angles = < 0, 360/24 * i, 0 >
-
 			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
 			print("origin "+origin)
 			print("direction "+direction)

@@ -201,12 +201,12 @@ WeaponData
 	"ads_fov_zoomfrac_start"						"0.0"
 	"ads_fov_zoomfrac_end"							"1.0"
 
-	"charge_time" 									"2.25"
-	"charge_levels"									"5"
+	"charge_time" 									"0.1"
+	"charge_levels"									"5.0"
 	"charge_cooldown_time"							"0.5"
 	"charge_cooldown_delay"   						"0.0"
 	"charge_is_triggered_by_ADS"					"1"
-
+	"charge_require_input"							"1"
 	"charge_effect_1p"								"P_wpn_xo_sniper_charge_FP"
 	"charge_effect_3p"								"P_wpn_xo_sniper_charge"
 	"charge_effect_attachment"						"muzzle_flash"
