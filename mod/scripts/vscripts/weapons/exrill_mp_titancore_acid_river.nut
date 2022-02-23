@@ -108,7 +108,7 @@ var function OnWeaponPrimaryAttack_titancore_acid_wave( entity weapon, WeaponPri
 			#if SERVER
 				EmitSoundOnEntity( projectile, soundFXs[count] )
 				weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.5 )
-				thread BeginAcidWave( projectile, count, inflictor, attackParams.pos + offset, attackParams.dir )
+				thread OnPoisonWallPlanted( projectile)
 				if ( weapon.HasMod( "pas_scorch_flamecore" ) )
 					thread BeginScorchedEarth( projectile, count, scorchedEarthInflictor, attackParams.pos + offset, attackParams.dir )
 			#elseif CLIENT
@@ -121,12 +121,52 @@ var function OnWeaponPrimaryAttack_titancore_acid_wave( entity weapon, WeaponPri
 	return 1
 }
 
+
+void function OnPoisonWallPlanted( entity projectile )
+{
+	#if SERVER
+		//thread DeployPoisonWall( projectile )
+		
+		vector origin = OriginToGround( projectile.GetOrigin() )
+		projectile.SetOrigin(< origin.x, origin.y, origin.z+100 >)
+		origin = projectile.GetOrigin()
+		float duration = ACID_WALL_THERMITE_DURATION
+		if ( GAMETYPE == GAMEMODE_SP )
+			duration *= SP_ACID_WALL_DURATION_SCALE
+		entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
+		inflictor.SetOrigin( origin )
+		entity _parent = projectile.GetParent()
+		if ( IsValid( _parent ) )
+			projectile.SetParent( _parent, "", true, 0 )
+		entity myParent = _parent
+		// Increase the radius a bit so AI proactively try to get away before they have a chance at taking damage
+		entity owner = projectile.GetOwner()
+		entity movingGeo = ( myParent && myParent.HasPusherRootParent() ) ? myParent : null
+		if ( movingGeo )
+		{
+			inflictor.SetParent( movingGeo, "", true, 0 )}
+			for ( int i = 0; i < 12; i++ )
+			{
+				vector angles = < 0, 30 * i, 0 >
+
+			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
+			print("direction "+direction)
+			print("initial angles "+angles)
+			const float FUSE_TIME = 0.0
+			projectile.SetModel( $"models/dev/empty_model.mdl" )
+			thread BeginAcidWave( projectile, 0, inflictor, origin, direction )
+			}
+
+	#endif
+		}
+
+
 #if SERVER
 void function BeginAcidWave( entity projectile, int projectileCount, entity inflictor, vector pos, vector dir )
 {
 	projectile.EndSignal( "OnDestroy" )
 	projectile.SetAbsOrigin( projectile.GetOrigin() )
-	//projectile.SetAbsAngles( projectile.GetAngles() )
+	projectile.SetAbsAngles( projectile.GetAngles() )
 	projectile.SetVelocity( Vector( 0, 0, 0 ) )
 	projectile.StopPhysics()
 	projectile.SetTakeDamageType( DAMAGE_NO )

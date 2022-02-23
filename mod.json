@@ -20,6 +20,13 @@
             }
 		},
 		{
+			"Path": "weapons/exrill_mp_titanability_acid_pool.nut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "MpTitanAbilityAcidPool_Init"
+            }
+		},
+		{
 			"Path": "PrimeTitanPlus.gnut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {

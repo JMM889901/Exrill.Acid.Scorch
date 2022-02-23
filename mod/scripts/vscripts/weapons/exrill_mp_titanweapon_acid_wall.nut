@@ -52,7 +52,7 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 	if ( IsValid( player ) )
 		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
 	vector angles = VectorToAngles( attackParams.dir )
-	attackPos.z = attackPos.z +25
+	attackPos.z = attackPos.z
 	vector angularVelocity = <0,0,0>
 	float fuseTime = 0.0
 	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
@@ -69,6 +69,7 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 		if ( deployable )
 		{
 			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
+			deployable.proj.isChargedShot = (weapon.GetWeaponChargeLevel() > 0)
 			Grenade_Init( deployable, weapon )
 			thread OnProjectilePlanted( deployable, OnPoisonWallPlanted )
 		}
@@ -89,7 +90,7 @@ vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
 {
 	if ( player.IsTitan() )
 	{
-		int attachID = player.LookupAttachment( "TITAN_GRENADE" )
+		int attachID = player.LookupAttachment( "muzzle_flash" )
 		vector attackPos = player.GetAttachmentOrigin( attachID )
 		vector attackDir = player.GetAttachmentForward( attachID )
 		return attackPos + ( attackDir * 50 )

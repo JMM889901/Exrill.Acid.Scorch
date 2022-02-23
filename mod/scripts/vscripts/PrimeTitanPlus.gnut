@@ -7,6 +7,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titancore_acid_river")
 	PrecacheWeapon("exrill_mp_titanweapon_acid_wall")
 	PrecacheWeapon("exrill_mp_titanweapon_hybrid_launcher")
+	PrecacheWeapon("exrill_mp_titanability_acid_pool")
 	
     #if SERVER
 
@@ -37,7 +38,7 @@ void function SetTitanLoadout( entity titan )
 				
 				//Offence
 				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
-				titan.GiveOffhandWeapon("mp_titanability_slow_trap", OFFHAND_ANTIRODEO ) 
+				titan.GiveOffhandWeapon("exrill_mp_titanability_acid_pool", OFFHAND_ANTIRODEO ) 
 				
 				
 				//Defence

@@ -14,8 +14,8 @@ WeaponData
 	"fire_mode"   									"offhand"
 	"minimap_reveal_distance"						"32000"
 
-	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_titanweapon_slow_trap"
-	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_slow_trap"
+	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_titanweapon_acid_pool"
+	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_acid_pool"
 	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
 
 	"offhand_default_inventory_slot"				"1"

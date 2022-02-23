@@ -211,7 +211,7 @@ WeaponData
 	"charge_effect_3p"								"P_wpn_xo_sniper_charge"
 	"charge_effect_attachment"						"muzzle_flash"
 
-	"shared_energy_cost"							"10"
+	"shared_energy_cost"							"0"
 
 	"allow_empty_fire"								"0"
 	"reload_enabled"  								"1"

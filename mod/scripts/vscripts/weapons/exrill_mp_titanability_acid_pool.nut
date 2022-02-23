@@ -2,11 +2,11 @@
 untyped
 #endif
 
-global function MpTitanAbilitySlowTrap_Init
-global function OnWeaponPrimaryAttack_titanweapon_slow_trap
+global function MpTitanAbilityAcidPool_Init
+global function OnWeaponPrimaryAttack_titanweapon_acid_pool
 
 #if SERVER
-global function OnWeaponNPCPrimaryAttack_titanweapon_slow_trap
+global function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool
 #endif
 
 //TODO: Need to reassign ownership to whomever destroys the Barrel.
@@ -26,7 +26,7 @@ const float FIRE_TRAP_MINI_EXPLOSION_RADIUS = 75
 const float FIRE_TRAP_LIFETIME = 10.5
 const int GAS_FX_HEIGHT = 70
 
-void function MpTitanAbilitySlowTrap_Init()
+void function MpTitanAbilityAcidPool_Init()
 {
 	PrecacheModel( SLOW_TRAP_MODEL )
 	PrecacheParticleSystem( SLOW_TRAP_FX_ALL )
@@ -48,13 +48,13 @@ void function MpTitanAbilitySlowTrap_Init()
 }
 
 #if SERVER
-var function OnWeaponNPCPrimaryAttack_titanweapon_slow_trap( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	return OnWeaponPrimaryAttack_titanweapon_slow_trap( weapon, attackParams )
 }
 #endif
 
-var function OnWeaponPrimaryAttack_titanweapon_slow_trap( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	entity weaponOwner = weapon.GetWeaponOwner() 
 	if ( weaponOwner.IsPlayer() )
@@ -66,7 +66,7 @@ var function OnWeaponPrimaryAttack_titanweapon_slow_trap( entity weapon, WeaponP
 	if ( IsValid( player ) )
 		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
 	vector angles = VectorToAngles( attackParams.dir )
-	attackPos.z = attackPos.z +25
+	attackPos.z = attackPos.z -25
 	vector angularVelocity = <0,0,0>
 	float fuseTime = 0.0
 	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
@@ -86,7 +86,7 @@ var function OnWeaponPrimaryAttack_titanweapon_slow_trap( entity weapon, WeaponP
 			print(deployable.proj.isChargedShot)
 			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
 			Grenade_Init( deployable, weapon )
-			thread OnProjectilePlanted( deployable, OnSlowTrapPlanted )
+			thread OnProjectilePlanted( deployable, OnPoisonWallPlanted )
 		}
 	#endif
 	return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
@@ -103,7 +103,7 @@ vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
 {
 	if ( player.IsTitan() )
 	{
-		int attachID = player.LookupAttachment( "TITAN_GRENADE" )
+		int attachID = player.LookupAttachment( "muzzle_flash" )
 		vector attackPos = player.GetAttachmentOrigin( attachID )
 		vector attackDir = player.GetAttachmentForward( attachID )
 		return attackPos + ( attackDir * 50 )
@@ -116,204 +116,62 @@ vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
 void function OnSlowTrapPlanted( entity projectile )
 {
 	#if SERVER
-		thread DeploySlowTrap( projectile )
+		thread OnPoisonWallPlanted( projectile )
 	#endif
 }
 #if SERVER
-function DeploySlowTrap( entity projectile )
+void function OnPoisonWallPlanted( entity projectile )
 {
-	print(projectile.proj.isChargedShot)
-	vector origin = OriginToGround( projectile.GetOrigin() )
-	vector angles = projectile.proj.savedAngles
-	angles = < angles.x + 90, angles.y, angles.z > // rotate 90 to face up
-	entity owner = projectile.GetOwner()
-	if ( !IsValid( owner ) )
-		return
-
-	array<string> projectileMods = projectile.ProjectileGetMods()
-	bool isExplosiveBarrel = false
-	if ( projectileMods.contains( "fd_explosive_barrel" ) )
-		isExplosiveBarrel = true
-
-	owner.EndSignal( "OnDestroy" )
-	if ( IsValid( projectile ) )
-		projectile.Destroy()
-
-	int team = owner.GetTeam()
-	string noSpawnIdx = CreateNoSpawnArea( TEAM_INVALID, team, origin, SLOW_TRAP_BUILD_TIME + SLOW_TRAP_LIFETIME, SLOW_TRAP_RADIUS )
-
-	//make npc's fire at their own traps to cut off lanes
-
-	entity _parent = projectile.GetParent()
-
-	//TODO - HACK : Update to use Vortex Sphere once the Vortex Sphere explosion code feature is done.
-	entity damageArea = CreatePropScript( DAMAGE_AREA_MODEL, origin, angles, 0 )
-	damageArea.SetOwner( owner )
-	if ( owner.IsPlayer() )
-		damageArea.SetBossPlayer( owner )
-	damageArea.SetMaxHealth( 100 )
-	damageArea.SetHealth( 100 )
-	damageArea.SetTakeDamageType( DAMAGE_NO )
-	damageArea.SetDamageNotifications( false )
-	damageArea.SetDeathNotifications( false )
-	damageArea.SetArmorType( ARMOR_TYPE_HEAVY )
-	damageArea.Hide()
-	if ( IsValid( _parent ) )
-		damageArea.SetParent( _parent, "", true, 0 )
-	//damageArea.LinkToEnt( tower )
-	if ( isExplosiveBarrel )
-		damageArea.SetScriptName( "explosive_barrel" )
-	SetTeam( damageArea, TEAM_UNASSIGNED )
-	SetObjectCanBeMeleed( damageArea, false )
-	SetVisibleEntitiesInConeQueriableEnabled( damageArea, false )
-
-	OnThreadEnd(
-	function() : ( noSpawnIdx, damageArea )
+	#if SERVER
+		//thread DeployPoisonWall( projectile )
+		
+		vector origin = OriginToGround( projectile.GetOrigin() )
+		projectile.SetOrigin(< origin.x, origin.y, origin.z+100 >)
+		origin = projectile.GetOrigin()
+		float duration = ACID_WALL_THERMITE_DURATION
+		if ( GAMETYPE == GAMEMODE_SP )
+			duration *= SP_ACID_WALL_DURATION_SCALE
+		entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
+		inflictor.SetOrigin( origin )
+		entity _parent = projectile.GetParent()
+		if ( IsValid( _parent ) )
+			projectile.SetParent( _parent, "", true, 0 )
+		entity myParent = _parent
+		// Increase the radius a bit so AI proactively try to get away before they have a chance at taking damage
+		entity owner = projectile.GetOwner()
+		entity movingGeo = ( myParent && myParent.HasPusherRootParent() ) ? myParent : null
+		if ( movingGeo )
 		{
-			DeleteNoSpawnArea( noSpawnIdx )
-
-
-			if ( IsValid( damageArea ) )
+			inflictor.SetParent( movingGeo, "", true, 0 )}
+			for ( int i = 0; i < 12; i++ )
 			{
-				//Naturally Timed Out
-				EmitSoundAtPosition( TEAM_UNASSIGNED, damageArea.GetOrigin() + <0,0,GAS_FX_HEIGHT>, "incendiary_trap_gas_stop" )
-				damageArea.Destroy()
+				vector angles = < 0, 30 * i, 0 >
+
+			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
+			print("direction "+direction)
+			print("initial angles "+angles)
+			const float FUSE_TIME = 0.0
+			projectile.SetModel( $"models/dev/empty_model.mdl" )
+			thread SpawnPoisonWave( projectile, 0, inflictor, origin, direction )
 			}
+
+	#endif
 		}
-	)
-
-	damageArea.EndSignal( "OnDestroy" )
-
-	IgniteTrap( damageArea, 0, projectile.proj.isChargedShot, isExplosiveBarrel )
-	wait SLOW_TRAP_LIFETIME
-}
-
-void function OnSlowTrapDamaged( entity damageArea, var damageInfo )
-{ 
-	//HACK - Should use damage flags, but we might be capped?
-	
-	bool shouldExplode = false
-	int damageSourceID = DamageInfo_GetDamageSourceIdentifier( damageInfo )
-	switch( damageSourceID )
-	{
-		//case eDamageSourceId.mp_titanweapon_meteor: Secondary explosions to hit it, not the flying projectile.
-		case eDamageSourceId.mp_titanweapon_meteor:
-		case eDamageSourceId.mp_titanweapon_meteor_thermite:
-		case eDamageSourceId.mp_weapon_thermite_grenade:
-		case eDamageSourceId.mp_titancore_flame_wave:
-		case eDamageSourceId.mp_titancore_flame_wave_secondary:
-		case eDamageSourceId.mp_titanweapon_flame_wall:
-		case eDamageSourceId.mp_titanweapon_heat_shield:
-		case eDamageSourceId.mp_titanability_slow_trap:
-			shouldExplode = true
-			break
-	}
-	if ( shouldExplode )
-	{
-		bool isExplosiveBarrel = damageArea.GetScriptName() == "explosive_barrel"
-		if ( isExplosiveBarrel )
-			CreateExplosiveBarrelExplosion( damageArea )
-		IgniteTrap( damageArea, damageInfo,false, isExplosiveBarrel )
-		DamageInfo_SetDamage( damageInfo, 1001 )
-	}
-	else
-	{
-		DamageInfo_SetDamage( damageInfo, 0 )
-	}
-}
-
-function CreateExplosiveBarrelExplosion( entity damageArea )
+void function SpawnPoisonWave( entity projectile, int projectileCount, entity inflictor, vector origin, vector direction )
 {
-	entity owner = damageArea.GetOwner()
-	if ( !IsValid( owner ) )
-		return
-
-	Explosion_DamageDefSimple( damagedef_fd_explosive_barrel, damageArea.GetOrigin(),owner, owner, damageArea.GetOrigin() )
+	projectile.EndSignal( "OnDestroy" )
+	projectile.SetAbsOrigin( projectile.GetOrigin() )
+	projectile.SetAbsAngles( projectile.GetAngles() )
+	projectile.SetVelocity( Vector( 0, 0, 0 ) )
+	projectile.StopPhysics()
+	projectile.SetTakeDamageType( DAMAGE_NO )
+	projectile.Hide()
+	projectile.NotSolid()
+	projectile.proj.savedOrigin = < -999999.0, -999999.0, -999999.0 >
+	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, origin, direction, CreateAcidWallSegment )
+	projectile.Destroy()
 }
-function IgniteTrap( entity damageArea, var damageInfo, bool ChargeLevel = false ,bool isExplosiveBarrel = false )
-{
-	entity owner = damageArea.GetOwner()
-	Assert( IsValid( owner ) )
-	if ( !IsValid( owner ) )
-		return
 
-	entity weapon = owner.GetOffhandWeapon( OFFHAND_ANTIRODEO )
-	if ( !IsValid( weapon ) || weapon.GetWeaponClassName() != "mp_titanability_slow_trap"  )
-		return
-
-	vector originNoHeightAdjust = damageArea.GetOrigin()
-	vector origin = originNoHeightAdjust + <0,0,GAS_FX_HEIGHT>
-	float range = SLOW_TRAP_RADIUS
-
-	//DebugDrawTrigger( origin, range, 255, 0, 0 )
-	if ( isExplosiveBarrel )
-	{
-		entity initialExplosion = StartParticleEffectInWorld_ReturnEntity( GetParticleSystemIndex( BARREL_EXP_FX ), origin, <0,0,0> )
-		EntFireByHandle( initialExplosion, "Kill", "", 3.0, null, null )
-		EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "incendiary_trap_explode_large" )
-	}
-	else
-	{
-		entity initialExplosion = StartParticleEffectInWorld_ReturnEntity( GetParticleSystemIndex( FIRE_CENTER_FX ), origin, <0,0,0> )
-		EntFireByHandle( initialExplosion, "Kill", "", 3.0, null, null )
-		EmitSoundAtPosition( TEAM_UNASSIGNED, origin, "incendiary_trap_explode_large" )
-
-	}
-
-	float duration = FLAME_WALL_THERMITE_DURATION
-	if ( GAMETYPE == GAMEMODE_SP )
-		duration *= SP_FLAME_WALL_DURATION_SCALE
-	entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
-	inflictor.SetOrigin( origin )
-
-	// Increase the radius a bit so AI proactively try to get away before they have a chance at taking damage
-	float dangerousAreaRadius = SLOW_TRAP_RADIUS + 50
-
-	array<entity> ignoreArray = damageArea.GetLinkEntArray()
-	ignoreArray.append( damageArea )
-	entity myParent = damageArea.GetParent()
-	entity movingGeo = ( myParent && myParent.HasPusherRootParent() ) ? myParent : null
-	if ( movingGeo )
-	{
-		inflictor.SetParent( movingGeo, "", true, 0 )
-		AI_CreateDangerousArea( inflictor, weapon, dangerousAreaRadius, TEAM_INVALID, true, true )
-	}
-	else
-	{
-		AI_CreateDangerousArea_Static( inflictor, weapon, dangerousAreaRadius, TEAM_INVALID, true, true, originNoHeightAdjust )
-	}
-	int num = 12
-	if(ChargeLevel)
-		num = 24
-	for ( int i = 0; i < num; i++ )
-	{
-		vector trailAngles = < 360/num * i, 360/num * i, 0 >
-		vector forward = AnglesToForward( trailAngles )
-		vector startPosition = origin + forward * FIRE_TRAP_MINI_EXPLOSION_RADIUS
-		vector direction = forward * 150
-		if ( i > num/2 )
-			direction *= -1
-		const float FUSE_TIME = 0.0
-		entity projectile = weapon.FireWeaponGrenade( startPosition, <0,0,0>, <0,0,0>, FUSE_TIME, damageTypes.projectileImpact, damageTypes.explosive, PROJECTILE_NOT_PREDICTED, true, true )
-		if ( !IsValid( projectile ) )
-			continue
-		projectile.SetModel( $"models/dev/empty_model.mdl" )
-		projectile.SetOrigin( startPosition )
-		projectile.SetVelocity( Vector( 0, 0, 0 ) )
-		projectile.StopPhysics()
-		projectile.SetTakeDamageType( DAMAGE_NO )
-		projectile.Hide()
-		projectile.NotSolid()
-		projectile.SetProjectilTrailEffectIndex( 1 )
-		projectile.proj.isChargedShot = ChargeLevel
-		thread SpawnFireLine( projectile, i, inflictor, startPosition, direction )
-	}
-	thread IncendiaryTrapFireSounds( inflictor )
-	if ( !movingGeo )
-		thread FlameOn( inflictor )
-	else
-		thread FlameOnMovingGeo( inflictor )
-}
 
 void function IncendiaryTrapFireSounds( entity inflictor )
 {
