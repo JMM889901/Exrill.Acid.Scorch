@@ -107,7 +107,7 @@ WeaponData
 	}
 
 		// Effects
-	"projectile_trail_effect_0" 					"P_projectile_TPA"
+	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod3"
 	"impact_effect_table" 							"titan_particle_accelerator"
 	"projectile_adjust_to_gun_barrel"				"1"
 

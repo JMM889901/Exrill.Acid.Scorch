@@ -49,7 +49,7 @@ WeaponData
 	"projectilemodel" 								"models/dev/empty_model.mdl"
 
 		// Effects
-	"projectile_trail_effect_0" 					"P_projectile_TPA"
+	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"impact_effect_table" 							"titan_particle_accelerator"
 	"projectile_adjust_to_gun_barrel"				"1"
 
@@ -207,8 +207,8 @@ WeaponData
 	"charge_cooldown_delay"   						"0.0"
 	"charge_is_triggered_by_ADS"					"1"
 	"charge_require_input"							"1"
-	"charge_effect_1p"								"P_wpn_xo_sniper_charge_FP"
-	"charge_effect_3p"								"P_wpn_xo_sniper_charge"
+	"charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
+	"charge_effect_3p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"charge_effect_attachment"						"muzzle_flash"
 
 	"shared_energy_cost"							"0"

@@ -21,8 +21,8 @@ WeaponData
 
 	"offhand_default_inventory_slot"				"1"
 	
-    "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
-    "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto"
+    "grenade_arc_indicator_effect"					"P_grenade_arc_proto_green"
+    "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto_green"
     "grenade_arc_indicator_show_from_hip"			"1"
 	"grenade_arc_indicator_bounce_count"			"1"
 	"grenade_bounce_vel_frac_shallow"				"0.5"
@@ -39,9 +39,9 @@ WeaponData
 	"bounce_effect_table"							"titan_footstep"
 	"impact_effect_table" 							"triplethreat_frag"
 	"projectile_trail_attachment" 					"fx_top"
-	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod3"
-	"projectile_trail_effect_1" 					"Rocket_Smoke_SMALL_Titan_mod3"
-      "fx_muzzle_flash_view"							"Rocket_Smoke_SMALL_Titan_mod3"
+	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
+	"projectile_trail_effect_1" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
+      "fx_muzzle_flash_view"							"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_trip_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_trip"
 	"vortex_absorb_sound"							"Vortex_Shield_AbsorbRocket"
@@ -122,7 +122,7 @@ WeaponData
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
 	"allow_headshots" 								"0"
-      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod3"
+      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
       "charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
       "fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
 
