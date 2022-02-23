@@ -17,6 +17,16 @@ const string ACID_WAVE_LEFT_SFX = "flamewave_blast_left"
 const string ACID_WAVE_MIDDLE_SFX = "flamewave_blast_middle"
 const string ACID_WAVE_RIGHT_SFX = "flamewave_blast_right"
 
+const asset ACID_WALL_FX = $"P_wpn_meteor_wall_acid"
+const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s_acid"
+const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2_acid"
+
+const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
+const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
+const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
+
 void function MpTitanWeaponAcidWave_Init()
 {
 	PrecacheParticleSystem( ACID_WAVE_IMPACT_TITAN )
@@ -87,12 +97,10 @@ var function OnWeaponPrimaryAttack_titancore_acid_wave( entity weapon, WeaponPri
 	entity scorchedEarthInflictor = CreateOncePerTickDamageInflictorHelper( 10.0 )
 	#endif
 
-	array<float> offsets = [ -1.0, 0.0, 1.0 ]
-	array<string> soundFXs = [ ACID_WAVE_RIGHT_SFX, ACID_WAVE_MIDDLE_SFX, ACID_WAVE_LEFT_SFX ]
+	array<float> offsets = [0.0]
+	array<string> soundFXs = [ACID_WAVE_MIDDLE_SFX]
 	Assert( offsets.len() == soundFXs.len(), "There should be a sound for each projectile." )
 	int count = 0
-	while ( count < offsets.len() )
-	{
 		//JFS - Bug 210617
 		Assert( IsValid( weapon.GetWeaponOwner() ), "JFS returning out - need to investigate why the owner is invalid." )
 		if ( !IsValid( weapon.GetWeaponOwner() ) )
@@ -114,8 +122,6 @@ var function OnWeaponPrimaryAttack_titancore_acid_wave( entity weapon, WeaponPri
 			#elseif CLIENT
 				ClientScreenShake( 8.0, 10.0, 1.0, Vector( 0.0, 0.0, 0.0 ) )
 			#endif
-		}
-		count++
 	}
 
 	return 1
@@ -128,11 +134,11 @@ void function OnPoisonWallPlanted( entity projectile )
 		//thread DeployPoisonWall( projectile )
 		
 		vector origin = OriginToGround( projectile.GetOrigin() )
-		projectile.SetOrigin(< origin.x, origin.y, origin.z+100 >)
+		projectile.SetOrigin(< origin.x, origin.y, origin.z+250 >)
 		origin = projectile.GetOrigin()
-		float duration = ACID_WALL_THERMITE_DURATION
+		float duration = 20
 		if ( GAMETYPE == GAMEMODE_SP )
-			duration *= SP_ACID_WALL_DURATION_SCALE
+			duration *= 1.5
 		entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
 		inflictor.SetOrigin( origin )
 		entity _parent = projectile.GetParent()
@@ -145,16 +151,17 @@ void function OnPoisonWallPlanted( entity projectile )
 		if ( movingGeo )
 		{
 			inflictor.SetParent( movingGeo, "", true, 0 )}
-			for ( int i = 0; i < 12; i++ )
+			for ( int i = 0; i < 24; i++ )
 			{
-				vector angles = < 0, 30 * i, 0 >
+				vector angles = < 0, 360/24 * i, 0 >
 
 			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
+			print("origin "+origin)
 			print("direction "+direction)
 			print("initial angles "+angles)
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
-			thread BeginAcidWave( projectile, 0, inflictor, origin, direction )
+			thread BeginAcidWave( projectile, 0, inflictor, origin+direction*150, direction )
 			}
 
 	#endif
@@ -187,62 +194,81 @@ void function BeginScorchedEarth( entity projectile, int projectileCount, entity
 
 bool function CreateAcidWaveSegment( entity projectile, int projectileCount, entity inflictor, entity movingGeo, vector pos, vector angles, int waveCount )
 {
-	array<string> mods = projectile.ProjectileGetMods()
-	projectile.SetOrigin( pos + < 0, 0, 100 > )
-	projectile.SetAngles( angles )
+	projectile.SetOrigin( pos )
+	entity owner = projectile.GetOwner()
 
-	int flags = DF_EXPLOSION | DF_STOPS_TITAN_REGEN | DF_DOOM_FATALITY | DF_SKIP_DAMAGE_PROT
-
-	if( !( waveCount in inflictor.e.waveLinkFXTable ) )
+	if ( projectile.proj.savedOrigin != < -999999.0, -999999.0, -999999.0 > )
 	{
-		entity waveEffectLeft = StartParticleEffectInWorld_ReturnEntity( GetParticleSystemIndex( ACIDWAVE_EFFECT_CONTROL ), pos, angles )
-		entity waveEffectRight = StartParticleEffectInWorld_ReturnEntity( GetParticleSystemIndex( ACIDWAVE_EFFECT_CONTROL ), pos, angles )
-		EntFireByHandle( waveEffectLeft, "Kill", "", 3.0, null, null )
-		EntFireByHandle( waveEffectRight, "Kill", "", 3.0, null, null )
-		vector leftOffset = pos + projectile.GetRightVector() * ACID_WALL_MAX_HEIGHT
-		vector rightOffset = pos + projectile.GetRightVector() * -ACID_WALL_MAX_HEIGHT
-		EffectSetControlPointVector( waveEffectLeft, 1, leftOffset )
-		EffectSetControlPointVector( waveEffectRight, 1, rightOffset )
-		array<entity> rowFxArray = [ waveEffectLeft, waveEffectRight ]
-		inflictor.e.waveLinkFXTable[ waveCount ] <- rowFxArray
-	}
-	else
-	{
-		array<entity> rowFxArray = inflictor.e.waveLinkFXTable[ waveCount ]
-		if ( projectileCount == 1 )
+		array<string> mods = projectile.ProjectileGetMods()
+		float duration
+		int damageSource
+		if ( mods.contains( "pas_scorch_flamecore" ) )
 		{
-			foreach( fx in rowFxArray )
+			damageSource = eDamageSourceId.mp_titancore_flame_wave_secondary
+			duration = 30
+		}
+		else
+		{
+			damageSource = eDamageSourceId.mp_titancore_flame_wave
+			duration = mods.contains( "pas_scorch_firewall" ) ? 20.0 : 15.0
+		}
+
+		if ( IsSingleplayer() )
+		{
+			if ( owner.IsPlayer() || Flag( "SP_MeteorIncreasedDuration" ) )
 			{
-				fx.SetOrigin( pos )
-				fx.SetAngles( angles )
+				duration *= SP_ACID_WALL_DURATION_SCALE
 			}
 		}
-		vector rightOffset = pos + projectile.GetRightVector() * -ACID_WALL_MAX_HEIGHT
-		EffectSetControlPointVector( rowFxArray[1], 1, rightOffset )
 
-		//Catches the case where the middle projectile is destroyed and two outer waves continue forward.
-		if ( Distance2D( rowFxArray[1].GetOrigin(), rightOffset ) > PROJECTILE_SEPARATION + ACID_WALL_MAX_HEIGHT )
+		entity thermiteParticle
+		//regular script path
+		if ( !movingGeo )
 		{
-			rowFxArray[0].SetOrigin( rowFxArray[0].GetOrigin() + rowFxArray[0].GetRightVector() * -ACID_WALL_MAX_HEIGHT )
-			vector leftOffset = pos + projectile.GetRightVector() * ACID_WALL_MAX_HEIGHT
-			rowFxArray[1].SetOrigin( leftOffset )
+			thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
+			EffectSetControlPointVector( thermiteParticle, 1, projectile.proj.savedOrigin )
+			AI_CreateDangerousArea_Static( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true, pos )
 		}
+		else
+		{
+			if ( GetMapName() == "sp_s2s" )
+			{
+				angles = <0,90,0>//wind dir
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX_S2S, damageSource )
+			}
+			else
+			{
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
+			}
+
+			if ( movingGeo == projectile.proj.savedMovingGeo )
+			{
+				thread EffectUpdateControlPointVectorOnMovingGeo( thermiteParticle, 1, projectile.proj.savedRelativeDelta, projectile.proj.savedMovingGeo )
+			}
+			else
+			{
+				thread EffectUpdateControlPointVectorOnMovingGeo( thermiteParticle, 1, GetRelativeDelta( pos, movingGeo ), movingGeo )
+			}
+			AI_CreateDangerousArea( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true )
+		}
+
+		//EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_SFX )
+		int maxSegments = expect int( projectile.ProjectileGetWeaponInfoFileKeyField( "wave_max_count" ) )
+		//figure out why it's starting at 1 but ending at 14.
+		if ( waveCount == 1 )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_BEGINNING_SFX )
+		else if ( waveCount == ( maxSegments - 1 ) )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
+		else if ( waveCount == maxSegments / 2  )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
 	}
 
-	// radiusHeight = sqr( ACID_WALL_MAX_HEIGHT^2 + PROJECTILE_SEPARATION^2 )
-	RadiusDamage(
-			pos,
-			projectile.GetOwner(), //attacker
-			inflictor, //inflictor
-			projectile.GetProjectileWeaponSettingInt( eWeaponVar.damage_near_value ),
-			projectile.GetProjectileWeaponSettingInt( eWeaponVar.damage_near_value_titanarmor ),
-			180, // inner radius
-			180, // outer radius
-			SF_ENVEXPLOSION_NO_DAMAGEOWNER | SF_ENVEXPLOSION_MASK_BRUSHONLY | SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,
-			0, // distanceFromAttacker
-			0, // explosionForce
-			flags,
-			eDamageSourceId.mp_titancore_flame_wave )
+	projectile.proj.savedOrigin = pos
+	if ( IsValid( movingGeo ) )
+	{
+		projectile.proj.savedRelativeDelta = GetRelativeDelta( pos, movingGeo )
+		projectile.proj.savedMovingGeo = movingGeo
+	}
 
 	return true
 }
@@ -280,10 +306,6 @@ void function AcidWave_DamagedPlayerOrNPC( entity ent, var damageInfo )
 
 	if ( DamageInfo_GetDamage( damageInfo ) > 0 )
 	{
-		if ( ent.IsTitan() )
-			PlayFXOnEntity( ACID_WAVE_IMPACT_TITAN, ent, "exp_torso_main" )
-		else
-			PlayFXOnEntity( ACID_WAVE_IMPACT, ent )
 
 		Scorch_SelfDamageReduction( ent, damageInfo )
 	}
@@ -291,7 +313,8 @@ void function AcidWave_DamagedPlayerOrNPC( entity ent, var damageInfo )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() )
 		return
-
+	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 1, 1, 1 )
+	DamageInfo_ScaleDamage( damageInfo, 0.2 )
 	array<entity> weapons = attacker.GetMainWeapons()
 	if ( weapons.len() > 0 )
 	{
@@ -301,7 +324,18 @@ void function AcidWave_DamagedPlayerOrNPC( entity ent, var damageInfo )
 			UpdateScorchHotStreakCoreMeter( attacker, DamageInfo_GetDamage( damageInfo ) )
 	}
 }
+void function EffectUpdateControlPointVectorOnMovingGeo( entity thermiteParticle, int cpIndex, vector relativeDelta, entity movingGeo )
+{
+	thermiteParticle.EndSignal( "OnDestroy" )
 
+	while ( 1 )
+	{
+		vector origin = GetWorldOriginFromRelativeDelta( relativeDelta, movingGeo )
+
+		EffectSetControlPointVector( thermiteParticle, cpIndex, origin )
+		WaitFrame()
+	}
+}
 void function ZeroDamageAndClearInflictorArray( entity ent, var damageInfo )
 {
 		DamageInfo_SetDamage( damageInfo, 0 )

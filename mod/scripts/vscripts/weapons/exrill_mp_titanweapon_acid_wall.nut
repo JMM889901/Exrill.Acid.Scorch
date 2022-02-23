@@ -47,7 +47,9 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 
 	//ThrowDeployable( weapon, attackParams, 0.63, OnSlowTrapPlanted, <90,0,0> )
 	entity player = weapon.GetWeaponOwner()
-
+	weaponOwner.TakeSharedEnergy( 250 )
+	if((weapon.GetWeaponChargeLevel() > 0))
+		weaponOwner.TakeSharedEnergy( 250 )
 	vector attackPos
 	if ( IsValid( player ) )
 		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )

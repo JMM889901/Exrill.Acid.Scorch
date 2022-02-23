@@ -75,7 +75,9 @@ var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponP
 		speed = GraphCapped( forward.x, 0, 80, speed, speed * 3 )
 
 	vector velocity = forward * speed
-	
+	weaponOwner.TakeSharedEnergy( 250 )
+	if((weapon.GetWeaponChargeLevel() > 0))
+		weaponOwner.TakeSharedEnergy( 250 )
 	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
 	#if SERVER

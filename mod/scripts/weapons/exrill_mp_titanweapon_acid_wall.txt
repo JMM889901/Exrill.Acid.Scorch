@@ -26,7 +26,7 @@ WeaponData
 	"wave_step_dist"								"100.0"
 	"charge_wave_max_count"							"8"
 	"charge_wave_step_dist"							"100.0"
-
+	"shared_energy_cost"							"25"
     "grenade_arc_indicator_effect"					"P_grenade_arc_proto"
     "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto"
     "grenade_arc_indicator_show_from_hip"			"1"
@@ -61,7 +61,7 @@ WeaponData
       
       // Charge settings
       "charge_time" 									"3.0"
-	  "charge_levels"									"5"
+	  "charge_levels"									"1"
       "charge_cooldown_time"							"1.0"
       "charge_cooldown_delay"   						"0.0"
       "charge_end_forces_fire"  						"1"
