@@ -209,7 +209,7 @@ particles_manifest
 	"file"		"particles/wpn_grenade_TT_mod.pcf"
 	"file"		"particles/wpn_vortex_titan_CP_mod.pcf"
 	"file"		"particles/wpn_rocket_fx_mod.pcf"
-      "file"		"particles/wpn_rocket_fx_mod2.pcf"
+      "file"		"particles/wpn_rocket_fx_mod_acid.pcf"
 	"file"		"particles/wpn_arc_cannon_mod.pcf"
 	"file"		"particles/player_screen_MFD.pcf"
 	"file"		"particles/wpn_mortar_fx.pcf"
