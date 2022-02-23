@@ -7,7 +7,15 @@ global function OnWeaponPrimaryAttack_titanweapon_acid_pool
 #if SERVER
 global function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool
 #endif
+const asset ACID_WALL_FX = $"P_wpn_meteor_wall_acid"
+const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s_acid"
+const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2_acid"
 
+const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
+const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
+const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
 //TODO: Need to reassign ownership to whomever destroys the Barrel.
 const asset DAMAGE_AREA_MODEL = $"models/fx/xo_shield.mdl"
 const asset SLOW_TRAP_MODEL = $"models/weapons/titan_incendiary_trap/w_titan_incendiary_trap.mdl"
@@ -156,9 +164,11 @@ void function OnPoisonWallPlanted( entity projectile )
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin, direction )
 			}
-
+			wait 5
+			projectile.Destroy()
 	#endif
 		}
+#if SERVER
 void function SpawnPoisonWave( entity projectile, int projectileCount, entity inflictor, vector origin, vector direction )
 {
 	projectile.EndSignal( "OnDestroy" )
@@ -170,9 +180,90 @@ void function SpawnPoisonWave( entity projectile, int projectileCount, entity in
 	projectile.Hide()
 	projectile.NotSolid()
 	projectile.proj.savedOrigin = < -999999.0, -999999.0, -999999.0 >
-	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, origin, direction, CreateAcidWallSegment )
-	projectile.Destroy()
+	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, origin, direction, CreateAcidPoolSegment )
 }
+
+bool function CreateAcidPoolSegment( entity projectile, int projectileCount, entity inflictor, entity movingGeo, vector pos, vector angles, int waveCount )
+{
+	projectile.SetOrigin( pos )
+	entity owner = projectile.GetOwner()
+
+	if ( projectile.proj.savedOrigin != < -999999.0, -999999.0, -999999.0 > )
+	{
+		array<string> mods = projectile.ProjectileGetMods()
+		float duration
+		int damageSource
+		if ( mods.contains( "pas_scorch_flamecore" ) )
+		{
+			damageSource = eDamageSourceId.mp_titancore_ACID_wave_secondary
+			duration = 1.5
+		}
+		else
+		{
+			damageSource = eDamageSourceId.mp_titanweapon_flame_wall
+			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_VENOM_ACIDWALL_DURATION : ACID_WALL_THERMITE_DURATION
+		}
+
+		if ( IsSingleplayer() )
+		{
+			if ( owner.IsPlayer() || Flag( "SP_MeteorIncreasedDuration" ) )
+			{
+				duration *= SP_ACID_WALL_DURATION_SCALE
+			}
+		}
+
+		entity thermiteParticle
+		//regular script path
+		if ( !movingGeo )
+		{
+			thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
+			EffectSetControlPointVector( thermiteParticle, 1, projectile.proj.savedOrigin )
+			AI_CreateDangerousArea_Static( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true, pos )
+		}
+		else
+		{
+			if ( GetMapName() == "sp_s2s" )
+			{
+				angles = <0,90,0>//wind dir
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX_S2S, damageSource )
+			}
+			else
+			{
+				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, ACID_WALL_FX, damageSource )
+			}
+
+			if ( movingGeo == projectile.proj.savedMovingGeo )
+			{
+				thread EffectUpdateControlPointVectorOnMovingGeo( thermiteParticle, 1, projectile.proj.savedRelativeDelta, projectile.proj.savedMovingGeo )
+			}
+			else
+			{
+				thread EffectUpdateControlPointVectorOnMovingGeo( thermiteParticle, 1, GetRelativeDelta( pos, movingGeo ), movingGeo )
+			}
+			AI_CreateDangerousArea( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true )
+		}
+
+		//EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_SFX )
+		int maxSegments = expect int( projectile.ProjectileGetWeaponInfoFileKeyField( "wave_max_count" ) )
+		//figure out why it's starting at 1 but ending at 14.
+		if ( waveCount == 1 )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_BEGINNING_SFX )
+		else if ( waveCount == ( maxSegments - 1 ) )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
+		else if ( waveCount == maxSegments / 2  )
+			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
+	}
+	projectile.proj.savedOrigin = pos
+	if ( IsValid( movingGeo ) )
+	{
+		projectile.proj.savedRelativeDelta = GetRelativeDelta( pos, movingGeo )
+		projectile.proj.savedMovingGeo = movingGeo
+	}
+
+	return true
+}
+
+#endif
 
 
 void function IncendiaryTrapFireSounds( entity inflictor )
@@ -209,61 +300,17 @@ void function FlameOn( entity inflictor )
 	}
 }
 
-void function FlameOnMovingGeo( entity inflictor )
+
+
+void function EffectUpdateControlPointVectorOnMovingGeo( entity thermiteParticle, int cpIndex, vector relativeDelta, entity movingGeo )
 {
-	inflictor.EndSignal( "OnDestroy")
-
-	float intialWaitTime = 0.3
-	wait intialWaitTime
-
-	float duration = FLAME_WALL_THERMITE_DURATION
-	if ( GAMETYPE == GAMEMODE_SP )
-		duration *= SP_FLAME_WALL_DURATION_SCALE
-
-	vector angles = inflictor.GetAngles()
-	int fxID = GetParticleSystemIndex( FIRE_LINES_FX )
-	if ( GetMapName() == "sp_s2s" )
-	{
-		angles = <0,-90,0> // wind dir
-		fxID = GetParticleSystemIndex( FIRE_LINES_S2S_FX )
-	}
-
-	foreach( key, relativeDelta in inflictor.e.fireTrapEndPositions )
-	{
-		if ( ( key in inflictor.e.fireTrapMovingGeo ) )
-		{
-			entity movingGeo = inflictor.e.fireTrapMovingGeo[ key ]
-			if ( !IsValid( movingGeo ) )
-				continue
-			vector pos = GetWorldOriginFromRelativeDelta( relativeDelta, movingGeo )
-
-			entity script_mover = CreateScriptMover( pos, angles )
-			script_mover.SetParent( movingGeo, "", true, 0 )
-
-			int attachIdx 		= script_mover.LookupAttachment( "REF" )
-			entity fireLine 	= StartParticleEffectOnEntity_ReturnEntity( script_mover, fxID, FX_PATTACH_POINT_FOLLOW, attachIdx )
-
-			EntFireByHandle( script_mover, "Kill", "", duration, null, null )
-			EntFireByHandle( fireLine, "Kill", "", duration, null, null )
-			thread EffectUpdateControlPointVectorOnMovingGeo( fireLine, 1, inflictor )
-		}
-		else
-		{
-			entity fireLine = StartParticleEffectInWorld_ReturnEntity( GetParticleSystemIndex( FIRE_LINES_FX ), relativeDelta, inflictor.GetAngles() )
-			EntFireByHandle( fireLine, "Kill", "", duration, null, null )
-			EffectSetControlPointVector( fireLine, 1, inflictor.GetOrigin() )
-		}
-	}
-}
-
-void function EffectUpdateControlPointVectorOnMovingGeo( entity fireLine, int cpIndex, entity inflictor )
-{
-	fireLine.EndSignal( "OnDestroy" )
-	inflictor.EndSignal( "OnDestroy" )
+	thermiteParticle.EndSignal( "OnDestroy" )
 
 	while ( 1 )
 	{
-		EffectSetControlPointVector( fireLine, cpIndex, inflictor.GetOrigin() )
+		vector origin = GetWorldOriginFromRelativeDelta( relativeDelta, movingGeo )
+
+		EffectSetControlPointVector( thermiteParticle, cpIndex, origin )
 		WaitFrame()
 	}
 }

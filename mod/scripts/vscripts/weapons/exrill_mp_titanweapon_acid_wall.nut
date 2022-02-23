@@ -22,13 +22,14 @@ const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
 const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
 
 global const float ACID_WALL_THERMITE_DURATION = 8.2
-global const float PAS_VENOM_ACIDWALL_DURATION = 8.2
+global const float PAS_VENOM_ACIDWALL_DURATION = 10.0
 global const float SP_ACID_WALL_DURATION_SCALE = 1.75
 
 void function MpTitanweaponAcidWall_Init()
 {
 	PrecacheParticleSystem( ACID_WALL_FX )
 	PrecacheParticleSystem( ACID_WALL_CHARGED_ADD_FX )
+	PrecacheParticleSystem($"Rocket_Smoke_SMALL_Titan_mod_acid")
 
 	if ( GetMapName() == "sp_s2s" )
 	{
@@ -157,8 +158,6 @@ void function OnPoisonWallPlanted( entity projectile )
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin-100*direction, direction )
-			entity Shield = CreateShieldWithSettings(origin, angles,1000,500,120,500,524200, $"P_pilot_cover_shield" )
-			Shield.SetParent( projectile )
 			direction = AnglesToForward( <angles.x,angles.y-90,angles.z> )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin-100*direction, direction )
 
@@ -212,7 +211,7 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 		else
 		{
 			damageSource = eDamageSourceId.mp_titanweapon_flame_wall
-			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_SCORCH_FIREWALL_DURATION : ACID_WALL_THERMITE_DURATION
+			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_VENOM_ACIDWALL_DURATION : ACID_WALL_THERMITE_DURATION
 		}
 
 		if ( IsSingleplayer() )
@@ -263,8 +262,8 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
 		else if ( waveCount == maxSegments / 2  )
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
+	entity Shield = CreateShieldWithSettings(pos, <0,0,0>,100,250,360,duration,524200, $"P_pilot_cover_shield" )
 	}
-
 	projectile.proj.savedOrigin = pos
 	if ( IsValid( movingGeo ) )
 	{

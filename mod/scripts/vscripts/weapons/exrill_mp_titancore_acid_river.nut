@@ -162,7 +162,8 @@ void function OnPoisonWallPlanted( entity projectile )
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread BeginAcidWave( projectile, 0, inflictor, origin+direction*150, direction )
 			}
-
+			wait 5
+			projectile.Destroy()
 	#endif
 		}
 
@@ -179,7 +180,6 @@ void function BeginAcidWave( entity projectile, int projectileCount, entity infl
 	projectile.Hide()
 	projectile.NotSolid()
 	waitthread WeaponAttackWave( projectile, projectileCount, inflictor, pos, dir, CreateAcidWaveSegment )
-	projectile.Destroy()
 }
 
 void function BeginScorchedEarth( entity projectile, int projectileCount, entity inflictor, vector pos, vector dir )
@@ -308,12 +308,12 @@ void function AcidWave_DamagedPlayerOrNPC( entity ent, var damageInfo )
 
 		Scorch_SelfDamageReduction( ent, damageInfo )
 	}
-
+	DamageInfo_ScaleDamage( damageInfo, 0.5 )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
-	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() )
-		return
+	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() ){
+		DamageInfo_ScaleDamage( damageInfo, 0.0 )
+		return}
 	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 1, 1, 1 )
-	DamageInfo_ScaleDamage( damageInfo, 0.2 )
 	array<entity> weapons = attacker.GetMainWeapons()
 	if ( weapons.len() > 0 )
 	{

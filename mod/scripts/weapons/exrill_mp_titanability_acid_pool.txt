@@ -28,7 +28,7 @@ WeaponData
 	"grenade_bounce_vel_frac_shallow"				"0.5"
 	"grenade_bounce_vel_frac_sharp"					"0.3"
 
-	"shared_energy_cost"							"250"
+	"shared_energy_cost"							"500"
 	"projectile_ignores_vortex"						"mirror"
 
 	// Models
@@ -122,7 +122,7 @@ WeaponData
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
 	"allow_headshots" 								"0"
-      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
+      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid "
       "charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
       "fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
 

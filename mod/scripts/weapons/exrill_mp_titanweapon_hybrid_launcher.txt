@@ -674,8 +674,16 @@ WeaponData
 
 		Crosshair_1
 		{
-			"ui"						"ui/crosshair_titan_sniper"
+			"ui"						"ui/crosshair_charge_rifle"
 			"base_spread"				"10.0"
+			Args
+			{
+				isFiring				weapon_is_firing
+			}
+		}
+		Crosshair_2
+		{
+			"ui"						"ui/crosshair_plus"
 			Args
 			{
 				isFiring				weapon_is_firing
