@@ -21,7 +21,7 @@ WeaponData
 	"OnWeaponAttemptOffhandSwitch" 					"OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall"
 
 	"projectile_ignores_vortex"						"mirror"
-
+	"OnClientAnimEvent"								"OnClientAnimEvent_titanweapon_acid_wall"
 	"offhand_default_inventory_slot"				"2"
 
 	"wave_max_count"								"5"
@@ -129,6 +129,8 @@ WeaponData
       "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod3"
       "charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
       "fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
+	"fx_muzzle_flash_view"							"wpn_muzzleflash_40mm_fp"
+	"fx_muzzle_flash_world"							"wpn_muzzleflash_40mm"
 	"projectile_launch_speed"						"1500"
 	"projectile_gravity_scale"						"0.8"
 	"projectile_launch_pitch_offset"				"0"

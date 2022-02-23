@@ -1,5 +1,7 @@
 global function MpTitanweaponAcidWall_Init
-
+#if CLIENT
+global function OnClientAnimEvent_titanweapon_acid_wall
+#endif
 global function OnWeaponPrimaryAttack_AcidWall
 global function OnProjectileCollision_AcidWall
 global function OnWeaponActivate_titancore_Acid_wall
@@ -50,7 +52,17 @@ bool function OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall( entity weapon 
 	#endif
 	return canUse
 }
+#if CLIENT
+void function OnClientAnimEvent_titanweapon_acid_wall( entity weapon, string name )
+{
+	GlobalClientEventHandler( weapon, name )
 
+	if ( name == "muzzle_flash" )
+	{
+		weapon.PlayWeaponEffect( $"Rocket_Smoke_SMALL_Titan_mod3", $"Rocket_Smoke_SMALL_Titan_mod3", "muzzle_flash")
+	}
+}
+#endif
 void function OnWeaponActivate_titancore_Acid_wall(entity weapon){}
 var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
@@ -76,7 +88,7 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 
 	vector velocity = forward * speed
 
-	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
+	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, true, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
 	print(weapon.GetWeaponChargeLevel())
 	#if SERVER
