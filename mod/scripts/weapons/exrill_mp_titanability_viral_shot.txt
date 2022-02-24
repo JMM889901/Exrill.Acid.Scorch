@@ -134,12 +134,15 @@ WeaponData
 	"impulse_force"   								"5000"
 
 	// Behavior
-	"charge_effect_1p"								"P_handlaser_charge"
-	"charge_effect_3p"								"P_handlaser_charge"
-	"charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
-
+      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid "
+	  "charge_effect_3p"								"Rocket_Smoke_SMALL_Titan_mod_acid "
+      "charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
+ 
 	"fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
-
+	"projectile_trail_attachment" 					"fx_top"
+	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
+	"projectile_trail_effect_1" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
+      "fx_muzzle_flash_view"	
 	"fire_rate"   									"1.5"
 	"zoom_time_in"									"0.1"
 	"zoom_time_out"   								"0.1"

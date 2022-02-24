@@ -55,7 +55,9 @@ void function SetTitanLoadout( entity titan )
 				titan.GiveOffhandWeapon("exrill_mp_titanweapon_acid_wall", OFFHAND_SPECIAL )
 				
 				//Tactical
-				
+				titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+				titan.GiveOffhandWeapon("exrill_mp_titanability_viral_shot", OFFHAND_RIGHT )
+
 				//Weapon
 				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
 				titan.GiveWeapon ("exrill_mp_titanweapon_hybrid_launcher")

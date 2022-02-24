@@ -12,6 +12,7 @@ void function MpTitanWeaponVirus_shot()
 	#if SERVER
 		AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanability_viral_shot, ViralShot_DamagedTarget )
 	#endif
+	PrecacheParticleSystem($"P_meteor_trap_burn_acid")
 }
 
 bool function OnWeaponAttemptOffhandSwitch_titanweapon_virus_shot( entity weapon )
@@ -63,6 +64,7 @@ void function ViralShot_DamagedTarget( entity target, var damageInfo )
 	DamageInfo_SetDamage( damageInfo, 2 )
 	thread StartVirus(attacker, target, 10.0)
 	thread StartVirusSpread(attacker, target, 10.0)
+	CreateSmoke(target)
 }
 
 void function StartVirus(entity attacker, entity target, float duration){
@@ -93,8 +95,18 @@ void function StartVirusSpread(entity attacker, entity target, float duration){
 			if(Distance( target.GetOrigin(), player.GetOrigin() ) < 500 && player != target){
 				thread StartVirus(attacker, player, timeleft)
 				thread StartVirusSpread(attacker  ,player, timeleft)
+				CreateSmoke(player)
 			}
 		}
 	}
+}
+const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas"
+entity function CreateSmoke( entity titan )
+{
+	print("shoud make smoke")
+	int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
+	int attachID = titan.LookupAttachment( "exp_torso_front" )
+	entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( titan, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )
+	return particleSystem
 }
 #endif

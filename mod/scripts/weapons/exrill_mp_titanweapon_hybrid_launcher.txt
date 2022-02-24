@@ -50,7 +50,7 @@ WeaponData
 
 		// Effects
 	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
-	"impact_effect_table" 							"titan_particle_accelerator"
+	"impact_effect_table" 							"titan_meteor"
 	"projectile_adjust_to_gun_barrel"				"1"
 
 	"fx_muzzle_flash_view"							"P_muz_TPA_FP"
