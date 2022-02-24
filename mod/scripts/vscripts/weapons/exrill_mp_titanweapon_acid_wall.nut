@@ -37,7 +37,7 @@ void function MpTitanweaponAcidWall_Init()
 	}
 
 	#if SERVER
-	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_flame_wall, AcidWall_DamagedTarget )
+	AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanweapon_acid_wall, AcidWall_DamagedTarget )
 	#endif
 }
 
@@ -88,11 +88,10 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 		speed = GraphCapped( forward.x, 0, 80, speed, speed * 3 )
 
 	vector velocity = forward * speed
-
+	#if SERVER
 	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, true, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
 	print(weapon.GetWeaponChargeLevel())
-	#if SERVER
 		if ( deployable )
 		{
 			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
@@ -210,7 +209,7 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 		}
 		else
 		{
-			damageSource = eDamageSourceId.mp_titanweapon_flame_wall
+			damageSource = eDamageSourceId.exrill_mp_titanweapon_acid_wall
 			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_VENOM_ACIDWALL_DURATION : ACID_WALL_THERMITE_DURATION
 		}
 
@@ -262,7 +261,7 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
 		else if ( waveCount == maxSegments / 2  )
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
-	entity Shield = CreateShieldWithSettings(pos, <0,0,0>,100,250,360,duration,524200, $"P_pilot_cover_shield" )
+	CreateShieldWithSettings(pos, angles,100,250,360,duration,524200, $"P_xo_shield_wall" )
 	}
 	projectile.proj.savedOrigin = pos
 	if ( IsValid( movingGeo ) )

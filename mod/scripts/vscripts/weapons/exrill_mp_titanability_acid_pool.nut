@@ -50,7 +50,7 @@ void function MpTitanAbilityAcidPool_Init()
 
 
 	#if SERVER
-		AddDamageCallbackSourceID( eDamageSourceId.mp_titanability_slow_trap, FireTrap_DamagedPlayerOrNPC )
+		AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanability_acid_pool, AcidPool_DamagedPlayerOrNPC )
 	#endif
 }
 
@@ -86,9 +86,9 @@ var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponP
 	vector velocity = forward * speed
 	if((weapon.GetWeaponChargeLevel() > 0))
 		weaponOwner.TakeSharedEnergy( 250 )
-	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, true, true, true )
+		#if SERVER
+	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
-	#if SERVER
 		if ( deployable )
 		{
 			print(weapon.GetWeaponChargeLevel())
@@ -200,7 +200,7 @@ bool function CreateAcidPoolSegment( entity projectile, int projectileCount, ent
 		}
 		else
 		{
-			damageSource = eDamageSourceId.mp_titanweapon_flame_wall
+			damageSource = eDamageSourceId.exrill_mp_titanability_acid_pool
 			duration = mods.contains( "pas_scorch_firewall" ) ? PAS_VENOM_ACIDWALL_DURATION : ACID_WALL_THERMITE_DURATION
 		}
 
@@ -448,11 +448,11 @@ void function FireTrap_RadiusDamage( vector pos, entity owner, entity inflictor 
 		0, 													// distanceFromAttacker
 		0, 													// explosionForce
 		DF_EXPLOSION,										// damage flags
-		eDamageSourceId.mp_titanability_slow_trap			// damage source id
+		eDamageSourceId.exrill_mp_titanability_acid_pool			// damage source id
 	)
 }
 
-void function FireTrap_DamagedPlayerOrNPC( entity ent, var damageInfo )
+void function AcidPool_DamagedPlayerOrNPC( entity ent, var damageInfo )
 {
 	if ( !IsValid( ent ) )
 		return

@@ -6,6 +6,13 @@
 	"Version": "1.0.0",
 	"Scripts": [
 		{
+			"Path": "PrimeTitanPlus.gnut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "PrimeTitanPlus_Init"
+            }
+		},
+		{
 			"Path": "weapons/exrill_mp_titanweapon_acid_wall.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
@@ -24,13 +31,6 @@
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "MpTitanAbilityAcidPool_Init"
-            }
-		},
-		{
-			"Path": "PrimeTitanPlus.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "PrimeTitanPlus_Init"
             }
 		},
 		{

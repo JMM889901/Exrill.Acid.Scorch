@@ -661,8 +661,7 @@ string function GetObitFromDamageSourceID( int damageSourceID )
 	}
 
 	return ""
-}
-
+} 
 //Dinorush my beloved
 void function pp_RegisterWeaponDamageSource(string weaponRef, string damageSourceName) {
     pp_RegisterWeaponDamageSources({weaponRef = damageSourceName})

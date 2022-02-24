@@ -51,7 +51,7 @@ var function exrill_OnWeaponPrimaryAttack_titanweapon_hybidlauncher( entity weap
 void function exrill_MpTitanWeapon_hybidlauncherInit()
 {
 	#if SERVER
-	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_sniper, OnHit_TitanWeaponSniper )
+	AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanweapon_hybridlauncher, OnHit_TitanWeaponSniper )
 	#endif
 }
 #if SERVER
@@ -72,7 +72,6 @@ void function OnHit_TitanWeaponSniper_Internal( entity victim, var damageInfo )
 	float damage = DamageInfo_GetDamage( damageInfo )
 
 	float f_extraDamage = float( extraDamage )
-
 	bool isCritical = IsCriticalHit( DamageInfo_GetAttacker( damageInfo ), victim, DamageInfo_GetHitBox( damageInfo ), damage, DamageInfo_GetDamageType( damageInfo ) )
 
 	if ( isCritical )

@@ -8,7 +8,13 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_acid_wall")
 	PrecacheWeapon("exrill_mp_titanweapon_hybrid_launcher")
 	PrecacheWeapon("exrill_mp_titanability_acid_pool")
-	
+	table<string,string> WeaponIds = {}
+	WeaponIds["empty_weapon"] <- "empty_weapon"
+	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
+	WeaponIds["exrill_mp_titanability_acid_pool"] <- "Acid_pool"
+	WeaponIds["exrill_mp_titancore_acid_river"] <- "Acid_river"
+	WeaponIds["exrill_mp_titanweapon_hybridlauncher"] <- "Hybrid Rifle"
+	pp_RegisterWeaponDamageSources(WeaponIds)
     #if SERVER
 
 		AddSpawnCallback("npc_titan", SetTitanLoadout );

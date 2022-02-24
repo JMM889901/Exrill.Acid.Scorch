@@ -35,8 +35,7 @@ void function MpTitanWeaponAcidWave_Init()
 	PrecacheParticleSystem( ACIDWAVE_EFFECT_CONTROL )
 
 	#if SERVER
-		AddDamageCallbackSourceID( eDamageSourceId.mp_titancore_flame_wave, AcidWave_DamagedPlayerOrNPC )
-		AddDamageCallbackSourceID( eDamageSourceId.mp_titancore_flame_wave_secondary, AcidWave_DamagedPlayerOrNPC )
+		AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titancore_acid_river, AcidWave_DamagedPlayerOrNPC )
 	#endif
 }
 
@@ -203,12 +202,12 @@ bool function CreateAcidWaveSegment( entity projectile, int projectileCount, ent
 		int damageSource
 		if ( mods.contains( "pas_scorch_flamecore" ) )
 		{
-			damageSource = eDamageSourceId.mp_titancore_flame_wave_secondary
+			damageSource = eDamageSourceId.exrill_mp_titancore_acid_river
 			duration = 30
 		}
 		else
 		{
-			damageSource = eDamageSourceId.mp_titancore_flame_wave
+			damageSource = eDamageSourceId.exrill_mp_titancore_acid_river
 			duration = mods.contains( "pas_scorch_firewall" ) ? 20.0 : 15.0
 		}
 
