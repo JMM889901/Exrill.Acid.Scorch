@@ -368,6 +368,7 @@ particles_manifest
 	"file"		"particles/wpn_muzzleflash_mastiff.pcf"
 	"file"		"particles/wpn_muzzleflash_smg_mod.pcf"
 	"file"		"particles/wpn_muzzleflash_particle_accelerator.pcf"
+      "file"		"particles/wpn_muzzleflash_particle_accelerator_acid.pcf"
 	"file"		"particles/wpn_muzzleflash_pistol.pcf"
 	"file"		"particles/wpn_muzzleflash_pistol_mod.pcf"
 	"file"		"particles/wpn_muzzleflash_pulse.pcf"
