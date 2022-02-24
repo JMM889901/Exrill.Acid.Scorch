@@ -10,7 +10,7 @@ WeaponData
 	"hud_icon"										"rui/titan_loadout/tactical/titan_tactical_incendiary"
 
 	"weaponClass" 									"titan"
-	"weaponType"									"shoulder"
+	"weaponType"									"tactical"
 	"fire_mode"   									"offhand"
 	"minimap_reveal_distance"						"32000"
 

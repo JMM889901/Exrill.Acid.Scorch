@@ -10,7 +10,7 @@ WeaponData
 	"hud_icon"										"rui/titan_loadout/ordnance/flame_wall"
 
 	"weaponClass" 									"titan"
-	"weaponType"									"tactical"
+	"weaponType"									"defense"
 	"fire_mode"   									"offhand"
 	"minimap_reveal_distance"						"32000"
 

@@ -20,6 +20,13 @@
             }
 		},
 		{
+			"Path": "weapons/exrill_mp_titanweapon_viral_shot.nut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "MpTitanWeaponVirus_shot"
+            }
+		},
+		{
 			"Path": "weapons/exrill_mp_titancore_acid_river.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
