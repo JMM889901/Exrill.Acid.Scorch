@@ -394,6 +394,7 @@ particles_manifest
       "file"		"particles/wpn_xo_meteor_wall_acid.pcf"
 	"file"		"particles/wpn_xo_sword.pcf"
 	"file"		"particles/wpn_vortex_titan_heat.pcf"
+      "file"		"particles/wpn_vortex_titan_heat_acid.pcf"
 	"file"		"particles/xo_core_lasercannon.pcf"
       "file"		"particles/xo_core_lasercannon_acid.pcf"
 	"file"		"particles/xo_death_ground.pcf"
