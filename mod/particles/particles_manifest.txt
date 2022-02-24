@@ -382,6 +382,7 @@ particles_manifest
 	"file"		"particles/wpn_xo_mine.pcf"
 	"file"		"particles/wpn_xo_arcball.pcf"
 	"file"		"particles/wpn_xo_handlaser.pcf"
+      "file"		"particles/wpn_xo_handlaser_acid.pcf"
 	"file"		"particles/wpn_xo_lasertrip.pcf"
 	"file"		"particles/wpn_xo_meteor.pcf"
 	"file"		"particles/wpn_xo_meteor_fist.pcf"
