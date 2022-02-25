@@ -114,8 +114,8 @@ WeaponData
 		"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects
-	"tracer_effect"   								"P_wpn_hand_laser_beam"
-	"tracer_effect_first_person"  					"P_wpn_hand_laser_beam"
+	"tracer_effect"   								"P_wpn_hand_laser_beam_acid"
+	"tracer_effect_first_person"  					"P_wpn_hand_laser_beam_acid"
 
 	"impact_effect_table" 							"exp_laser_lite"
 	"projectile_adjust_to_gun_barrel"				"1"

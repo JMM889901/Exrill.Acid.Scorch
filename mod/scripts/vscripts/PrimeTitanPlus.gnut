@@ -14,6 +14,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_muz_TPA_acid" )
 	PrecacheParticleSystem( $"P_muz_TPA_FP_acid" )
 	PrecacheParticleSystem( $"P_wpn_HeatShield_acid" )
+	PrecacheParticleSystem( $"P_wpn_hand_laser_beam_acid" )
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
 	#endif
