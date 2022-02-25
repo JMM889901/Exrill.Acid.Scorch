@@ -60,7 +60,7 @@ void function SetTitanLoadout( entity titan )
 			//Ion Prime
 			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_scorch_prime.mdl")
 			{
-				SendHudMessage(player, "Ion Prime Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+				SendHudMessage(player, "Venom Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
 				
 				//Offence
 				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
