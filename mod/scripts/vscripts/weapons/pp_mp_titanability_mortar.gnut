@@ -27,7 +27,7 @@ void function pp_OnWeaponActivate_Mortar(entity weapon){
 void function pp_OnWeaponDeactivate_Mortar(entity weapon){
     entity weaponOwner = weapon.GetWeaponOwner()
     #if SERVER
-    weaponOwner.Signal("MortarCamToggle")
+    //weaponOwner.Signal("MortarCamToggle")
     #endif
 }
 var function pp_OnWeaponPrimaryAttack_titanweapon_multi_mortar( entity weapon, WeaponPrimaryAttackParams attackParams )
@@ -55,10 +55,12 @@ void function stuff(entity weapon, entity camera){
             }
         )
     while(true){
+        if(weaponOwner.IsTitan()){
+        entity titan = weaponOwner.GetTitanSoul()
         vector origin = weaponOwner.GetOrigin()
         camera.SetOrigin(<origin.x, origin.y, origin.z + 5000>)
         wait 0.1
-        print(weaponOwner.GetAngles())
+        print(weaponOwner.EyeAngles())}
     }
 
     #endif
@@ -133,7 +135,7 @@ entity function FireClusterRocket( entity weapon, vector attackPos, vector attac
 
 	bool doPopup = false
 
-	entity missile = weapon.FireWeaponMissile( attackPos, attackDir, missileSpeed, damageTypes.projectileImpact, damageTypes.explosive, doPopup, shouldPredict )
+	entity missile = weapon.FireWeaponMissile( attackPos, attackDir, 1, damageTypes.projectileImpact, damageTypes.explosive, doPopup, shouldPredict )
 
 	if ( missile )
 	{

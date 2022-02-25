@@ -34,6 +34,7 @@ void function PrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanability_viral_shot"] <- "Viral shot"
 	WeaponIds["exrill_mp_titanability_viral_shot_secondary"] <- "Viral damage"
 	pp_RegisterWeaponDamageSources(WeaponIds)
+	CreateNewVortexIgnore("exrill_mp_titancore_acid_river", true)
     #if SERVER
 
 		AddSpawnCallback("npc_titan", SetTitanLoadout );

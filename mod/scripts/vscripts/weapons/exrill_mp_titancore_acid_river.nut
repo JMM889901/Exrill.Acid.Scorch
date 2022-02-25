@@ -162,7 +162,8 @@ void function OnPoisonWallPlanted( entity projectile )
 			thread BeginAcidWave( projectile, 0, inflictor, origin+direction*150, direction )
 			}
 			wait 5
-			projectile.Destroy()
+			if(IsValid(projectile))
+				projectile.Destroy()
 	#endif
 		}
 
