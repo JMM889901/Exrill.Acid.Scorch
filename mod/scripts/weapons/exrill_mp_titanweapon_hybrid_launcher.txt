@@ -111,10 +111,10 @@ WeaponData
 		// Damage - When Used by Players
 		"damage_near_distance"							"800"
 		"damage_far_distance" 							"3000"
-		"damage_near_value"   							"250"
-		"damage_far_value"								"250"
-		"damage_near_value_titanarmor"					"250"
-		"damage_far_value_titanarmor" 					"250"
+		"damage_near_value"   							"75"
+		"damage_far_value"								"75"
+		"damage_near_value_titanarmor"					"75"
+		"damage_far_value_titanarmor" 					"75"
 
 		"deploy_time" 									"0.85"
 
