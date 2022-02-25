@@ -277,7 +277,6 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 		OnAbilityChargeEnd_LaserCannon(weapon)
 		return false
 	}
-	OnAbilityCharge_TitanCore( weapon )
 
 #if CLIENT
 	if ( !InPrediction() || IsFirstTimePredicted() )
@@ -330,7 +329,6 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 {
 	entity weaponOwner = weapon.GetWeaponOwner()
 	print(weaponOwner.GetSharedEnergyCount())
-	OnAbilityStart_TitanCore( weapon )
 	if( weaponOwner.GetSharedEnergyCount() < 800){
 		#if SERVER
 		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
@@ -400,7 +398,6 @@ void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
 	weapon.StopWeaponEffect( FX_LASERCANNON_MUZZLEFLASH, FX_LASERCANNON_MUZZLEFLASH )
 
 	#if SERVER
-	OnAbilityEnd_TitanCore( weapon )
 
 	entity player = weapon.GetWeaponOwner()
 
@@ -433,9 +430,6 @@ void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
 
 void function exrill_OnAbilityChargeEnd_HybridCannon( entity weapon )
 {
-	#if SERVER
-	OnAbilityChargeEnd_TitanCore( weapon )
-	#endif
 
 	#if CLIENT
 	if ( IsFirstTimePredicted() )
