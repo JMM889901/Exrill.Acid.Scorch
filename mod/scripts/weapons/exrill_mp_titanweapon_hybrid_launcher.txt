@@ -28,9 +28,9 @@ WeaponData
 	"OnWeaponStartZoomOut"							"exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher"
 	"OnWeaponOwnerChanged"							"exrill_OnWeaponOwnerChanged_titanweapon_hybidlauncher"
 	"OnWeaponSustainedDischargeBegin"				"exrill_OnAbilityStart_hybridlauncher"
-	"OnWeaponSustainedDischargeEnd"					"OnAbilityEnd_LaserCannon"
+	"OnWeaponSustainedDischargeEnd"					"exrill_OnAbilityEnd_HybridCannon"
 	"OnWeaponChargeBegin"							"exrill_OnAbilityCharge_HybridLauncher"
-	"OnWeaponChargeEnd"								"OnAbilityChargeEnd_LaserCannon"
+	"OnWeaponChargeEnd"								"exrill_OnAbilityChargeEnd_HybridCannon"
 
 	"npc_use_check_type"							"shared_energy"
 
@@ -53,8 +53,8 @@ WeaponData
 	"impact_effect_table" 							"titan_meteor"
 	"projectile_adjust_to_gun_barrel"				"1"
 
-	"fx_muzzle_flash_view"							"P_muz_TPA_FP"
-	"fx_muzzle_flash_world"							"P_muz_TPA"
+	"fx_muzzle_flash_view"							"P_muz_TPA_FP_acid"
+	"fx_muzzle_flash_world"							"P_muz_TPA_acid"
 	"fx_muzzle_flash_attach"						"muzzle_flash"
 
 	"vortex_absorb_effect"							"wpn_vortex_projectile_40mm_FP"
@@ -128,10 +128,10 @@ WeaponData
 		// Damage - When Used by NPCs
 		"npc_damage_near_distance"						"800"
 		"npc_damage_far_distance" 						"3000"
-		"npc_damage_near_value"   						"250"
-		"npc_damage_far_value"							"250"
-		"npc_damage_near_value_titanarmor"				"200"
-		"npc_damage_far_value_titanarmor" 				"200"
+		"npc_damage_near_value"   						"75"
+		"npc_damage_far_value"							"75"
+		"npc_damage_near_value_titanarmor"				"75"
+		"npc_damage_far_value_titanarmor" 				"75"
 
 		"ammo_min_to_fire"								"1"
 		"enable_highlight_networking_on_creation"		"<KEEP_DEFAULT>"
@@ -143,10 +143,10 @@ WeaponData
 		// Damage - When Used by Players
 		"damage_near_distance"							"800"
 		"damage_far_distance" 							"3000"
-		"damage_near_value"   							"250"
-		"damage_far_value"								"250"
-		"damage_near_value_titanarmor"					"250"
-		"damage_far_value_titanarmor" 					"250"
+		"damage_near_value"   							"75"
+		"damage_far_value"								"75"
+		"damage_near_value_titanarmor"					"75"
+		"damage_far_value_titanarmor" 					"75"
 
 		"deploy_time" 									"1.75"
 
@@ -576,9 +576,9 @@ WeaponData
 			"sustained_laser_radius"						"18"
 			"sustained_laser_range"							"6000"
 			"sustained_laser_attachment"					"muzzle_flash"
-			"sustained_laser_effect_1p"						"P_wpn_lasercannon_FP"
-			"sustained_laser_effect_3p"						"P_wpn_lasercannon"
-			"sustained_laser_impact_effect"					"P_lasercannon_endglow"
+			"sustained_laser_effect_1p"						"P_wpn_lasercannon_FP_acid"
+			"sustained_laser_effect_3p"						"P_wpn_lasercannon_acid"
+			"sustained_laser_impact_effect"					"P_lasercannon_endglow_acid"
 			"sustained_laser_impact_distance"				"50"
 			"sustained_laser_effect_loops"					"false"
 			"sustained_discharge_duration"					"2.5" // core duration
@@ -619,9 +619,9 @@ WeaponData
 			"sustained_laser_radius"						"18"
 			"sustained_laser_range"							"6000"
 			"sustained_laser_attachment"					"muzzle_flash"
-			"sustained_laser_effect_1p"						"P_wpn_lasercannon_FP"
-			"sustained_laser_effect_3p"						"P_wpn_lasercannon"
-			"sustained_laser_impact_effect"					"P_lasercannon_endglow"
+			"sustained_laser_effect_1p"						"P_wpn_lasercannon_FP_acid"
+			"sustained_laser_effect_3p"						"P_wpn_lasercannon_acid"
+			"sustained_laser_impact_effect"					"P_lasercannon_endglow_acid"
 			"sustained_laser_impact_distance"				"50"
 			"sustained_laser_effect_loops"					"false"
 			"sustained_discharge_duration"					"0" // core duration

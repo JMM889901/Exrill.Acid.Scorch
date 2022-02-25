@@ -3,7 +3,20 @@ global function PrimeTitanPlus_Init
 void function PrimeTitanPlus_Init() {
     PrecacheModel( $"models/titans/buddy/titan_buddy.mdl" )
 	PrecacheModel( $"models/weapons/arms/buddypov.mdl" )
+	PrecacheModel( $"models/weapons/empty_handed/w_laser_cannon.mdl")
 	PrecacheParticleSystem( $"P_BT_eye_SM" )
+	PrecacheParticleSystem( $"P_wpn_lasercannon_FP_acid" )
+	PrecacheParticleSystem( $"P_wpn_lasercannon_acid" )
+	PrecacheParticleSystem( $"P_lasercannon_endglow_acid" )
+	PrecacheParticleSystem($"P_wpn_lasercannon_aim_acid" )
+	PrecacheParticleSystem( $"P_lasercannon_core_acid" )
+	PrecacheParticleSystem( $"P_handlaser_charge_acid" )
+	PrecacheParticleSystem( $"P_muz_TPA_acid" )
+	PrecacheParticleSystem( $"P_muz_TPA_FP_acid" )
+	PrecacheParticleSystem( $"P_wpn_HeatShield_acid" )
+	#if CLIENT
+	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
+	#endif
 	PrecacheWeapon("exrill_mp_titancore_acid_river")
 	PrecacheWeapon("exrill_mp_titanweapon_acid_wall")
 	PrecacheWeapon("exrill_mp_titanweapon_hybrid_launcher")

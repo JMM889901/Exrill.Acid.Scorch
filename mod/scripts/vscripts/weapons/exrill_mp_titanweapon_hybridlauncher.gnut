@@ -2,9 +2,9 @@ untyped
 global function exrill_OnAbilityCharge_HybridLauncher
 const SEVERITY_SLOWTURN_LASERCORE = 0.1
 const SEVERITY_SLOWMOVE_LASERCORE = 0.1
-const FX_LASERCANNON_AIM = $"P_wpn_lasercannon_aim"
-const FX_LASERCANNON_CORE = $"P_lasercannon_core"
-const FX_LASERCANNON_MUZZLEFLASH = $"P_handlaser_charge"
+const FX_LASERCANNON_AIM = $"P_wpn_lasercannon_aim_acid"
+const FX_LASERCANNON_CORE = $"P_lasercannon_core_acid"
+const FX_LASERCANNON_MUZZLEFLASH = $"P_handlaser_charge_acid"
 
 const LASER_MODEL = $"models/weapons/empty_handed/w_laser_cannon.mdl"
 
@@ -14,7 +14,8 @@ const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P_extended"
 #else
 const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P"
 #endif
-
+global function exrill_OnAbilityChargeEnd_HybridCannon
+global function exrill_OnAbilityEnd_HybridCannon
 global function exrill_OnAbilityStart_hybridlauncher
 global function exrill_OnWeaponActivate_titanweapon_hybidlauncher
 global function exrill_OnWeaponPrimaryAttack_titanweapon_hybidlauncher
@@ -222,8 +223,8 @@ void function exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher( entity weap
 		#if SERVER
 		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
 		#endif
-		OnAbilityEnd_LaserCannon(weapon)
-		OnAbilityChargeEnd_LaserCannon(weapon)
+		exrill_OnAbilityEnd_HybridCannon(weapon)
+		exrill_OnAbilityChargeEnd_HybridCannon(weapon)
 	#if SERVER
 	if ( weapon.HasMod( "pas_northstar_optics" ) )
 	{
@@ -392,4 +393,72 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 	#endif
 
 	return true
+}
+void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
+{
+	weapon.Signal( "OnSustainedDischargeEnd" )
+	weapon.StopWeaponEffect( FX_LASERCANNON_MUZZLEFLASH, FX_LASERCANNON_MUZZLEFLASH )
+
+	#if SERVER
+	OnAbilityEnd_TitanCore( weapon )
+
+	entity player = weapon.GetWeaponOwner()
+
+	if ( player == null )
+		return
+
+	if ( player.IsPlayer() )
+	{
+		player.Server_TurnDodgeDisabledOff()
+		player.Server_TurnOffhandWeaponsDisabledOff()
+
+		EmitSoundOnEntityOnlyToPlayer( player, player, "Titan_Core_Laser_FireStop_1P" )
+		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireStop_3P" )
+	}
+	else
+	{
+		EmitSoundOnEntity( player, "Titan_Core_Laser_FireStop_3P" )
+	}
+
+	if ( player.IsNPC() && IsAlive( player ) )
+	{
+		player.SetVelocity( <0,0,0> )
+		player.Anim_ScriptedPlayActivityByName( "ACT_SPECIAL_ATTACK_END", true, 0.0 )
+	}
+
+	StopSoundOnEntity( player, "Titan_Core_Laser_FireBeam_3P" )
+	StopSoundOnEntity( player, LASER_FIRE_SOUND_1P )
+	#endif
+}
+
+void function exrill_OnAbilityChargeEnd_HybridCannon( entity weapon )
+{
+	#if SERVER
+	OnAbilityChargeEnd_TitanCore( weapon )
+	#endif
+
+	#if CLIENT
+	if ( IsFirstTimePredicted() )
+	{
+		weapon.StopWeaponEffect( FX_LASERCANNON_AIM, FX_LASERCANNON_AIM )
+	}
+	#endif
+
+	#if SERVER
+	if ( IsValid( weapon.w.laserWorldModel ) )
+		weapon.w.laserWorldModel.Destroy()
+
+	entity player = weapon.GetWeaponOwner()
+
+	if ( player == null )
+		return
+
+	if ( player.IsPlayer() )
+		player.Server_TurnOffhandWeaponsDisabledOff()
+
+	if ( player.IsNPC() && IsAlive( player ) )
+	{
+		player.Anim_Stop()
+	}
+	#endif
 }

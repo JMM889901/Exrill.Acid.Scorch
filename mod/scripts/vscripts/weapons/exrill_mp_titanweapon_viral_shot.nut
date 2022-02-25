@@ -64,7 +64,7 @@ void function ViralShot_DamagedTarget( entity target, var damageInfo )
 	DamageInfo_SetDamage( damageInfo, 2 )
 	thread StartVirus(attacker, target, 10.0)
 	thread StartVirusSpread(attacker, target, 10.0)
-	CreateSmoke(target)
+	thread CreateSmoke(attacker, target, 10.0)
 }
 
 void function StartVirus(entity attacker, entity target, float duration){
@@ -76,7 +76,7 @@ void function StartVirus(entity attacker, entity target, float duration){
 	while(timeleft > 0){
 		wait 0.5
 		timeleft = timeleft - 0.5
-		target.TakeDamage( 50, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+		target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
 	}
 	}
 void function StartVirusSpread(entity attacker, entity target, float duration){
@@ -92,21 +92,25 @@ void function StartVirusSpread(entity attacker, entity target, float duration){
 		wait 0.5
 		timeleft = timeleft - 0.5
 		foreach(entity player in GetTitanArrayOfEnemies( attacker.GetTeam() )){
-			if(Distance( target.GetOrigin(), player.GetOrigin() ) < 500 && player != target){
+			if(Distance( target.GetOrigin(), player.GetOrigin() ) < 1000){
 				thread StartVirus(attacker, player, timeleft)
 				thread StartVirusSpread(attacker  ,player, timeleft)
-				CreateSmoke(player)
+				if(attacker != player)
+					thread CreateSmoke(attacker, player, timeleft)
 			}
 		}
 	}
 }
+table<entity, array<entity> > ToxinFXArrays = {}
 const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas"
-entity function CreateSmoke( entity titan )
+entity function CreateSmoke(entity attacker, entity titan, float timeleft)
 {
 	print("shoud make smoke")
 	int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
 	int attachID = titan.LookupAttachment( "exp_torso_front" )
 	entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( titan, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )
-	return particleSystem
-}
+	wait timeleft
+	if ( IsValid( particleSystem ) ){
+		particleSystem.Destroy()}
+		}
 #endif

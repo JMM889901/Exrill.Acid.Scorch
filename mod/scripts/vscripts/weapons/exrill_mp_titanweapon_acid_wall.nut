@@ -261,8 +261,28 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_END_SFX )
 		else if ( waveCount == maxSegments / 2  )
 			EmitSoundOnEntity( thermiteParticle, ACID_WALL_GROUND_MIDDLE_SFX )
-	CreateShieldWithSettings(pos, angles,100,250,360,duration,524200, $"P_xo_shield_wall" )
+	if(angles.y > 270 ){
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )}
+	else{
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y+90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y+90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y+90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		if(angles.y < 90){
+			CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y+270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+			CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y+270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+			CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y+270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		}
+		else{
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )}
 	}
+}
 	projectile.proj.savedOrigin = pos
 	if ( IsValid( movingGeo ) )
 	{
