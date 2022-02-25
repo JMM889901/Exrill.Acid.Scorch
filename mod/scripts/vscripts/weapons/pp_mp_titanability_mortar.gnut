@@ -1,0 +1,152 @@
+global function pp_OnWeaponPrimaryAttack_titanweapon_mortar
+global function pp_OnWeaponPrimaryAttack_titanweapon_multi_mortar
+global function pp_OnWeaponAttemptOffhandSwitch_titanweapon_mortar
+global function pp_OnWeaponActivate_Mortar
+global function pp_OnWeaponDeactivate_Mortar
+global function pp_TitanAbilityMortarInit
+#if SERVER
+	global function OnWeaponNPCPrimaryAttack_titanweapon_mortar
+#endif
+//----------------
+//Cluster Missile
+//----------------
+void function pp_TitanAbilityMortarInit(){
+    RegisterSignal( "MortarCamToggle" )
+}
+void function pp_OnWeaponActivate_Mortar(entity weapon){
+    #if SERVER
+    entity weaponOwner = weapon.GetWeaponOwner()
+    entity camera = CreateEntity( "point_viewcontrol" )
+    vector origin = weaponOwner.GetOrigin()
+    camera.SetOrigin(<origin.x, origin.y, origin.z + 5000>)
+    camera.SetAngles(< 90,0,0>)
+    weaponOwner.SetViewEntity(camera, true)
+    thread stuff(weapon, camera)
+    #endif
+}
+void function pp_OnWeaponDeactivate_Mortar(entity weapon){
+    entity weaponOwner = weapon.GetWeaponOwner()
+    #if SERVER
+    weaponOwner.Signal("MortarCamToggle")
+    #endif
+}
+var function pp_OnWeaponPrimaryAttack_titanweapon_multi_mortar( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	int ammoReq = weapon.GetAmmoPerShot()
+	bool shouldPredict = weapon.ShouldPredictProjectiles()
+	#if CLIENT
+		if ( !shouldPredict )
+			return ammoReq
+	#endif
+    print("pain")
+	entity missile = FireClusterRocket( weapon, attackParams.pos, attackParams.dir, shouldPredict )
+
+	return ammoReq
+}
+void function stuff(entity weapon, entity camera){
+    #if SERVER
+    entity weaponOwner = weapon.GetWeaponOwner()
+    weaponOwner.EndSignal("MortarCamToggle")
+    OnThreadEnd(
+        function() : ( camera, weaponOwner )
+            {
+                weaponOwner.ClearViewEntity()
+                camera.Destroy()
+            }
+        )
+    while(true){
+        vector origin = weaponOwner.GetOrigin()
+        camera.SetOrigin(<origin.x, origin.y, origin.z + 5000>)
+        wait 0.1
+        print(weaponOwner.GetAngles())
+    }
+
+    #endif
+}
+bool function pp_OnWeaponAttemptOffhandSwitch_titanweapon_mortar( entity weapon )
+{
+	int ammoPerShot = weapon.GetAmmoPerShot()
+	int currAmmo = weapon.GetWeaponPrimaryClipCount()
+    
+	if ( currAmmo < ammoPerShot )
+		return false
+
+	return true
+}
+
+var function pp_OnWeaponPrimaryAttack_titanweapon_mortar( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	bool shouldPredict = weapon.ShouldPredictProjectiles()
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+
+	#if CLIENT
+	if ( !shouldPredict )
+		return weapon.GetAmmoPerShot()
+	#endif
+	entity owner = weapon.GetWeaponOwner()
+	vector attackDir
+	bool isTwinShot = weapon.HasMod( "fd_twin_cluster" ) //&& RandomIntRange( 1, 100 ) <= 25
+	if ( isTwinShot )
+	{
+		int altFireIndex = weapon.GetBurstFireShotsPending() % 2
+		float horizontalMultiplier
+		if ( altFireIndex == 0 )
+			horizontalMultiplier = RandomFloatRange( 0.25, 0.35 )
+		else
+			horizontalMultiplier = RandomFloatRange( -0.35, -0.25 )
+		vector offset
+		if ( owner.IsPlayer() )
+			offset = AnglesToRight( owner.CameraAngles() ) * horizontalMultiplier
+		#if SERVER
+		else
+			offset = owner.GetPlayerOrNPCViewRight() * horizontalMultiplier
+		#endif
+
+		attackDir = attackParams.dir + offset*0.1 // + <0,0,RandomFloatRange(-0.25,0.55)>
+	}
+	else
+	{
+		if ( owner.IsPlayer() )
+			attackDir = GetVectorFromPositionToCrosshair( owner, attackParams.pos )
+		else
+			attackDir = attackParams.dir
+	}
+
+	entity missile = FireClusterRocket( weapon, attackParams.pos, attackDir, shouldPredict )
+
+	if ( owner.IsPlayer() )
+		PlayerUsedOffhand( owner, weapon )
+
+	int ammoToSpend = weapon.GetAmmoPerShot()
+
+	if ( isTwinShot && attackParams.burstIndex == 0 )
+	{
+		return 90
+	}
+
+	return ammoToSpend
+}
+
+entity function FireClusterRocket( entity weapon, vector attackPos, vector attackDir, bool shouldPredict )
+{
+	float missileSpeed = 3500.0
+
+	bool doPopup = false
+
+	entity missile = weapon.FireWeaponMissile( attackPos, attackDir, missileSpeed, damageTypes.projectileImpact, damageTypes.explosive, doPopup, shouldPredict )
+
+	if ( missile )
+	{
+		missile.InitMissileForRandomDriftFromWeaponSettings( attackPos, attackDir )
+	}
+
+	return missile
+}
+
+
+#if SERVER
+var function OnWeaponNPCPrimaryAttack_titanweapon_mortar( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	return OnWeaponPrimaryAttack_titanweapon_dumbfire_rockets( weapon, attackParams )
+}
+#endif

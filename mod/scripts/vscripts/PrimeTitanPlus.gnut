@@ -15,6 +15,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_muz_TPA_FP_acid" )
 	PrecacheParticleSystem( $"P_wpn_HeatShield_acid" )
 	PrecacheParticleSystem( $"P_wpn_hand_laser_beam_acid" )
+	PrecacheParticleSystem( $"Rocket_Smoke_SMALL_Titan_mod_acid")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
 	#endif
@@ -23,6 +24,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_hybrid_launcher")
 	PrecacheWeapon("exrill_mp_titanability_acid_pool")
 	PrecacheWeapon("exrill_mp_titanability_viral_shot")
+	PrecacheWeapon("pp_mp_titanability_mortar_scuffed")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"

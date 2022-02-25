@@ -20,6 +20,13 @@
             }
 		},
 		{
+			"Path": "weapons/pp_mp_titanability_mortar.gnut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+				"After": "pp_TitanAbilityMortarInit"
+			}
+		},
+		{
 			"Path": "weapons/exrill_mp_titanweapon_viral_shot.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
