@@ -40,6 +40,7 @@ WeaponData
 	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_titanweapon_virus_shot"
 	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_virus_shot"
 	"sound_weapon_ready"							"HUD_TitanOffenseAbility_replenished_1P"
+      "projectile_adjust_to_gun_barrel"				"1"
 
 	//TODO: Investigate if we can improve how we're using charge.
 	MP_BASE
@@ -109,13 +110,13 @@ WeaponData
 	}
 
 	// Models
-	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_laser_pod.mdl"
+	"viewmodel"   									"models/weapons/titan_vortex_blocker/atpov_vortexblocker.mdl"
 	//"playermodel" 								// no model, use rocket pod
 		"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects
-	"tracer_effect"   								"P_wpn_hand_laser_beam_BC_acid"
-	"tracer_effect_first_person"  					"P_wpn_hand_laser_beam_BC_acid"
+	"tracer_effect"   								"P_wpn_monarch_beam_v2_acid"
+	"tracer_effect_first_person"  					"P_wpn_monarch_beam_v2_acid"
 
 	"impact_effect_table" 							"exp_laser_lite"
 	"projectile_adjust_to_gun_barrel"				"1"
@@ -125,20 +126,22 @@ WeaponData
 	"vortex_refire_behavior"  						"absorb"
 
 	// Sounds
-	"fire_sound_1_player_1p"						"diag_sp_bossFight_STS676_06_01_imc_viper"
+	"fire_sound_1_player_1p"						""
 	"fire_sound_1_player_3p"						"Weapon_ShoulderLaser_Fire_3P"
-	"charge_sound_1p"								"Weapon_ShoulderLaser_StutterBuild_1P"
+	"charge_sound_1p"								"diag_sp_bossFight_STS676_06_01_imc_viper"
 	"charge_sound_3p"								"Weapon_ShoulderLaser_StutterBuild_3P"
 	"gesture_attack_anim"							"0"
 
 	"impulse_force"   								"5000"
 
 	// Behavior
-	"charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
-	"charge_effect_3p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
+	"charge_effect_1p"								"P_TPA_electricity_FP_acid"
+	"charge_effect_3p"								"P_TPA_electricity_acid"
 	"charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
-
-	"fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
+      
+      "fx_muzzle_flash_view"                                      "wpn_muzzleflash_arc_cannon_fp_acid"
+      "fx_muzzle_flash_world"							"wpn_muzzleflash_arc_cannon_acid"
+      "fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
 
 	"fire_rate"   									"1.5"
 	"zoom_time_in"									"0.1"
