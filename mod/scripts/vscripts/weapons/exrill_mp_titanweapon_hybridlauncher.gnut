@@ -277,6 +277,7 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 		OnAbilityChargeEnd_LaserCannon(weapon)
 		return false
 	}
+	OnAbilityCharge_TitanCore( weapon )
 
 #if CLIENT
 	if ( !InPrediction() || IsFirstTimePredicted() )
@@ -319,7 +320,7 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 	}
 #endif // #if SERVER
 
-	weapon.EmitWeaponSound_1p3p( "Titan_Core_Laser_ChargeUp_1P", "Titan_Core_Laser_ChargeUp_3P" )
+	weapon.EmitWeaponSound_1p3p( "diag_sp_bossFight_STS676_01_01_imc_viper", "diag_sp_bossFight_STS676_02_01_imc_viper" )
 
 	return true
 }
@@ -329,6 +330,7 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 {
 	entity weaponOwner = weapon.GetWeaponOwner()
 	print(weaponOwner.GetSharedEnergyCount())
+	OnAbilityStart_TitanCore( weapon )
 	if( weaponOwner.GetSharedEnergyCount() < 800){
 		#if SERVER
 		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
@@ -364,8 +366,8 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 	{
 		player.Server_TurnDodgeDisabledOn()
 		player.Server_TurnOffhandWeaponsDisabledOn()
-		EmitSoundOnEntityOnlyToPlayer( player, player, "Titan_Core_Laser_FireStart_1P" )
-		EmitSoundOnEntityOnlyToPlayer( player, player, LASER_FIRE_SOUND_1P )
+		EmitSoundOnEntityOnlyToPlayer( player, player, "diag_sp_bossFight_STS676_03_01_imc_viper" )
+		EmitSoundOnEntityOnlyToPlayer( player, player, diag_sp_bossFight_STS676_03_01_imc_viper )
 		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireStart_3P" )
 		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireBeam_3P" )
 	}
@@ -398,6 +400,7 @@ void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
 	weapon.StopWeaponEffect( FX_LASERCANNON_MUZZLEFLASH, FX_LASERCANNON_MUZZLEFLASH )
 
 	#if SERVER
+	OnAbilityEnd_TitanCore( weapon )
 
 	entity player = weapon.GetWeaponOwner()
 
@@ -430,6 +433,9 @@ void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
 
 void function exrill_OnAbilityChargeEnd_HybridCannon( entity weapon )
 {
+	#if SERVER
+	OnAbilityChargeEnd_TitanCore( weapon )
+	#endif
 
 	#if CLIENT
 	if ( IsFirstTimePredicted() )
