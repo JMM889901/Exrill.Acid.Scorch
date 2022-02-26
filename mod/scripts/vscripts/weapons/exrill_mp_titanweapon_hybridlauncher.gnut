@@ -367,7 +367,7 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 		player.Server_TurnDodgeDisabledOn()
 		player.Server_TurnOffhandWeaponsDisabledOn()
 		EmitSoundOnEntityOnlyToPlayer( player, player, "diag_sp_bossFight_STS676_03_01_imc_viper" )
-		EmitSoundOnEntityOnlyToPlayer( player, player, diag_sp_bossFight_STS676_03_01_imc_viper )
+		EmitSoundOnEntityOnlyToPlayer( player, player, "diag_sp_bossFight_STS676_03_01_imc_viper" )
 		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireStart_3P" )
 		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireBeam_3P" )
 	}
