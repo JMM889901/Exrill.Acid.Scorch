@@ -71,10 +71,10 @@ WeaponData
       "charge_remain_full_when_fired"					"1"
       
 	// Sound
-	"fire_sound_1_player_1p"						"incendiary_trap_deploy_1p"
-	"fire_sound_1_player_3p"						"incendiary_trap_deploy_3p"
-      "charge_sound_1p"								"incendiary_trap_land"
-      "charge_sound_3p"								"incendiary_trap_land"
+	"fire_sound_1_player_1p"						"diag_sp_bossFight_STS676_04_01_imc_viper"
+	"fire_sound_1_player_3p"						""
+      "charge_sound_1p"								"diag_sp_bossFight_STS676_05_01_imc_viper"
+      "charge_sound_3p"								""
 	"sound_dryfire"									"titan_dryfire"
 	"sound_weapon_ready"							"HUD_TitanUtilityAbility_replenished_1P"
 
@@ -126,7 +126,7 @@ WeaponData
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
 	"allow_headshots" 								"0"
-      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid "
+      "charge_effect_1p"								"Rocket_Smoke_SMALL_Titan_mod_acid"
       "charge_effect_attachment"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
       "fx_muzzle_flash_attach"						"muzzle_flash"	// on titan in 3p, on weapon in 1p
 	"projectile_launch_speed"						"1500"
