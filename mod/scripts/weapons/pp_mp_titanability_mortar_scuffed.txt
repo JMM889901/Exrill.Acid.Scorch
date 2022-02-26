@@ -21,8 +21,8 @@ WeaponData
 	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_multi_mortar"
 	"OnWeaponNpcPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_mortar"
 	"OnWeaponAttemptOffhandSwitch" 					"pp_OnWeaponAttemptOffhandSwitch_titanweapon_mortar"
-	//"OnWeaponActivate" 								"pp_OnWeaponActivate_Mortar"
-	//"OnWeaponDeactivate"							"pp_OnWeaponDeactivate_Mortar"
+	"OnWeaponActivate" 								"pp_OnWeaponActivate_Mortar"
+	"OnWeaponDeactivate"							"pp_OnWeaponDeactivate_Mortar"
 	"aimassist_disable_hipfire"						"1"
 	"aimassist_disable_ads"							"1"
 
@@ -69,7 +69,7 @@ WeaponData
 
     "grenade_arc_indicator_effect"					"P_grenade_arc_proto_green"
     "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto_green"
-	    "grenade_arc_indicator_show_from_hip"			"1"
+	    "grenade_arc_indicator_show_from_hip"			"0"
 	"grenade_arc_indicator_bounce_count"			"1"
 		"grenade_bounce_vel_frac_shallow"				"0.5"
 	"grenade_bounce_vel_frac_sharp"					"0.3"
@@ -254,6 +254,10 @@ WeaponData
 
 		}
 		pas_northstar_cluster
+		{
+
+		}
+		IsInDrone
 		{
 
 		}

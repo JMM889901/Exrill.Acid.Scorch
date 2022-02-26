@@ -25,6 +25,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanability_acid_pool")
 	PrecacheWeapon("exrill_mp_titanability_viral_shot")
 	PrecacheWeapon("pp_mp_titanability_mortar_scuffed")
+	PrecacheWeapon("exrill_mp_titanweapon_colder_war")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"

@@ -13,15 +13,28 @@ global function pp_TitanAbilityMortarInit
 void function pp_TitanAbilityMortarInit(){
     RegisterSignal( "MortarCamToggle" )
 }
-void function pp_OnWeaponActivate_Mortar(entity weapon){
+void function pp_OnWeaponActivate_Mortar(entity weapon)
+{
     #if SERVER
     entity weaponOwner = weapon.GetWeaponOwner()
+	if(weapon.HasMod("IsInDrone")){
+		array<string> mods = weapon.GetMods()
+		weaponOwner.Signal("MortarCamToggle")
+		mods.remove(mods.find("IsInDrone"))
+		weapon.SetMods(mods)}
+	else
+	{
     entity camera = CreateEntity( "point_viewcontrol" )
     vector origin = weaponOwner.GetOrigin()
-    camera.SetOrigin(<origin.x, origin.y, origin.z + 5000>)
+    camera.SetOrigin(<origin.x, origin.y, origin.z + 2000>)
     camera.SetAngles(< 90,0,0>)
     weaponOwner.SetViewEntity(camera, true)
+	array<string> mods = weapon.GetMods()
+	mods.append("IsInDrone")
+	weapon.SetMods(mods)
+	weapon.SetMods(mods)
     thread stuff(weapon, camera)
+	}
     #endif
 }
 void function pp_OnWeaponDeactivate_Mortar(entity weapon){
@@ -47,6 +60,7 @@ void function stuff(entity weapon, entity camera){
     #if SERVER
     entity weaponOwner = weapon.GetWeaponOwner()
     weaponOwner.EndSignal("MortarCamToggle")
+	AddButtonPressedPlayerInputCallback(weaponOwner, IN_FORWARD, MoveCamForward(camera))
     OnThreadEnd(
         function() : ( camera, weaponOwner )
             {
@@ -54,16 +68,13 @@ void function stuff(entity weapon, entity camera){
                 camera.Destroy()
             }
         )
-    while(true){
-        if(weaponOwner.IsTitan()){
-        entity titan = weaponOwner.GetTitanSoul()
-        vector origin = weaponOwner.GetOrigin()
-        camera.SetOrigin(<origin.x, origin.y, origin.z + 5000>)
-        wait 0.1
-        print(weaponOwner.EyeAngles())}
-    }
+	WaitForever()
 
     #endif
+}
+void function MoveCamForward( entity camera){
+	if(IsValid(camera))
+		print(camera)
 }
 bool function pp_OnWeaponAttemptOffhandSwitch_titanweapon_mortar( entity weapon )
 {
