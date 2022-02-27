@@ -20,6 +20,16 @@
             }
 		},
 		{
+			"Path": "weapons/exrill_mp_titanweapon_mortar_rockets.nut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+				"After": "exrill_TitanAbilityMortarInit"
+			},
+			"ClientCallback": {
+				"After": "exrill_TitanAbilityMortarInit"
+			}
+		},
+		{
 			"Path": "weapons/pp_mp_titanability_mortar.gnut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {

@@ -49,7 +49,7 @@ WeaponData
 	"projectilemodel" 								"models/weapons/bullets/projectile_rocket_largest.mdl"
 
 	// Effects
-	"impact_effect_table" 							"exp_rocket_dumbfire"
+	"impact_effect_table" 							"40mm_splasher_rounds"
 	"projectile_trail_effect_0" 						"Rocket_Smoke_SMALL_Titan_2"
 	"projectile_trail_attachment" 					"exhaust"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_rocket_FP"
@@ -74,7 +74,7 @@ WeaponData
 		"grenade_bounce_vel_frac_shallow"				"0.5"
 	"grenade_bounce_vel_frac_sharp"					"0.3"
 	"projectile_launch_speed"						"3000"
-	"projectile_gravity_scale"						"0.8"
+	"projectile_gravity_scale"						"0"
 	"projectile_launch_pitch_offset"				"0"
 
 

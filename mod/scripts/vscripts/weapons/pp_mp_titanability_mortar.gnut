@@ -24,18 +24,30 @@ void function pp_OnWeaponActivate_Mortar(entity weapon)
 		weapon.SetMods(mods)}
 	else
 	{
-    entity camera = CreateEntity( "point_viewcontrol" )
-    vector origin = weaponOwner.GetOrigin()
-    camera.SetOrigin(<origin.x, origin.y, origin.z + 2000>)
-    camera.SetAngles(< 90,0,0>)
-    weaponOwner.SetViewEntity(camera, true)
-	array<string> mods = weapon.GetMods()
-	mods.append("IsInDrone")
-	weapon.SetMods(mods)
-	weapon.SetMods(mods)
-    thread stuff(weapon, camera)
+		vector velocity = weaponOwner.GetVelocity()
+		weaponOwner.SetVelocity(<0,0,0>)
+		entity camera = CreateEntity( "point_viewcontrol" )
+		vector origin = weaponOwner.GetOrigin()
+		camera.SetOrigin(weaponOwner.EyePosition())
+		camera.SetAngles(weaponOwner.EyeAngles())
+
+		camera.kv.spawnflags = 56
+		DispatchSpawn( camera )
+		weaponOwner.SetViewEntity( camera, true )
+		array<string> mods = weapon.GetMods()
+		mods.append("IsInDrone")
+		weapon.SetMods(mods)
+		weapon.SetMods(mods)
+		thread stuff(weapon, camera)
+		weaponOwner.SetVelocity(velocity)
 	}
     #endif
+}
+void function pp_OnWeaponActivate_MortarOld(entity weapon)
+{
+	entity weaponOwner = weapon.GetWeaponOwner()
+    TraceResults forwardTrace = TraceLine( weaponOwner.EyePosition(), AnglesToForward(weaponOwner.EyeAngles()), null, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_BLOCK_WEAPONS )
+	print(forwardTrace.endPos)
 }
 void function pp_OnWeaponDeactivate_Mortar(entity weapon){
     entity weaponOwner = weapon.GetWeaponOwner()
@@ -52,7 +64,10 @@ var function pp_OnWeaponPrimaryAttack_titanweapon_multi_mortar( entity weapon, W
 			return ammoReq
 	#endif
     print("pain")
-	entity missile = FireClusterRocket( weapon, attackParams.pos, attackParams.dir, shouldPredict )
+	//entity weaponOwner = weapon.GetWeaponOwner()
+    //TraceResults forwardTrace = TraceLine( weaponOwner.EyePosition(), weaponOwner.EyePosition() + (AnglesToForward(weaponOwner.EyeAngles())*10000), null,TRACE_MASK_SOLID, TRACE_COLLISION_GROUP_BLOCK_WEAPONS )
+
+	//entity missile = FireClusterRocket( weapon, <forwardTrace.endPos.x, forwardTrace.endPos.y, forwardTrace.endPos.z+2000>, AnglesToForward(<90,0,0>), shouldPredict )
 
 	return ammoReq
 }
@@ -60,15 +75,20 @@ void function stuff(entity weapon, entity camera){
     #if SERVER
     entity weaponOwner = weapon.GetWeaponOwner()
     weaponOwner.EndSignal("MortarCamToggle")
-	AddButtonPressedPlayerInputCallback(weaponOwner, IN_FORWARD, MoveCamForward(camera))
+	//AddButtonPressedPlayerInputCallback(weaponOwner, IN_FORWARD, MoveCamForward)
     OnThreadEnd(
         function() : ( camera, weaponOwner )
             {
                 weaponOwner.ClearViewEntity()
-                camera.Destroy()
+                camera.Die()
             }
         )
-	WaitForever()
+	while(true){
+		vector pos = weaponOwner.GetOrigin()
+		camera.SetOrigin(<pos.x, pos.y, pos.z+2000>)
+		camera.SetAngles(weaponOwner.EyeAngles())
+		wait 0.1
+	}
 
     #endif
 }
