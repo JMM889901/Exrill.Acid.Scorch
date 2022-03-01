@@ -1,7 +1,8 @@
 untyped
 
 global function Vortex_Init
-global function CreateNewVortexIgnore
+global function RegisterNewVortexIgnoreClassname
+global function RegisterNewVortexIgnoreClassnames
 global function CreateVortexSphere
 global function DestroyVortexSphereFromVortexWeapon
 global function EnableVortexSphere
@@ -83,7 +84,12 @@ table<string, bool> VortexIgnoreClassnames = {
 	["mp_ability_grapple"] = true,
 	["mp_ability_shifter"] = true,
 }
-void function CreateNewVortexIgnore(string classname, bool ShouldIgnore){
+void function RegisterNewVortexIgnoreClassnames(array<string> names){
+	foreach(string classname in names){
+		RegisterNewVortexIgnoreClassname(classname, true)
+	}
+}
+void function RegisterNewVortexIgnoreClassname(string classname, bool ShouldIgnore){
 	if(classname in VortexIgnoreClassnames)
 		return
 	VortexIgnoreClassnames[classname] <- true

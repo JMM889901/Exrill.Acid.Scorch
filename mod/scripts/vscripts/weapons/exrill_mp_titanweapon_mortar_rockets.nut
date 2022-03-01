@@ -6,16 +6,7 @@ global function exrill_TitanAbilityMortarInit
 global function exrill_OnWeaponNPCPrimaryAttack_titanweapon_mortar_rockets
 #endif
 
-const SALVOROCKETS_MISSILE_SFX_LOOP			= "Weapon_Sidwinder_Projectile"
-const SALVOROCKETS_NUM_ROCKETS_PER_SHOT 	= 1
-const SALVOROCKETS_APPLY_RANDOM_SPREAD 		= true
-const SALVOROCKETS_LAUNCH_OUT_ANG 			= 50
-const SALVOROCKETS_LAUNCH_OUT_TIME 			= 0.20
-const SALVOROCKETS_LAUNCH_IN_LERP_TIME 		= 0.2
-const SALVOROCKETS_LAUNCH_IN_ANG 			= -10
-const SALVOROCKETS_LAUNCH_IN_TIME 			= 0.10
-const SALVOROCKETS_LAUNCH_STRAIGHT_LERP_TIME = 0.1
-const SALVOROCKETS_DEBUG_DRAW_PATH 			= false
+const GRAVITY_ACCELERATION = 750
 void function exrill_TitanAbilityMortarInit(){
     RegisterSignal( "MortarCamToggle" )
 }
@@ -64,23 +55,28 @@ void function showicon(entity weapon){
 				#endif
             }
         )
-	while(true){
-		if(IsValid(weapon)){
-		vector origin = weaponOwner.EyePosition()
-		vector direction = AnglesToForward(weaponOwner.EyeAngles())
-		float speed = weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_speed )
-		#if CLIENT
-		vector lastdirection = direction
-		vector lastvelocity = (speed*direction)/10
-		vector laststep = (<origin.x, origin.y, origin.z>) + lastvelocity/100
-		TraceResults traceResult = TraceLine( laststep, laststep + lastvelocity)
-		while(traceResult.endPos == laststep+lastvelocity){
-			lastvelocity.z = lastvelocity.z - ((750*weapon.GetWeaponSettingFloat( eWeaponVar.projectile_gravity_scale ))/100)
-			laststep = traceResult.endPos
-			traceResult = TraceLine( laststep, laststep + lastvelocity , null, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE )
-		}
-		Minimap_Ping( traceResult.endPos, 50, 0.2, <255,255,255> , true )
-		#endif
+	while(true)
+	{
+		if(IsValid(weapon))
+		{
+			int attachID = weaponOwner.LookupAttachment( "muzzle_flash" )
+			vector origin = weaponOwner.GetAttachmentOrigin( attachID )
+			vector eyangles = weaponOwner.EyeAngles()
+			vector direction = AnglesToForward(<eyangles.x+ weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_pitch_offset ), eyangles.y, eyangles.z>)
+			float speed = weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_speed )
+			vector lastdirection = direction
+			vector lastvelocity = (speed*direction)/10
+			vector laststep = (<origin.x, origin.y, origin.z>) + lastvelocity/100
+			#if CLIENT
+			TraceResults traceResult = TraceLine( laststep, laststep + lastvelocity)
+			while(traceResult.endPos == laststep+lastvelocity)
+			{
+				lastvelocity.z = lastvelocity.z - ((GRAVITY_ACCELERATION*weapon.GetWeaponSettingFloat( eWeaponVar.projectile_gravity_scale ))/90)
+				laststep = traceResult.endPos
+				traceResult = TraceLine( laststep, laststep + lastvelocity , null, TRACE_MASK_SHOT, TRACE_COLLISION_GROUP_NONE )
+			}
+			Minimap_Ping( traceResult.endPos, 50, 0.2, <255,255,255> , true )
+			#endif
 		}
 		wait 0.2
 	}

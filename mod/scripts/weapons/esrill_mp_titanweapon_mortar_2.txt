@@ -15,7 +15,7 @@ WeaponData
 	"alwaysShow"									"1"
 	"minimap_reveal_distance"						"32000"
 
-	"projectile_lifetime"							"10.0"
+	"projectile_lifetime"							"25.0"
 	"projectile_airburst_on_death"					"1"
 
 	"OnWeaponPrimaryAttack"							"exrill_OnWeaponPrimaryAttack_titanweapon_mortar_rockets"
@@ -34,6 +34,8 @@ WeaponData
 	"stat_range"  									"90"
 	"stat_accuracy"   								"50"
 	"stat_rof"										"20"
+
+	"offhand_default_inventory_slot"				"2"
 
 	// Models
 	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod_core.mdl"
@@ -114,9 +116,9 @@ WeaponData
 		// Damage - When Used by Players
 		"ammo_per_shot"									"20"
 		"burst_fire_count"								"12"
-		"damage_near_distance"							"800"
+		"damage_near_distance"							"600"
 		"damage_far_distance" 							"1200"
-		"damage_near_value"   							"250"
+		"damage_near_value"   							"100"
 		"damage_far_value"								"250"
 		"explosion_damage"								"300"
 		"explosion_damage_heavy_armor"					"750"
@@ -158,8 +160,8 @@ WeaponData
 	"allow_headshots" 								"0"
 
 	"projectile_launch_speed"						"2000"
-	"projectile_gravity_scale"						"1"
-	"projectile_launch_pitch_offset"				"1"
+	"projectile_gravity_scale"						"0.7"
+	"projectile_launch_pitch_offset"				"0"
 
 
 	// Spread
@@ -328,7 +330,7 @@ WeaponData
 
 		Crosshair_1
 		{
-			"ui"						"ui/crosshair_tracker_rockets"
+			"ui"						"ui/crosshair_smr"
 			"base_spread"				"0.0"
 			Args
 			{

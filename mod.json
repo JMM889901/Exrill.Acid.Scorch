@@ -13,10 +13,21 @@
             }
 		},
 		{
+			"Path": "weapons/pp_mp_titanweapon_point_defence.nut",
+			"RunOn": "SERVER || CLIENT"
+		},
+		{
 			"Path": "weapons/exrill_mp_titanweapon_acid_wall.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "MpTitanweaponAcidWall_Init"
+            }
+		},
+		{
+			"Path": "weapons/exrill_mp_titanweapon_rod_from_god.nut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "pp_MpTitanWeapon_rod_from_godInit"
             }
 		},
 		{
