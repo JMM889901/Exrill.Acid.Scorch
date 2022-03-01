@@ -33,12 +33,11 @@ WeaponData
 	// Menu Stats
 
 	// Models
-	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod_core.mdl"
+	"viewmodel"   									"models/weapons/titan_raptor_rocket_pod/atpov_titan_raptor_rocket_pod_core.mdl"
+	//"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod_core.mdl"
 	"projectilemodel" 								"models/weapons/bullets/projectile_rocket.mdl"
 
 	//Sounds
-	"charge_sound_1p"								"heat_shield_1p_loop"
-	"charge_sound_3p"								"heat_shield_3p_loop"
 
 	// Effects
 	"vortex_absorb_effect"							"wpn_vortex_projectile_rifle_FP"
@@ -57,7 +56,7 @@ WeaponData
 	"offhand_default_inventory_slot"				"1"
 
 	// Ammo
-	"ammo_stockpile_max"							"4500"
+	"ammo_stockpile_max"							"8000"
 	"ammo_clip_size"   								"-1"
 	"ammo_default_total"							"0"
 	"cooldown_type"                                 "vortex_drain"
@@ -127,7 +126,9 @@ WeaponData
 
 	"fx_muzzle_flash2_view"							"wpn_mflash_xo_rocket_shoulder_FP"
 	"fx_muzzle_flash2_world"						"P_muzzleflash_predator"
-	"fx_muzzle_flash2_attach"						"muzzle_flash_r"
+	"fx_muzzle_flash2_attach"						"muzzle_flash_2"
+
+	"owner_muzzle_index"							"1"
 
 	// NPC
 	"proficiency_poor_additional_rest"				"20"
@@ -136,9 +137,9 @@ WeaponData
 	"proficiency_very_good_additional_rest"			"3"
 
 
-	"projectile_launch_speed"						"2000"
-	"projectile_gravity_scale"						"0.7"
-	"projectile_launch_pitch_offset"				"1"
+	"projectile_launch_speed"						"1000"
+	"projectile_gravity_scale"						"0"
+	"projectile_launch_pitch_offset"				"0"
 	"explosion_inner_radius"  						"25"
 	"explosionradius" 								"50"
 

@@ -31,7 +31,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanability_acid_pool")
 	PrecacheWeapon("exrill_mp_titanability_viral_shot")
 	PrecacheWeapon("pp_mp_titanability_mortar_scuffed")
-	PrecacheWeapon("esrill_mp_titanweapon_mortar_2")
+	PrecacheWeapon("exrill_mp_titanweapon_mortar_2")
 	PrecacheWeapon("exrill_mp_titanweapon_colder_war")
 	PrecacheWeapon("exrill_mp_titanweapon_150mm")
 	PrecacheWeapon("exrill_mp_titanweapon_rod_from_god")
@@ -73,7 +73,7 @@ void function SetTitanLoadout( entity titan )
 		{
 			array<entity> weapons = titan.GetMainWeapons()
 			
-			//Ion Prime
+			//Venom
 			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_scorch_prime.mdl")
 			{
 				SendHudMessage(player, "Venom Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
@@ -94,6 +94,34 @@ void function SetTitanLoadout( entity titan )
 				//Weapon
 				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
 				titan.GiveWeapon ("exrill_mp_titanweapon_hybrid_launcher")
+				
+				//Titan Core
+				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
+				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
+				
+			}
+
+			//Templar
+			if (titan.GetModelName() == $"models/titans/medium/titan_medium_tone_prime.mdl")
+			{
+				SendHudMessage(player, "Templar Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+				
+				//Offence
+				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
+				titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_ANTIRODEO ) 
+				
+				
+				//Defence
+				titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
+				titan.GiveOffhandWeapon("pp_mp_titanweapon_point_defence", OFFHAND_SPECIAL )
+				
+				//Tactical
+				titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+				titan.GiveOffhandWeapon("exrill_mp_titanweapon_rod_from_god", OFFHAND_RIGHT )
+
+				//Weapon
+				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
+				titan.GiveWeapon ("exrill_mp_titanweapon_150mm")
 				
 				//Titan Core
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)

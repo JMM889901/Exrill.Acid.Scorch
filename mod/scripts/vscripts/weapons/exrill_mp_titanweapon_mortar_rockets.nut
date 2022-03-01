@@ -59,8 +59,8 @@ void function showicon(entity weapon){
 	{
 		if(IsValid(weapon))
 		{
-			int attachID = weaponOwner.LookupAttachment( "muzzle_flash" )
-			vector origin = weaponOwner.GetAttachmentOrigin( attachID )
+			int attachID = weapon.LookupAttachment( "muzzle_flash" )
+			vector origin = weapon.GetAttachmentOrigin( attachID )
 			vector eyangles = weaponOwner.EyeAngles()
 			vector direction = AnglesToForward(<eyangles.x+ weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_pitch_offset ), eyangles.y, eyangles.z>)
 			float speed = weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_speed )

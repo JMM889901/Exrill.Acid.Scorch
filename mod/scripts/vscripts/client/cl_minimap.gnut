@@ -449,6 +449,8 @@ void function Minimap_Ping( vector origin, float radius, float duration, vector 
 	RuiSetBool( rui, "reverse", reverse )
 }
 
+
+
 var function Minimap_AddLayer( asset layerImage, bool isFriendly )
 {
 	entity player = GetLocalViewPlayer()
