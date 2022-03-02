@@ -893,6 +893,10 @@ void function Minimap_SetZoomScale( float scale )
 		RuiSetBool( file.minimap_wedges, "isVisible", file.minimapZoomScale == 1.0 )
 		RuiSetFloat( file.minimap_wedges, "minimapZoomScale", file.minimapZoomScale )
     }
+	foreach ( var rui in file.minimapOtherRuis )
+	{
+		RuiSetFloat( rui, "minimapZoomScale", file.minimapZoomScale )
+	}
 }
 
 void function Minimap_SetSizeScale( float scale )
@@ -902,6 +906,10 @@ void function Minimap_SetSizeScale( float scale )
 	RuiSetFloat( file.minimap_indicator, "minimapSizeScale", file.minimapSizeScale )
 	RuiSetFloat( file.minimap_you, "minimapSizeScale", file.minimapSizeScale )
 	RuiSetFloat( file.minimap_wedges, "minimapSizeScale", file.minimapSizeScale )
+	foreach ( var rui in file.minimapOtherRuis )
+	{
+		RuiSetFloat( rui, "minimapSizeScale", file.minimapSizeScale )
+	}
 
 }
 
