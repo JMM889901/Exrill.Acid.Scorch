@@ -38,7 +38,9 @@ WeaponData
 	"projectilemodel" 								"models/weapons/bullets/projectile_rocket.mdl"
 
 	//Sounds
-
+	"charge_sound_1p"								"heat_shield_1p_loop"
+	"charge_sound_3p"								"heat_shield_3p_loop"
+	
 	// Effects
 	"vortex_absorb_effect"							"wpn_vortex_projectile_rifle_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_rifle"
