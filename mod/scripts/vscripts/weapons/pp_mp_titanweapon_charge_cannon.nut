@@ -1,52 +1,60 @@
 untyped
 
 
-global function pp_OnWeaponActivate_titanweapon_rod_from_god
-global function pp_OnWeaponPrimaryAttack_titanweapon_rod_from_god
-global function pp_OnWeaponChargeLevelIncreased_titanweapon_rod_from_god
-global function pp_MpTitanWeapon_rod_from_godInit
-global function pp_OnWeaponStartZoomIn_titanweapon_rod_from_god
-global function pp_OnWeaponStartZoomOut_titanweapon_rod_from_god
-global function pp_OnWeaponOwnerChanged_titanweapon_rod_from_god
-
+global function pp_OnWeaponActivate_titanweapon_energy_cannon
+global function pp_OnWeaponPrimaryAttack_titanweapon_energy_cannon
+global function pp_OnWeaponChargeLevelIncreased_titanweapon_energy_cannon
+global function pp_GetTitanEnergy_cannonChargeLevel
+global function pp_MpTitanWeapon_Energy_cannonInit
+global function pp_OnWeaponStartZoomIn_titanweapon_energy_cannon
+global function pp_OnWeaponStartZoomOut_titanweapon_energy_cannon
+global function pp_OnWeaponOwnerChanged_titanweapon_energy_cannon
+global function pp_OnProjectileCollision_titanweapon_energy_cannon
 #if SERVER
-global function pp_OnWeaponNpcPrimaryAttack_titanweapon_rod_from_god
+global function pp_OnWeaponNpcPrimaryAttack_titanweapon_energy_cannon
 #endif // #if SERVER
 
 const INSTANT_SHOT_DAMAGE 				= 1200
 //const INSTANT_SHOT_MAX_CHARGES		= 2 // can't change this without updating crosshair
 //const INSTANT_SHOT_TIME_PER_CHARGE	= 0
-const SNIPER_PROJECTILE_SPEED			= 10000
+const ENERGY_CANNON_PROJECTILE_SPEED			= 1
 
 struct {
 	float chargeDownSoundDuration = 1.0 //"charge_cooldown_time"
 } file
+void function pp_OnProjectileCollision_titanweapon_energy_cannon( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+{
+	print("testing")
+	#if SERVER
+		StartParticleEffectInWorld( GetParticleSystemIndex($"P_meteor_trap_EXP"), projectile.GetOrigin(), <0,0,0>)
+		EmitSoundAtPosition( TEAM_UNASSIGNED, projectile.GetOrigin(), "incendiary_trap_explode_large" )
+		#endif
+}
 
-void function pp_OnWeaponActivate_titanweapon_rod_from_god( entity weapon )
+void function pp_OnWeaponActivate_titanweapon_energy_cannon( entity weapon )
 {
 	file.chargeDownSoundDuration = expect float( weapon.GetWeaponInfoFileKeyField( "charge_cooldown_time" ) )
 }
 
-var function pp_OnWeaponPrimaryAttack_titanweapon_rod_from_god( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function pp_OnWeaponPrimaryAttack_titanweapon_energy_cannon( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
-	return FireSniper( weapon, attackParams, true )
+	return FireEnergy_cannon( weapon, attackParams, true )
 }
 
-void function pp_MpTitanWeapon_rod_from_godInit()
+void function pp_MpTitanWeapon_Energy_cannonInit()
 {
 	#if SERVER
-	AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanweapon_rod_from_god, OnHit_TitanWeaponSniper )
+	AddDamageCallbackSourceID( eDamageSourceId.pp_mp_titanweapon_energy_cannon, OnHit_TitanWeaponEnergy_cannon )
 	#endif
 }
 #if SERVER
 
-void function OnHit_TitanWeaponSniper( entity victim, var damageInfo )
+void function OnHit_TitanWeaponEnergy_cannon( entity victim, var damageInfo )
 {
-	print("pain")
-	OnHit_TitanWeaponSniper_Internal( victim, damageInfo )
+	OnHit_TitanWeaponEnergy_cannon_Internal( victim, damageInfo )
 }
 
-void function OnHit_TitanWeaponSniper_Internal( entity victim, var damageInfo )
+void function OnHit_TitanWeaponEnergy_cannon_Internal( entity victim, var damageInfo )
 {
 	entity inflictor = DamageInfo_GetInflictor( damageInfo )
 	if ( !IsValid( inflictor ) )
@@ -85,14 +93,14 @@ void function OnHit_TitanWeaponSniper_Internal( entity victim, var damageInfo )
 		PushEntWithDamageInfoAndDistanceScale( victim, damageInfo, nearRange, farRange, nearScale, farScale, 0.25 )
 }
 
-var function pp_OnWeaponNpcPrimaryAttack_titanweapon_rod_from_god( entity weapon, WeaponPrimaryAttackParams attackParams )
+var function pp_OnWeaponNpcPrimaryAttack_titanweapon_energy_cannon( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
-	return FireSniper( weapon, attackParams, false )
+	return FireEnergy_cannon( weapon, attackParams, false )
 }
 #endif // #if SERVER
 
 
-bool function pp_OnWeaponChargeLevelIncreased_titanweapon_rod_from_god( entity weapon )
+bool function pp_OnWeaponChargeLevelIncreased_titanweapon_energy_cannon( entity weapon )
 {
 	#if CLIENT
 		if ( InPrediction() && !IsFirstTimePredicted() )
@@ -103,23 +111,23 @@ bool function pp_OnWeaponChargeLevelIncreased_titanweapon_rod_from_god( entity w
 	int maxLevel = weapon.GetWeaponChargeLevelMax()
 
 	if ( level == maxLevel )
-		weapon.EmitWeaponSound( "Weapon_Titan_Sniper_LevelTick_Final" )
+		weapon.EmitWeaponSound( "Weapon_Titan_Energy_cannon_LevelTick_Final" )
 	else
-		weapon.EmitWeaponSound( "Weapon_Titan_Sniper_LevelTick_" + level )
+		weapon.EmitWeaponSound( "Weapon_Titan_Energy_cannon_LevelTick_" + level )
 
 	return true
 }
 
 
-function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool playerFired )
+function FireEnergy_cannon( entity weapon, WeaponPrimaryAttackParams attackParams, bool playerFired )
 {
-	int chargeLevel = GetTitanSniperChargeLevel( weapon )
+	int chargeLevel = pp_GetTitanEnergy_cannonChargeLevel( weapon )
 	entity weaponOwner = weapon.GetWeaponOwner()
 	bool weaponHasInstantShotMod = weapon.HasMod( "instant_shot" )
 	if ( chargeLevel == 0 )
 		return 0
 
-	//printt( "GetTitanSniperChargeLevel():", chargeLevel )
+	//printt( "GetTitanEnergy_cannonChargeLevel():", chargeLevel )
 
 	if ( chargeLevel > 4 )
 		weapon.EmitWeaponSound_1p3p( "Weapon_Titan_Sniper_Level_4_1P", "Weapon_Titan_Sniper_Level_4_3P" )
@@ -172,23 +180,15 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 	#endif
 
 	if ( !shouldCreateProjectile )
-		return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
+		return 1
 
-	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,1, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
+	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,weapon.GetWeaponChargeFraction()+0.3, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
 	if ( bolt )
 	{
-		bolt.kv.gravity = 0.001
 		bolt.s.bulletsToFire <- chargeLevel
 
 		bolt.s.extraDamagePerBullet <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets )
 		bolt.s.extraDamagePerBullet_Titan <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets_titanarmor )
-		if ( weaponHasInstantShotMod )
-		{
-			local damage_far_value_titanarmor = weapon.GetWeaponSettingInt( eWeaponVar.damage_far_value_titanarmor )
-			Assert( INSTANT_SHOT_DAMAGE > damage_far_value_titanarmor )
-			bolt.s.extraDamagePerBullet_Titan = INSTANT_SHOT_DAMAGE - damage_far_value_titanarmor
-			bolt.s.bulletsToFire = 2
-		}
 
 		if ( chargeLevel > 4 )
 			bolt.SetProjectilTrailEffectIndex( 2 )
@@ -201,12 +201,29 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 		#endif
 	}
 
-	return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
+	return 1
 }
 
+int function pp_GetTitanEnergy_cannonChargeLevel( entity weapon )
+{
+	if ( !IsValid( weapon ) )
+		return 0
 
+	entity owner = weapon.GetWeaponOwner()
+	if ( !IsValid( owner ) )
+		return 0
 
-void function pp_OnWeaponStartZoomIn_titanweapon_rod_from_god( entity weapon )
+	if ( !owner.IsPlayer() )
+		return 3
+
+	if ( !weapon.IsReadyToFire() )
+		return 0
+
+	int charges = weapon.GetWeaponChargeLevel()
+	return (1 + charges)
+}
+
+void function pp_OnWeaponStartZoomIn_titanweapon_energy_cannon( entity weapon )
 {
 	#if SERVER
 	if ( weapon.HasMod( "pas_northstar_optics" ) )
@@ -219,7 +236,7 @@ void function pp_OnWeaponStartZoomIn_titanweapon_rod_from_god( entity weapon )
 	#endif
 }
 
-void function pp_OnWeaponStartZoomOut_titanweapon_rod_from_god( entity weapon )
+void function pp_OnWeaponStartZoomOut_titanweapon_energy_cannon( entity weapon )
 {
 	#if SERVER
 	if ( weapon.HasMod( "pas_northstar_optics" ) )
@@ -232,7 +249,7 @@ void function pp_OnWeaponStartZoomOut_titanweapon_rod_from_god( entity weapon )
 	#endif
 }
 
-void function pp_OnWeaponOwnerChanged_titanweapon_rod_from_god( entity weapon, WeaponOwnerChangedParams changeParams )
+void function pp_OnWeaponOwnerChanged_titanweapon_energy_cannon( entity weapon, WeaponOwnerChangedParams changeParams )
 {
 	#if SERVER
 	if ( IsValid( changeParams.oldOwner ) && changeParams.oldOwner.IsPlayer() )

@@ -36,6 +36,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_150mm")
 	PrecacheWeapon("exrill_mp_titanweapon_rod_from_god")
 	PrecacheWeapon("pp_mp_titanweapon_point_defence")
+	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
@@ -45,6 +46,7 @@ void function PrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanability_viral_shot"] <- "Viral shot"
 	WeaponIds["exrill_mp_titanability_viral_shot_secondary"] <- "Viral damage"
 	WeaponIds["exrill_mp_titanweapon_rod_from_god"] <- "Rod from god"
+	WeaponIds["pp_mp_titanweapon_energy_cannon"] <- "Energy Cannon"
 	pp_RegisterWeaponDamageSources(WeaponIds)
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
     #if SERVER

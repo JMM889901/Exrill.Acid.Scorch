@@ -55,18 +55,17 @@ void function showicon(entity weapon){
 				#endif
             }
         )
+	int attachID = weapon.LookupAttachment( "muzzle_flash" )
 	while(true)
 	{
 		if(IsValid(weapon))
 		{
-			int attachID = weapon.LookupAttachment( "muzzle_flash" )
 			vector origin = weapon.GetAttachmentOrigin( attachID )
 			vector eyangles = weaponOwner.EyeAngles()
 			vector direction = AnglesToForward(<eyangles.x+ weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_pitch_offset ), eyangles.y, eyangles.z>)
 			float speed = weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_speed )
-			vector lastdirection = direction
 			vector lastvelocity = (speed*direction)/10
-			vector laststep = (<origin.x, origin.y, origin.z>) + lastvelocity/100
+			vector laststep = origin + lastvelocity/100
 			#if CLIENT
 			TraceResults traceResult = TraceLine( laststep, laststep + lastvelocity)
 			while(traceResult.endPos == laststep+lastvelocity)

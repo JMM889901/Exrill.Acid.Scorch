@@ -8,13 +8,12 @@ WeaponData
 
 	"leveled_pickup"								"1"
 	"ammo_no_remove_from_stockpile"						"1"
-
 	"menu_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_particle_ac"
 	"hud_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_particle_ac"
 
 	"weaponClass" 									"titan"
-	"body_type"										"battle_rifle"
 	"fire_mode"   									"semi-auto"
+	"body_type"										"battle_rifle"
 	"pickup_hold_prompt"  							"Hold [USE] [WEAPONNAME]"
 	"pickup_press_prompt" 							"[USE] [WEAPONNAME]"
 	"minimap_reveal_distance"						"32000"
@@ -34,8 +33,9 @@ WeaponData
 	// Models
 	"viewmodel"   									"models/weapons/titan_particle_accelerator/atpov_titan_particle_accelerator.mdl"
 	"playermodel" 									"models/weapons/titan_particle_accelerator/w_titan_particle_accelerator.mdl"
-	"projectilemodel" 								"models/dev/empty_model.mdl"
+	//"projectilemodel" 								"models/dev/empty_model.mdl"
 
+	"projectilemodel" 								"models/weapons/bullets/triple_threat_projectile.mdl"
 
 	"bolt_hitsize"									"0.5"
 	"bolt_hitsize_grow1_time"						"0.075"
@@ -105,30 +105,6 @@ WeaponData
 		"enable_highlight_networking_on_creation"		"1"
 	}
 
-	"charge_time" 									"0.5"
-	"charge_cooldown_time"							"0.5"
-	"charge_cooldown_delay"   						"0.0"
-	"charge_end_forces_fire"							"1"
-	"charge_require_input"							"0"
-
-	"charge_sound_1p"									"Weapon_ColdWar_ChargeUp_1P"
-	"charge_sound_3p"									"Weapon_ColdWar_ChargeUp_3P"
-	"charge_sound_stop_when_full"						"1"
-	"charge_sound_seek_to_charge_fraction"			"0"
-	"charge_drain_sound_1p"							"Weapon_ChargeRifle_WindDown_1P"
-	"charge_drain_sound_3p"							"Weapon_ChargeRifle_WindDown_3P"
-	"charge_drain_sound_stop_when_empty"				"1"
-	"charge_drain_sound_seek_to_charge_fraction"		"1"
-	"charge_effect_1p"								"P_wpn_charge_coldwar_FP"
-	"charge_effect_3p"								"P_wpn_charge_coldwar"
-	"charge_effect_attachment"						"muzzle_flash"
-	"charge_effect2_3p"								"defender_charge_CH_dlight"
-	"charge_effect2_attachment"						"muzzle_flash"
-	"charge_rumble_min"								"10"
-	"charge_rumble_max"								"30"
-
-
-
 	// Effects
 	"tracer_effect"   								"weapon_tracers_40mm"
 	"impact_effect_table" 							"titan_meteor"
@@ -174,19 +150,36 @@ WeaponData
 	"ammo_clip_size"   								"12"
 	"ammo_default_total"							"1500"
 
-	// Behavior
-	"npc_min_burst"   								"4"
-	"npc_max_burst"   								"4"
-	"npc_rest_time_between_bursts_min"				"1.0"
-	"npc_rest_time_between_bursts_max"				"1.5"
+	"burst_fire_count"								"3"
+	"burst_fire_delay"								"0.2"
 
-	"fire_rate"   									"12.0"
-	"burst_fire_count"								"4"
-	"burst_fire_delay"								"0.5"
+	"charge_time" 									"0.5"
+	"charge_cooldown_time"							"0.5"
+	"charge_cooldown_delay"   						"0.0"
+	"charge_end_forces_fire"							"1"
+	"charge_require_input"							"0"
+
+	"charge_sound_1p"									"Weapon_ColdWar_ChargeUp_1P"
+	"charge_sound_3p"									"Weapon_ColdWar_ChargeUp_3P"
+	"charge_sound_stop_when_full"						"1"
+	"charge_sound_seek_to_charge_fraction"			"0"
+	"charge_drain_sound_1p"							"Weapon_ChargeRifle_WindDown_1P"
+	"charge_drain_sound_3p"							"Weapon_ChargeRifle_WindDown_3P"
+	"charge_drain_sound_stop_when_empty"				"1"
+	"charge_drain_sound_seek_to_charge_fraction"		"1"
+	"charge_effect_1p"								"P_wpn_charge_coldwar_FP"
+	"charge_effect_3p"								"P_wpn_charge_coldwar"
+	"charge_effect_attachment"						"muzzle_flash"
+	"charge_effect2_3p"								"defender_charge_CH_dlight"
+	"charge_effect2_attachment"						"muzzle_flash"
+	"charge_rumble_min"								"10"
+	"charge_rumble_max"								"30"
+
+	// Behavior
+	"fire_rate"   									"12"
 	"zoom_time_in"									"0.1"
 	"zoom_time_out"   								"0.1"
 	"zoom_fov"										"50"
-	"ammo_clip_reload_max"							"200"
 	"reload_time" 									"4.0"
 	"reload_time_late1" 							"2.7"
 	"reload_time_late2" 							"2"
@@ -197,10 +190,12 @@ WeaponData
 	"reloadempty_time_late2"						"2"
 	"reloadempty_time_late3"						"1.0"
 	"reloadempty_time_late4"						"0.4"
-	"holster_time"									".45"
-	"lower_time"  									".1"
-	"raise_time"  									".4"
-	"vortex_refire_behavior"  						"explosive_round"
+	"holster_time"									"0.5"
+	"lower_time"  									"0.07"
+	"raise_time"  									"0.3"
+	"vortex_drain" 			 						"0.0"
+	"vortex_refire_behavior"  						"absorb"
+
 	"allow_empty_fire"								"0"
 	"reload_enabled"  								"1"
 	"allow_empty_click"   							"1"
@@ -425,6 +420,13 @@ WeaponData
 	// Crosshair
 	"red_crosshair_range" 							"3000"
 
+	"reload_is_segmented"							"0"
+	"reload_time" 									"1.6"
+	"reloadempty_time"								"1.6"
+
+	"ammo_size_segmented_reload"					"0"
+	"ammo_display_as_clips"							"1"
+
 	// Bodygroups:
     "clip_bodygroup"						"shell"
     "clip_bodygroup_index_shown"			"0"
@@ -434,7 +436,7 @@ WeaponData
     "clip_bodygroup_show_for_milestone_2"	"1"
     "clip_bodygroup_show_for_milestone_3"	"1"
 
-	"reload_alt_anim"								"1"
+	"reload_alt_anim"								"0"
 
 	Mods
 	{
@@ -484,7 +486,7 @@ WeaponData
 			"reloadsegment_time_loop"						"1.2"
 			"reloadsegment_time_end"						"0.8"
 
-			"ammo_size_segmented_reload"					"0"
+			"ammo_size_segmented_reload"					"1"
 			"ammo_display_as_clips"							"0"
 		}
 		fd_fire_damage_upgrade

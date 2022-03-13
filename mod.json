@@ -17,6 +17,13 @@
 			"RunOn": "SERVER || CLIENT"
 		},
 		{
+			"Path": "weapons/pp_mp_titanweapon_charge_cannon.nut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+				"After": "pp_MpTitanWeapon_Energy_cannonInit"
+			}
+		},
+		{
 			"Path": "weapons/exrill_mp_titanweapon_acid_wall.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {

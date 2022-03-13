@@ -12,22 +12,23 @@ WeaponData
 	"hud_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun"
 
 	"weaponClass" 									"titan"
-	"fire_mode"   									"offhand"
-	"weaponType"									"shoulder"
+	"fire_mode"   									"semi-auto"
 	"pickup_hold_prompt"  							"Hold [USE] [WEAPONNAME]"
 	"pickup_press_prompt" 							"[USE] [WEAPONNAME]"
 	"minimap_reveal_distance"						"32000"
 
-	"OnWeaponActivate"								"OnWeaponActivate_titanweapon_sniper"
-	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_rod_from_god"
-	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_titanweapon_sniper"
-	"OnWeaponChargeLevelIncreased"					"OnWeaponChargeLevelIncreased_titanweapon_sniper"
-	"OnWeaponStartZoomIn"							"OnWeaponStartZoomIn_titanweapon_sniper"
-	"OnWeaponStartZoomOut"							"OnWeaponStartZoomOut_titanweapon_sniper"
-	"OnWeaponOwnerChanged"							"OnWeaponOwnerChanged_titanweapon_sniper"
+	"OnProjectileCollision"							"pp_OnProjectileCollision_titanweapon_energy_cannon"
+	"OnWeaponActivate"								"pp_OnWeaponActivate_titanweapon_energy_cannon"
+	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_energy_cannon"
+	"OnWeaponNpcPrimaryAttack"						"pp_OnWeaponNpcPrimaryAttack_titanweapon_energy_cannon"
+	"OnWeaponChargeLevelIncreased"					"pp_OnWeaponChargeLevelIncreased_titanweapon_energy_cannon"
+	"OnWeaponStartZoomIn"							"pp_OnWeaponStartZoomIn_titanweapon_energy_cannon"
+	"OnWeaponStartZoomOut"							"pp_OnWeaponStartZoomOut_titanweapon_energy_cannon"
+	"OnWeaponOwnerChanged"							"pp_OnWeaponOwnerChanged_titanweapon_energy_cannon"
 
-
-	"offhand_default_inventory_slot"				"0"
+	"projectile_launch_speed"						"7000"
+	"projectile_gravity_scale"						"1"
+	"projectile_launch_pitch_offset"				"0"
 
 	// Menu Stats
 	"stat_damage" 									"95"
@@ -37,24 +38,20 @@ WeaponData
 
 	"ads_dof_disable"	"1"
 
-	"projectile_launch_speed"						"10000"
-	"projectile_gravity_scale"						"0"
-
 	// Models
-	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod.mdl"
-	//"viewmodel"										"models/weapons/titan_xo16_shorty/atpov_xo16shorty_offhand.mdl"
-	"projectilemodel" 								"models/weapons/bullets/projectile_40mm.mdl"
+	"viewmodel"   									"models/weapons/atpov_titan_sniper_rifle/atpov_titan_sniper_rifle.mdl"
+	"playermodel" 									"models/weapons/titan_sniper_rifle/w_titan_sniper_rifle.mdl"
+	"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects
-	//"tracer_effect"   							"weapon_tracers_40mm_tem"
+	//"tracer_effect"   							"weapon_tracers_40mm"
 	//"tracer_effect"   							"P_wpn_tracer_sniper"
 	//"tracer_effect_first_person"  				"P_wpn_tracer_sniper"
-	//"projectile_trail_effect_0" 					"P_titan_sniper1_tem"
-	//"projectile_trail_effect_1" 					"P_titan_sniper2_tem"
-	//"projectile_trail_effect_2" 					"P_titan_sniper3_tem"
-	"projectile_trail_effect_0" 					"P_proj_predator_alt_pwr"
-	"projectile_trail_effect_1" 					"P_proj_predator_alt_pwr"
-	"projectile_trail_effect_2" 					"P_proj_predator_alt_pwr"
+	"projectile_trail_attachment" 					"fx_top"
+	"projectile_trail_effect_0" 					"P_projectile_TPA"
+	"projectile_trail_effect_1" 					"P_projectile_TPA"
+	"projectile_trail_effect_2" 					"P_projectile_TPA"
+
 	"impact_effect_table" 							"titan_sniper"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_40mm_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_40mm"
@@ -62,7 +59,7 @@ WeaponData
 	"vortex_absorb_sound_1p_vs_3p"					"Vortex_Shield_AbsorbBulletLarge_1P_VS_3P"
 	"projectile_adjust_to_gun_barrel"				"1"
 
-	"fx_muzzle_flash_view"							"P_wpn_mflash_arcball_FP"
+	"fx_muzzle_flash_view"							"P_wpn_xo_sniper_muzzleflash_FP"
 	"fx_muzzle_flash_world"							"P_wpn_xo_sniper_muzzleflash"
 	"fx_muzzle_flash_attach"						"muzzle_flash"
 
@@ -74,17 +71,9 @@ WeaponData
 	"critical_hit_damage_scale"						"1.5"
 
 	// Ammo
-	"ammo_display"									"bar"
-	"ammo_stockpile_max"							"120"
-	"ammo_clip_size"   								"120"
-	"ammo_default_total"							"120"
-	"ammo_min_to_fire"								"120"
-	"cooldown_type"                                 "ammo_per_shot"
-	"reload_enabled"								"0"
-	"ammo_per_shot"									"120"
-	// Regen Ammo
-	"regen_ammo_refill_rate"						"10.0"
-	"regen_ammo_refill_start_delay"					"1.0"
+	"ammo_stockpile_max"							"1000"
+	"ammo_clip_size"   								"1"
+	"ammo_default_total"							"1000"
 
 	"damage_additional_bullets"						"250"		// each additional bullet after the first does this much
 	"damage_additional_bullets_titanarmor"			"300"		// each additional bullet after the first does this much
@@ -99,12 +88,12 @@ WeaponData
 	MP_BASE
 	{
 		// Damage - When Used by Players
-		"damage_near_distance"							"500"
-		"damage_far_distance" 							"1000"
-		"damage_near_value"   							"250"
-		"damage_far_value"								"250"
-		"damage_near_value_titanarmor"					"250"
-		"damage_far_value_titanarmor" 					"250"
+		"damage_near_distance"							"800"
+		"damage_far_distance" 							"3000"
+		"damage_near_value"   							"750"
+		"damage_far_value"								"750"
+		"damage_near_value_titanarmor"					"750"
+		"damage_far_value_titanarmor" 					"750"
 
 		"deploy_time" 									"0.85"
 
@@ -123,7 +112,7 @@ WeaponData
 		"npc_damage_near_value_titanarmor"				"200"
 		"npc_damage_far_value_titanarmor" 				"200"
 
-		"ammo_min_to_fire"								"120"
+		"ammo_min_to_fire"								"1"
 		"enable_highlight_networking_on_creation"		"<KEEP_DEFAULT>"
 		"pass_through_depth"							"0"
 	}
@@ -133,10 +122,10 @@ WeaponData
 		// Damage - When Used by Players
 		"damage_near_distance"							"800"
 		"damage_far_distance" 							"3000"
-		"damage_near_value"   							"250"
-		"damage_far_value"								"250"
-		"damage_near_value_titanarmor"					"250"
-		"damage_far_value_titanarmor" 					"250"
+		"damage_near_value"   							"500"
+		"damage_far_value"								"500"
+		"damage_near_value_titanarmor"					"500"
+		"damage_far_value_titanarmor" 					"500"
 
 		"deploy_time" 									"1.75"
 
@@ -159,46 +148,44 @@ WeaponData
 		"pass_through_depth"							"500"// Not sure how long a dropship is, probably the biggest entity
 	}
 
-	"ammo_no_remove_from_stockpile"					"0"
-
-	// Ammo
-	"ammo_stockpile_max"							"120"
-	"ammo_clip_size"   								"120"
-	"ammo_default_total"							"120"
 	"ammo_no_remove_from_stockpile"					"1"
-	"ammo_no_remove_from_clip"						"0"
 
 	// Behavior
-	"burst_fire_delay"								"0.7"
-	"zoom_time_in"									"0.1"
-	"zoom_time_out"   								"0.1"
+	"fire_rate"   									"0.9"
+	"zoom_time_in"									"0.2"
+	"zoom_time_out"   								"0.2"
 	"zoom_fov"										"50"
-	"reload_time" 									"0"
-	"holster_time"									"0.1"
-	"deploy_time" 									"0.25"
-	"lower_time"  									"0.1"
-	"raise_time"  									"0.25"
-	"vortex_refire_behavior"  						"rocket"
+	"zoom_toggle_lerp_time"							"0.2"
+	"zoom_toggle_fov"								"25"
+	"reload_time" 									"2"
+	"reload_time_late1" 							"1.42"
+	"reload_time_late2" 							"0.77"
+	"reloadempty_time"								"2"
+	"reloadempty_time_late1"						"1.42"
+	"reloadempty_time_late2"						"0.77"
+	"holster_time"									".05"
+	"lower_time"  									".05"
+	"raise_time"  									".3"
+	"vortex_refire_behavior"  						"explosive_round"
 	"allow_empty_fire"								"0"
 	"reload_enabled"  								"1"
 	"allow_empty_click"   							"1"
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
-	"allow_headshots" 								"0"
-
-
-		"play_offhand_charging_anim"  					"1"
-	"play_offhand_start_end_anim"					"1"
-	"play_offhand_fire_anim"						"1"
-
+	"allow_headshots" 								"1"
+	"damage_headshot_scale"							"1.5"
+	"headshot_distance" 							"15000"
+	"aimassist_disable_hipfire"						"1"
+	"aimassist_disable_ads"							"1"
+	"ads_fov_zoomfrac_start"						"0.0"
+	"ads_fov_zoomfrac_end"							"1.0"
 
 	"charge_time" 									"2.25"
 	"charge_levels"									"5"
 	"charge_cooldown_time"							"0.5"
 	"charge_cooldown_delay"   						"0.0"
-	"charge_is_triggered_by_ADS"					"0"
-	"charge_end_forces_fire"						"0"
 	"charge_require_input"							"1"
+	"charge_end_forces_fire"						"0"
 	"charge_sound_1p"								"Weapon_Titan_Sniper_WindUp"
 	"charge_sound_stop_when_full"					"0"
 	"charge_sound_seek_to_charge_fraction"			"0"
@@ -206,22 +193,22 @@ WeaponData
 	"charge_drain_sound_1p"							"Weapon_Titan_Sniper_WindDown"
 	"charge_drain_sound_stop_when_empty"			"1"
 	"charge_drain_sound_seek_to_charge_fraction"	"1"
-	"charge_effect_1p"								"wpn_arc_cannon_electricity_fp"
+	"charge_effect_1p"								"P_wpn_xo_sniper_charge_FP"
 	"charge_effect_3p"								"P_wpn_xo_sniper_charge"
 	"charge_effect_attachment"						"muzzle_flash"
 
 
 
 	// Spread
-	"spread_stand_hip"								"8"
-	"spread_stand_hip_run"							"10"
+	"spread_stand_hip"								"1"
+	"spread_stand_hip_run"							"1"
 	"spread_stand_ads"								"0"
-	"spread_crouch_hip"   							"7"
+	"spread_crouch_hip"   							"1"
 	"spread_crouch_ads"   							"0"
-	"spread_air_hip"  								"10"
+	"spread_air_hip"  								"1"
 	"spread_air_ads"  								"0"
 
-	"ammo_suck_behavior"							"offhand_weapons"
+	"ammo_suck_behavior"							"primary_weapons"
 
 	// View Kick
 	"viewkick_spring" 								"titan_railgun"
