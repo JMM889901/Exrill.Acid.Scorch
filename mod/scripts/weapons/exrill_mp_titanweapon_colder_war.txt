@@ -123,9 +123,9 @@ WeaponData
 	"fx_muzzle_flash_attach"						"muzzle_flash"
 
 	// Sound
-	"fire_sound_1_player_1p"						"Weapon_bulletCasings.Bounce"
+	"fire_sound_1_player_1p"						"diag_sp_bossFight_STS676_02_01_imc_viper"
 	"fire_sound_1_player_3p"						"Weapon_bulletCasings.Bounce"
-	"fire_sound_2_player_1p"						"weapon_thermitelauncher_fire_1p"
+	"fire_sound_2_player_1p"						"diag_sp_bossFight_STS676_03_01_imc_viper"
 	"fire_sound_2_player_3p"						"weapon_thermitelauncher_fire_3p"
 	"fire_sound_1_npc"								"weapon_thermitelauncher_fire_npc"
 
