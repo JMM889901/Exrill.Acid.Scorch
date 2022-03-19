@@ -22,12 +22,12 @@ WeaponData
 	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_energy_cannon"
 	"OnWeaponNpcPrimaryAttack"						"pp_OnWeaponNpcPrimaryAttack_titanweapon_energy_cannon"
 	"OnWeaponChargeLevelIncreased"					"pp_OnWeaponChargeLevelIncreased_titanweapon_energy_cannon"
-	"OnWeaponStartZoomIn"							"pp_OnWeaponStartZoomIn_titanweapon_energy_cannon"
-	"OnWeaponStartZoomOut"							"pp_OnWeaponStartZoomOut_titanweapon_energy_cannon"
+	"OnWeaponStartZoomIn"							"exrill_OnWeaponActivate_titanweapon_mortar_rockets"
+	"OnWeaponStartZoomOut"							"exrill_OnWeaponDeactivate_titanweapon_mortar_rockets"
 	"OnWeaponOwnerChanged"							"pp_OnWeaponOwnerChanged_titanweapon_energy_cannon"
 
-	"projectile_launch_speed"						"7000"
-	"projectile_gravity_scale"						"1"
+	"projectile_launch_speed"						"3000"
+	"projectile_gravity_scale"						"0.8"
 	"projectile_launch_pitch_offset"				"0"
 
 	// Menu Stats
@@ -68,15 +68,15 @@ WeaponData
 	"damage_type" 									"bullet"
 
 	"impulse_force"   								"15000"
-	"critical_hit_damage_scale"						"1.5"
+	"critical_hit_damage_scale"						"1.2"
 
 	// Ammo
 	"ammo_stockpile_max"							"1000"
 	"ammo_clip_size"   								"1"
 	"ammo_default_total"							"1000"
 
-	"damage_additional_bullets"						"250"		// each additional bullet after the first does this much
-	"damage_additional_bullets_titanarmor"			"300"		// each additional bullet after the first does this much
+	"damage_additional_bullets"						"150"		// each additional bullet after the first does this much
+	"damage_additional_bullets_titanarmor"			"250"		// each additional bullet after the first does this much
 	"bolt_hitsize"									"0.0"
 	"bolt_hitsize_grow1_time"						"0.035"
 	"bolt_hitsize_grow1_size"						"2.0"
@@ -157,12 +157,12 @@ WeaponData
 	"zoom_fov"										"50"
 	"zoom_toggle_lerp_time"							"0.2"
 	"zoom_toggle_fov"								"25"
-	"reload_time" 									"2"
-	"reload_time_late1" 							"1.42"
-	"reload_time_late2" 							"0.77"
-	"reloadempty_time"								"2"
-	"reloadempty_time_late1"						"1.42"
-	"reloadempty_time_late2"						"0.77"
+	"reload_time" 									"3"
+	"reload_time_late1" 							"2"
+	"reload_time_late2" 							"1.5"
+	"reloadempty_time"								"3"
+	"reloadempty_time_late1"						"2"
+	"reloadempty_time_late2"						"1.5"
 	"holster_time"									".05"
 	"lower_time"  									".05"
 	"raise_time"  									".3"

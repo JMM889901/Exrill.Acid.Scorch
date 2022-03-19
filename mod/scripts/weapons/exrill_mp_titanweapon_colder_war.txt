@@ -18,11 +18,11 @@ WeaponData
 	"pickup_press_prompt" 							"[USE] [WEAPONNAME]"
 	"minimap_reveal_distance"						"32000"
 
-	"OnProjectileCollision"  						"OnProjectileCollision_Meteor"
-	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_Meteor"
-	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_Meteor"
-	"OnWeaponActivate"								"OnWeaponActivate_Meteor"
-	"OnWeaponDeactivate"							"OnWeaponDeactivate_Meteor"
+	"OnProjectileCollision"  						"pp_OnProjectileCollision_ColderWar"
+	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_ColderWar"
+	"OnWeaponNpcPrimaryAttack"						"pp_OnWeaponNpcPrimaryAttack_ColderWar"
+	"OnWeaponActivate"								"pp_OnWeaponActivate_ColderWar"
+	"OnWeaponDeactivate"							"pp_OnWeaponDeactivate_ColderWar"
 
 	// Menu Stats
 	"stat_damage" 									"70"

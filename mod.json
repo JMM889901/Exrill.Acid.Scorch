@@ -81,6 +81,13 @@
 			"ServerCallback": {
                 "After": "exrill_MpTitanWeapon_hybidlauncherInit"
             }
+		},
+		{
+			"Path": "weapons/exrill_mp_titanweapon_colder_war.gnut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+				"After": "pp_MpTitanweaponColderWar_Init"
+			}
 		}
 	]
 }

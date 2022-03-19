@@ -26,9 +26,29 @@ void function pp_OnProjectileCollision_titanweapon_energy_cannon( entity project
 {
 	print("testing")
 	#if SERVER
+		int ChargeLevel = expect int(projectile.s.bulletsToFire)
+		if(ChargeLevel < 2)
+		{
 		StartParticleEffectInWorld( GetParticleSystemIndex($"P_meteor_trap_EXP"), projectile.GetOrigin(), <0,0,0>)
 		EmitSoundAtPosition( TEAM_UNASSIGNED, projectile.GetOrigin(), "incendiary_trap_explode_large" )
-		#endif
+		}
+		entity owner = projectile.GetOwner()
+		RadiusDamage(
+			pos,												// origin
+			owner,												// owner
+			projectile,		 									// inflictor
+			25,													// pilot damage
+			1000/ChargeLevel,									// heavy armor damage
+			750/ChargeLevel,									// inner radius
+			750/ChargeLevel,									// outer radius
+			SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+			0, 													// distanceFromAttacker
+			0, 													// explosionForce
+			DF_EXPLOSION,										// damage flags
+			eDamageSourceId.pp_mp_titanweapon_energy_cannon		// damage source id
+		)
+	#endif
+
 }
 
 void function pp_OnWeaponActivate_titanweapon_energy_cannon( entity weapon )

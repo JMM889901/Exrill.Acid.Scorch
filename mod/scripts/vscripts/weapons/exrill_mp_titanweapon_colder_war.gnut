@@ -1,0 +1,387 @@
+untyped
+
+global function pp_MpTitanweaponColderWar_Init
+global function pp_OnProjectileCollision_ColderWar
+global function pp_OnWeaponPrimaryAttack_ColderWar
+global function pp_OnWeaponActivate_ColderWar
+global function pp_OnWeaponDeactivate_ColderWar
+
+#if SERVER
+global function pp_OnWeaponNpcPrimaryAttack_ColderWar
+global function pp_Venom_SelfDamageReduction
+global function pp_GetColderWarRadiusDamage
+global const PLAYER_ACID_DAMAGE_TICK = 100.0
+global const PLAYER_ACID_DAMAGE_TICK_PILOT = 20.0
+
+global const NPC_ACID_DAMAGE_TICK = 100.0
+global const NPC_ACID_DAMAGE_TICK_PILOT = 20.0
+
+global struct ColderWarRadiusDamage
+{
+	float pilotDamage
+	float heavyArmorDamage
+}
+
+
+#endif // #if SERVER
+
+#if CLIENT
+const INDICATOR_IMAGE = $"ui/menu/common/locked_icon"
+#endif
+
+global const SP_ACID_DURATION_SCALE = 1.25
+
+
+const ACID_FX_CHARGED = $"P_wpn_meteor_exp_amp"
+global const ACID_FX_TRAIL = $"P_wpn_meteor_exp_trail"
+global const ACID_FX_BASE = $"P_wpn_meteor_exp"
+
+const FLAME_WALL_SPLIT = false
+const ACID_LIFE_TIME = 1.2
+global const ACID_THERMITE_DAMAGE_RADIUS_DEF = 45
+const FLAME_WALL_DAMAGE_RADIUS_DEF = 60
+
+const ACID_SHELL_EJECT		= $"models/Weapons/shellejects/shelleject_40mm.mdl"
+const ACID_FX_LOOP		= "Weapon_Sidwinder_Projectile"
+const int ACID_DAMAGE_FLAGS = damageTypes.gibBullet | DF_IMPACT | DF_EXPLOSION
+
+void function pp_MpTitanweaponColderWar_Init()
+{
+	PrecacheParticleSystem( $"wpn_mflash_40mm_smoke_side_FP" )
+	PrecacheParticleSystem( $"wpn_mflash_40mm_smoke_side" )
+	PrecacheParticleSystem( $"P_scope_glint" )
+
+	PrecacheParticleSystem( $"P_team_jet_hover_HLD" )
+	PrecacheParticleSystem( $"P_enemy_jet_hover_HLD" )
+
+	PrecacheModel( $"models/dev/empty_physics.mdl" )
+
+	PrecacheParticleSystem( ACID_FX_TRAIL )
+	PrecacheParticleSystem( ACID_FX_CHARGED )
+
+	#if SERVER
+	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_meteor_thermite, ColderWarThermite_DamagedTarget )
+
+	PrecacheParticleSystem( THERMITE_GRENADE_FX )
+	PrecacheModel( ACID_SHELL_EJECT )
+
+	FlagInit( "SP_ColderWarIncreasedDuration" )
+	FlagSet( "SP_ColderWarIncreasedDuration" )
+	#endif
+
+	#if CLIENT
+	PrecacheMaterial( INDICATOR_IMAGE )
+	RegisterSignal( "NewOwner" )
+	#endif
+
+	MpTitanweaponFlameWall_Init()
+}
+
+void function pp_OnWeaponActivate_ColderWar( entity weapon )
+{
+}
+
+void function pp_OnWeaponDeactivate_ColderWar( entity weapon )
+{
+}
+
+var function pp_OnWeaponPrimaryAttack_ColderWar( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+
+	return PlayerOrNPCFire_ColderWar( attackParams, true, weapon )
+}
+
+#if SERVER
+void function ColderWarThermite_DamagedTarget( entity target, var damageInfo )
+{
+	if ( !IsValid( target ) )
+		return
+
+	Thermite_DamagePlayerOrNPCSounds( target )
+	pp_Venom_SelfDamageReduction( target, damageInfo )
+
+	entity attacker = DamageInfo_GetAttacker( damageInfo )
+	if ( !IsValid( attacker ) || attacker.GetTeam() == target.GetTeam() )
+		return
+
+	array<entity> weapons = attacker.GetMainWeapons()
+	if ( weapons.len() > 0 )
+	{
+		if ( weapons[0].HasMod( "fd_fire_damage_upgrade" )  )
+			DamageInfo_ScaleDamage( damageInfo, FD_FIRE_DAMAGE_SCALE )
+		if ( weapons[0].HasMod( "fd_hot_streak" ) )
+			UpdateScorchHotStreakCoreMeter( attacker, DamageInfo_GetDamage( damageInfo ) )
+	}
+}
+
+void function pp_Venom_SelfDamageReduction( entity target, var damageInfo )
+{
+	if ( !IsAlive( target ) )
+		return
+
+	entity attacker = DamageInfo_GetAttacker( damageInfo )
+	if ( !IsValid( attacker ) )
+		return
+
+	if ( target != attacker )
+		return
+
+	if ( IsMultiplayer() )
+	{
+		entity soul = attacker.GetTitanSoul()
+		if ( IsValid( soul ) && SoulHasPassive( soul, ePassives.PAS_SCORCH_SELFDMG ) )
+			DamageInfo_ScaleDamage( damageInfo, 0.0 )
+	}
+	else
+	{
+		DamageInfo_ScaleDamage( damageInfo, 0.20 )
+	}
+}
+
+var function pp_OnWeaponNpcPrimaryAttack_ColderWar( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+	return PlayerOrNPCFire_ColderWar( attackParams, false, weapon )
+}
+
+void function ColderWarAirburst( entity bolt )
+{
+	bolt.EndSignal( "OnDestroy" )
+	bolt.GetOwner().EndSignal( "OnDestroy" )
+	wait ACID_LIFE_TIME
+	thread Proto_ColderWarCreatesThermite( bolt )
+	bolt.Destroy()
+}
+
+function Proto_ColderWarCreatesThermite( entity projectile, entity hitEnt = null )
+{
+	vector velocity = projectile.GetVelocity()
+	// printt( "speed " + Length( velocity ) )
+	float speed = min( Length( velocity ), 2500 )
+
+	float speedScale = 0.25
+
+	if ( IsSingleplayer() )
+	{
+		speedScale = 0.35
+	}
+
+	velocity = Normalize( velocity ) * speed * speedScale
+	vector normal = <0,0,1>
+	vector origin = projectile.GetOrigin()
+	vector angles = VectorToAngles( normal )
+	//DebugDrawLine( origin, origin + velocity * 10, 255, 0, 0, true, 5.0 )
+	int range = 360
+	entity owner = projectile.GetOwner()
+	Assert( IsValid( owner ) )
+
+	//EmitSoundAtPosition( owner.GetTeam(), origin, "Explo_ColderWarGun_Impact_3P" )
+
+	float thermiteLifetimeMin = 2.0
+	float thermiteLifetimeMax = 2.5
+
+	if ( IsSingleplayer() )
+	{
+		if ( owner.IsPlayer() || Flag( "SP_ColderWarIncreasedDuration" ) )
+		{
+			thermiteLifetimeMin *= SP_THERMITE_DURATION_SCALE
+			thermiteLifetimeMax *= SP_THERMITE_DURATION_SCALE
+		}
+	}
+	entity inflictor = CreateOncePerTickDamageInflictorHelper( thermiteLifetimeMax )
+	entity base = CreatePhysicsThermiteTrail( origin, owner, inflictor, projectile, velocity, thermiteLifetimeMax, ACID_FX_BASE, eDamageSourceId.mp_titanweapon_meteor_thermite )
+
+	base.SetAngles( AnglesCompose( angles, <90,0,0> ) )
+
+	if ( hitEnt != null && hitEnt.IsWorld() )
+		base.StopPhysics()
+
+	int fireCount
+	float fireSpeed
+
+	array<string> mods = projectile.ProjectileGetMods()
+	if ( mods.contains( "pas_scorch_weapon" ) )
+	{
+		fireCount = 8
+		fireSpeed = 200
+	}
+	else
+	{
+		fireCount = 4
+		fireSpeed = 50
+	}
+	for ( int i = 0; i < fireCount; i++ )
+	{
+		vector trailAngles = <RandomFloatRange( -range, range ), RandomFloatRange( -range, range ), RandomFloatRange( -range, range )>
+		vector forward = AnglesToForward( trailAngles )
+		vector up = AnglesToUp( trailAngles )
+		vector v = velocity + forward * fireSpeed + up * fireSpeed
+		entity prop = CreatePhysicsThermiteTrail( origin, owner, inflictor, projectile, v, RandomFloatRange( thermiteLifetimeMin, thermiteLifetimeMax ), ACID_FX_TRAIL, eDamageSourceId.mp_titanweapon_meteor_thermite )
+
+		trailAngles = VectorToAngles( v )
+		prop.SetAngles( trailAngles )
+	}
+}
+
+ColderWarRadiusDamage function pp_GetColderWarRadiusDamage( entity owner )
+{
+	ColderWarRadiusDamage meteorRadiusDamage
+	if ( owner.IsNPC() )
+	{
+		meteorRadiusDamage.pilotDamage = NPC_ACID_DAMAGE_TICK_PILOT
+		meteorRadiusDamage.heavyArmorDamage = NPC_ACID_DAMAGE_TICK
+	}
+	else
+	{
+		meteorRadiusDamage.pilotDamage = PLAYER_ACID_DAMAGE_TICK_PILOT
+		meteorRadiusDamage.heavyArmorDamage = PLAYER_ACID_DAMAGE_TICK
+	}
+
+	return meteorRadiusDamage
+}
+
+void function PROTO_PhysicsThermiteCausesDamage( entity trail, entity inflictor, int damageSourceId = eDamageSourceId.mp_titanweapon_meteor_thermite )
+{
+	entity owner = trail.GetOwner()
+	Assert( IsValid( owner ) )
+
+	trail.EndSignal( "OnDestroy" )
+	owner.EndSignal( "OnDestroy" )
+
+	ColderWarRadiusDamage meteorRadiusDamage = pp_GetColderWarRadiusDamage( owner )
+	float ACID_DAMAGE_TICK_PILOT = meteorRadiusDamage.pilotDamage
+	float ACID_DAMAGE_TICK = meteorRadiusDamage.heavyArmorDamage
+
+	array<entity> fxArray = trail.e.fxArray
+
+	OnThreadEnd(
+	function() : ( fxArray )
+		{
+			foreach ( fx in fxArray )
+			{
+				if ( IsValid( fx ) )
+					EffectStop( fx )
+			}
+		}
+	)
+
+	wait 0.2 // thermite falls and ignites
+
+	vector originLastFrame = trail.GetOrigin()
+
+	for ( ;; )
+	{
+		vector moveVec = originLastFrame - trail.GetOrigin()
+		float moveDist = Length( moveVec )
+
+		// spread the circle while the particles are moving fast, could replace with trace
+		float dist = max( ACID_THERMITE_DAMAGE_RADIUS_DEF, moveDist )
+
+		RadiusDamage(
+			trail.GetOrigin(),									// origin
+			owner,												// owner
+			inflictor,		 									// inflictor
+			ACID_DAMAGE_TICK_PILOT,							// pilot damage
+			ACID_DAMAGE_TICK,									// heavy armor damage
+			dist,												// inner radius
+			dist,												// outer radius
+			SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+			0, 													// distanceFromAttacker
+			0, 													// explosionForce
+			0,													// damage flags
+			damageSourceId 										// damage source id
+		)
+
+		originLastFrame = trail.GetOrigin()
+
+		wait 0.1
+	}
+}
+
+void function PROTO_ThermiteCausesDamage( entity trail, entity owner, entity inflictor, int damageSourceId = eDamageSourceId.mp_titanweapon_meteor_thermite )
+{
+	Assert( IsValid( owner ) )
+
+	trail.EndSignal( "OnDestroy" )
+	owner.EndSignal( "OnDestroy" )
+	inflictor.EndSignal( "OnDestroy" )
+
+	ColderWarRadiusDamage meteorRadiusDamage = pp_GetColderWarRadiusDamage( owner )
+	float ACID_DAMAGE_TICK_PILOT = meteorRadiusDamage.pilotDamage
+	float ACID_DAMAGE_TICK = meteorRadiusDamage.heavyArmorDamage
+
+	OnThreadEnd(
+		function() : ( trail )
+		{
+			EffectStop( trail )
+		}
+	)
+
+	float radius = ACID_THERMITE_DAMAGE_RADIUS_DEF
+	if ( damageSourceId == eDamageSourceId.mp_titanweapon_flame_wall )
+		radius = FLAME_WALL_DAMAGE_RADIUS_DEF
+
+	for ( ;; )
+	{
+		RadiusDamage(
+			trail.GetOrigin(),									// origin
+			owner,												// owner
+			inflictor,		 									// inflictor
+			ACID_DAMAGE_TICK_PILOT,							// pilot damage
+			ACID_DAMAGE_TICK,									// heavy armor damage
+			radius,												// inner radius
+			radius,												// outer radius
+			SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+			0, 													// distanceFromAttacker
+			0, 													// explosionForce
+			DF_EXPLOSION,										// damage flags
+			damageSourceId										// damage source id
+		)
+
+		WaitFrame()
+	}
+}
+
+#endif // #if SERVER
+
+void function pp_OnProjectileCollision_ColderWar( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+{
+	#if SERVER
+	if ( projectile.proj.projectileBounceCount > 0 )
+		return
+
+	projectile.proj.projectileBounceCount++
+
+	entity owner = projectile.GetOwner()
+	if ( !IsValid( owner ) )
+		return
+
+	if ( IsValid( owner ) )
+		thread Proto_ColderWarCreatesThermite( projectile, hitEnt )
+	#endif
+}
+
+function PlayerOrNPCFire_ColderWar( WeaponPrimaryAttackParams attackParams, playerFired, entity weapon )
+{
+	//entity owner = weapon.GetWeaponOwner()
+	bool shouldCreateProjectile = false
+	if ( IsServer() || weapon.ShouldPredictProjectiles() )
+		shouldCreateProjectile = true
+	#if CLIENT
+		if ( !playerFired )
+			shouldCreateProjectile = false
+	#endif
+
+	if ( shouldCreateProjectile )
+	{
+		float speed	= 1.0 // 2200.0
+
+ 		//TODO:: Calculate better attackParams.dir if auto-titan using mortarShots
+		entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir, speed, ACID_DAMAGE_FLAGS, ACID_DAMAGE_FLAGS, playerFired , 0 )
+		if ( bolt != null )
+			EmitSoundOnEntity( bolt, "weapon_thermitelauncher_projectile_3p" )
+	}
+
+	return 1
+}

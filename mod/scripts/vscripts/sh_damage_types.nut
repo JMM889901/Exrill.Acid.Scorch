@@ -3,9 +3,9 @@ global function RegisterWeaponDamageSourceName
 global function GetObitFromDamageSourceID
 global function DamageSourceIDToString
 global function DamageSourceIDHasString
-//made by dinorush, just prefixed with my prefix to avoid mod conflicts 
-global function pp_RegisterWeaponDamageSource
-global function pp_RegisterWeaponDamageSources
+//These were made by dinorush and are pog
+global function RegisterWeaponDamageSource
+global function RegisterWeaponDamageSources
 
 struct
 {
@@ -663,14 +663,14 @@ string function GetObitFromDamageSourceID( int damageSourceID )
 	return ""
 } 
 //Dinorush my beloved
-void function pp_RegisterWeaponDamageSource(string weaponRef, string damageSourceName) {
-    pp_RegisterWeaponDamageSources({weaponRef = damageSourceName})
+void function RegisterWeaponDamageSource(string weaponRef, string damageSourceName) {
+    RegisterWeaponDamageSources({weaponRef = damageSourceName})
 }
 
 // Values are expected to be in a table containing the enum variable name and the string name, e.g.
 // {"mp_titanweapon_sniper" : "Plasma Railgun", "mp_titanweapon_meteor" : "T203 Thermite Launcher"}
 // Only works properly if used after the match starts, e.g. called in "after" callbacks.
-void function pp_RegisterWeaponDamageSources(table<string, string> newValueTable) {
+void function RegisterWeaponDamageSources(table<string, string> newValueTable) {
     int trgt = file.damageSourceIDToString.len() - 1 //-1 accounts for invalid.
 
     foreach (newVal, stringVal in newValueTable) {

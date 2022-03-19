@@ -47,7 +47,7 @@ void function PrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanability_viral_shot_secondary"] <- "Viral damage"
 	WeaponIds["exrill_mp_titanweapon_rod_from_god"] <- "Rod from god"
 	WeaponIds["pp_mp_titanweapon_energy_cannon"] <- "Energy Cannon"
-	pp_RegisterWeaponDamageSources(WeaponIds)
+	RegisterWeaponDamageSources(WeaponIds)
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
     #if SERVER
 
