@@ -135,7 +135,7 @@ void function OnPoisonWallPlanted( entity projectile )
 		vector origin = OriginToGround( projectile.GetOrigin() )
 		projectile.SetOrigin(< origin.x, origin.y, origin.z+250 >)
 		origin = <origin.x, origin.y, origin.z +250>
-		float duration = 10
+		float duration = 6
 		if ( GAMETYPE == GAMEMODE_SP )
 			duration *= 1.5
 		entity inflictor = CreateOncePerTickDamageInflictorHelper( duration )
@@ -204,12 +204,12 @@ bool function CreateAcidWaveSegment( entity projectile, int projectileCount, ent
 		if ( mods.contains( "pas_scorch_flamecore" ) )
 		{
 			damageSource = eDamageSourceId.exrill_mp_titancore_acid_river
-			duration = 15
+			duration = 10
 		}
 		else
 		{
 			damageSource = eDamageSourceId.exrill_mp_titancore_acid_river
-			duration = mods.contains( "pas_scorch_firewall" ) ? 10.0 : 7.5
+			duration = mods.contains( "pas_scorch_firewall" ) ? 6.0 : 7.5
 		}
 
 		if ( IsSingleplayer() )
