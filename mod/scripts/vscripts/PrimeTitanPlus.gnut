@@ -95,7 +95,7 @@ void function SetTitanLoadout( entity titan )
 
 				//Weapon
 				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
-				titan.GiveWeapon ("exrill_mp_titanweapon_hybrid_launcher")
+				titan.GiveWeapon ("exrill_mp_titanweapon_colder_war")
 				
 				//Titan Core
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
@@ -123,7 +123,7 @@ void function SetTitanLoadout( entity titan )
 
 				//Weapon
 				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
-				titan.GiveWeapon ("exrill_mp_titanweapon_150mm")
+				titan.GiveWeapon ("pp_mp_titanweapon_energy_cannon")
 				
 				//Titan Core
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
