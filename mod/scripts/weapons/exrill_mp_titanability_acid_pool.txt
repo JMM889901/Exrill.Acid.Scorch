@@ -6,8 +6,8 @@ WeaponData
 	"description" 									"#WPN_TITAN_SLOW_TRAP_DESC"
 	"longdesc"										"#WPN_TITAN_SLOW_TRAP_LONGDESC"
 
-	"menu_icon"										"rui/titan_loadout/tactical/titan_tactical_incendiary_menu"
-	"hud_icon"										"rui/titan_loadout/tactical/titan_tactical_incendiary"
+	"menu_icon"										"ui/temp"
+	"hud_icon"										"ui/temp"
 
 	"weaponClass" 									"titan"
 	"weaponType"									"tactical"
@@ -32,7 +32,8 @@ WeaponData
 	"projectile_ignores_vortex"						"mirror"
 
 	// Models
-      "viewmodel"                                                      "models/weapons/titan_bt_rocket_pod/atpov_titan_bt_laser_pod.mdl"
+      "viewmodel"                                                      "models/weapons/titan_vortex_blocker/atpov_vortexblocker.mdl"
+       "playermodel" 									"models/weapons/titan_vortex_blocker/w_vortexblocker.mdl"
 	"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects

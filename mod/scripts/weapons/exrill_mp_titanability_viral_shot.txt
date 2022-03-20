@@ -5,8 +5,8 @@ WeaponData
 	"description"									"#WPN_TITAN_LASER_LITE_DESC"
 	"longdesc"										"#WPN_TITAN_LASER_LITE_LONGDESC"
 
-	"menu_icon"										"rui/titan_loadout/ordnance/laser_shot_menu"
-	"hud_icon"										"rui/titan_loadout/ordnance/laser_shot"
+	"menu_icon"										"ui/temp"
+	"hud_icon"										"ui/temp"
 
 	"draw_latest_non_offhand_when_offhand_is_active"	"1"
 	"offhand_default_inventory_slot"				"0"
@@ -111,7 +111,7 @@ WeaponData
 
 	// Models
 	"viewmodel"   									"models/weapons/titan_vortex_blocker/atpov_vortexblocker.mdl"
-	//"playermodel" 								// no model, use rocket pod
+	"playermodel" 									"models/weapons/titan_vortex_blocker/w_vortexblocker.mdl"
 		"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects
@@ -126,9 +126,9 @@ WeaponData
 	"vortex_refire_behavior"  						"absorb"
 
 	// Sounds
-	"fire_sound_1_player_1p"						""
+	"fire_sound_1_player_1p"						"Weapon_ShoulderLaser_Fire_3P"
 	"fire_sound_1_player_3p"						"Weapon_ShoulderLaser_Fire_3P"
-	"charge_sound_1p"								"diag_sp_bossFight_STS676_06_01_imc_viper"
+	"charge_sound_1p"								"wilds_anim_bt_1st_battery_fall_2ch_v1_01"
 	"charge_sound_3p"								"Weapon_ShoulderLaser_StutterBuild_3P"
 	"gesture_attack_anim"							"0"
 

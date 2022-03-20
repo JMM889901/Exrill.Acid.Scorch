@@ -159,10 +159,10 @@ WeaponData
 	"charge_end_forces_fire"							"1"
 	"charge_require_input"							"0"
 
-	"charge_sound_1p"									"Weapon_ColdWar_ChargeUp_1P"
+	"charge_sound_1p"									"s2s_emit_spaceship_big"
 	"charge_sound_3p"									"Weapon_ColdWar_ChargeUp_3P"
 	"charge_sound_stop_when_full"						"1"
-	"charge_sound_seek_to_charge_fraction"			"0"
+	"charge_sound_seek_to_charge_fraction"			"1"
 	"charge_drain_sound_1p"							"Weapon_ChargeRifle_WindDown_1P"
 	"charge_drain_sound_3p"							"Weapon_ChargeRifle_WindDown_3P"
 	"charge_drain_sound_stop_when_empty"				"1"

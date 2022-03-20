@@ -6,8 +6,8 @@ WeaponData
 	"shortprintname"								"#WPN_TITAN_FIREWALL"
 	"longdesc"										"#WPN_TITAN_FIREWALL_LONGDESC"
 
-	"menu_icon"										"rui/titan_loadout/ordnance/flame_wall_menu"
-	"hud_icon"										"rui/titan_loadout/ordnance/flame_wall"
+	"menu_icon"										"ui/temp"
+	"hud_icon"										"ui/temp"
 
 	"weaponClass" 									"titan"
 	"weaponType"									"defense"
@@ -36,7 +36,8 @@ WeaponData
 	"grenade_bounce_vel_frac_shallow"				"0.5"
 	"grenade_bounce_vel_frac_sharp"					"0.3"
 	// Models
-      "viewmodel"                                                      "models/weapons/titan_bt_rocket_pod/atpov_titan_bt_laser_pod.mdl"
+      "viewmodel"                                                      "models/weapons/titan_vortex_blocker/atpov_vortexblocker.mdl"
+      "playermodel" 									"models/weapons/titan_vortex_blocker/w_vortexblocker.mdl"
 	"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects
