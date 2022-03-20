@@ -32,9 +32,9 @@ const INDICATOR_IMAGE = $"ui/menu/common/locked_icon"
 global const SP_ACID_DURATION_SCALE = 1.25
 
 
-const ACID_FX_CHARGED = $"P_wpn_meteor_exp_amp"
-global const ACID_FX_TRAIL = $"P_wpn_meteor_exp_trail"
-global const ACID_FX_BASE = $"P_wpn_meteor_exp"
+const ACID_FX_CHARGED = $"P_wpn_meteor_exp_amp_acid"
+global const ACID_FX_TRAIL = $"P_wpn_meteor_exp_trail_acid"
+global const ACID_FX_BASE = $"P_wpn_meteor_exp_acid"
 
 const FLAME_WALL_SPLIT = false
 const ACID_LIFE_TIME = 1.2
