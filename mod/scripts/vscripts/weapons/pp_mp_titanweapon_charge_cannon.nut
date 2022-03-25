@@ -146,7 +146,7 @@ function FireEnergy_cannon( entity weapon, WeaponPrimaryAttackParams attackParam
 	bool weaponHasInstantShotMod = weapon.HasMod( "instant_shot" )
 	if ( chargeLevel == 0 )
 		return 0
-
+	chargeLevel = weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) - chargeLevel
 	//printt( "GetTitanEnergy_cannonChargeLevel():", chargeLevel )
 
 	if ( chargeLevel > 4 )
@@ -202,7 +202,7 @@ function FireEnergy_cannon( entity weapon, WeaponPrimaryAttackParams attackParam
 	if ( !shouldCreateProjectile )
 		return 1
 
-	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,weapon.GetWeaponChargeFraction()+0.3, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
+	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,(1-weapon.GetWeaponChargeFraction())+0.3, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
 	if ( bolt )
 	{
 		bolt.s.bulletsToFire <- chargeLevel
