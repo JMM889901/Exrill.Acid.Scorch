@@ -1,0 +1,4 @@
+{
+    "EventId": [ "amb_emit_boiling_steam_02" ],
+    "AudioSelectionStrategy": "random"
+}
