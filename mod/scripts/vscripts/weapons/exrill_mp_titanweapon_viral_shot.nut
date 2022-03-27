@@ -102,7 +102,7 @@ void function StartVirusSpread(entity attacker, entity target, float duration){
 	}
 }
 table<entity, array<entity> > ToxinFXArrays = {}
-const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas"
+const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas_acid"
 entity function CreateSmoke(entity attacker, entity titan, float timeleft)
 {
 	print("shoud make smoke")

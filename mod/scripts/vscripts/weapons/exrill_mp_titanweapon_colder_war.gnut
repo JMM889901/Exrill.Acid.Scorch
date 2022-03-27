@@ -22,7 +22,6 @@ global struct ColderWarRadiusDamage
 	float heavyArmorDamage
 }
 
-
 #endif // #if SERVER
 
 #if CLIENT
