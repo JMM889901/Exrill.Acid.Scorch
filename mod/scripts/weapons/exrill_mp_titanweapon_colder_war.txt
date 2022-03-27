@@ -8,8 +8,8 @@ WeaponData
 
 	"leveled_pickup"								"1"
 	"ammo_no_remove_from_stockpile"						"1"
-	"menu_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_particle_ac"
-	"hud_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_particle_ac"
+	"menu_icon"										"ui/temp"
+	"hud_icon"										"ui/temp"
 
 	"weaponClass" 									"titan"
 	"fire_mode"   									"semi-auto"
@@ -33,9 +33,9 @@ WeaponData
 	// Models
 	"viewmodel"   									"models/weapons/titan_particle_accelerator/atpov_titan_particle_accelerator.mdl"
 	"playermodel" 									"models/weapons/titan_particle_accelerator/w_titan_particle_accelerator.mdl"
-	//"projectilemodel" 								"models/dev/empty_model.mdl"
+	"projectilemodel" 								"models/dev/empty_model.mdl"
 
-	"projectilemodel" 								"models/weapons/bullets/triple_threat_projectile.mdl"
+	//"projectilemodel" 								"models/weapons/bullets/triple_threat_projectile.mdl"
 
 	"bolt_hitsize"									"0.5"
 	"bolt_hitsize_grow1_time"						"0.075"
@@ -48,8 +48,8 @@ WeaponData
 
 	"bolt_gravity_enabled"							"1"
 
-    "grenade_arc_indicator_effect"					"P_grenade_arc_proto_first_orange"
-    "grenade_arc_impact_indicator_effect"			"grenade_arc_impact_proto_orange"
+    "grenade_arc_indicator_effect"					"P_grenade_arc_proto_green"
+    "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto_green"
     "grenade_arc_indicator_show_from_hip"			"0"
 	"grenade_arc_indicator_bounce_count"			"1"
 
@@ -106,7 +106,7 @@ WeaponData
 	}
 
 	// Effects
-	"tracer_effect"   								"weapon_tracers_40mm"
+	"tracer_effect"   								"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"impact_effect_table" 							"titan_meteor_acid"
 	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_trip_FP"
@@ -159,7 +159,7 @@ WeaponData
 	"charge_end_forces_fire"							"1"
 	"charge_require_input"							"0"
 
-	"charge_sound_1p"									"s2s_emit_spaceship_big"
+	"charge_sound_1p"									"marvin_weld_medium"
 	"charge_sound_3p"									"Weapon_ColdWar_ChargeUp_3P"
 	"charge_sound_stop_when_full"						"1"
 	"charge_sound_seek_to_charge_fraction"			"1"
