@@ -11,11 +11,11 @@ const asset ACID_WALL_FX = $"P_wpn_meteor_wall_acid"
 const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s_acid"
 const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2_acid"
 
-const string ACID_WALL_PROJECTILE_SFX = "flamewall_flame_start"
+const string ACID_WALL_PROJECTILE_SFX = "amb_emit_boiling_steam_02"
 const string ACID_WALL_GROUND_SFX = "Explo_ThermiteGrenade_Impact_3P"
-const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
-const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
-const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
+const string ACID_WALL_GROUND_BEGINNING_SFX = "amb_emit_boiling_steam_02"
+const string ACID_WALL_GROUND_MIDDLE_SFX = "amb_emit_boiling_steam_02"
+const string ACID_WALL_GROUND_END_SFX = "amb_emit_boiling_steam_02"
 //TODO: Need to reassign ownership to whomever destroys the Barrel.
 const asset DAMAGE_AREA_MODEL = $"models/fx/xo_shield.mdl"
 const asset SLOW_TRAP_MODEL = $"models/weapons/titan_incendiary_trap/w_titan_incendiary_trap.mdl"
@@ -27,7 +27,7 @@ const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas_acid"
 const asset TOXIC_FUMES_S2S_FX 	= $"P_meteor_trap_gas_s2s_acid"
 const asset FIRE_CENTER_FX = $"P_meteor_trap_center_acid"
 const asset BARREL_EXP_FX = $"P_meteor_trap_EXP_acid"
-const asset FIRE_LINES_FX = $"P_meteor_trap_burn"
+const asset FIRE_LINES_FX = $"P_meteor_trap_burn_acid"
 const asset FIRE_LINES_S2S_FX = $"P_meteor_trap_burn_s2s_acid"
 const float FIRE_TRAP_MINI_EXPLOSION_RADIUS = 75
 const float FIRE_TRAP_LIFETIME = 10.5
@@ -271,12 +271,12 @@ void function IncendiaryTrapFireSounds( entity inflictor )
 	inflictor.EndSignal( "OnDestroy" )
 
 	vector position = inflictor.GetOrigin()
-	EmitSoundAtPosition( TEAM_UNASSIGNED, position, "incendiary_trap_burn" )
+	EmitSoundAtPosition( TEAM_UNASSIGNED, position, "amb_emit_boiling_steam_02" )
 	OnThreadEnd(
 	function() : ( position )
 		{
-			StopSoundAtPosition( position, "incendiary_trap_burn" )
-			EmitSoundAtPosition( TEAM_UNASSIGNED, position, "incendiary_trap_burn_stop" )
+			StopSoundAtPosition( position, "amb_emit_boiling_steam_02" )
+			EmitSoundAtPosition( TEAM_UNASSIGNED, position, "amb_emit_reverse_water_fountain_and_boil_03" )
 		}
 	)
 

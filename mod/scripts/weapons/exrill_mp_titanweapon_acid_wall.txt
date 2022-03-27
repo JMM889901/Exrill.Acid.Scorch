@@ -72,9 +72,9 @@ WeaponData
       "charge_remain_full_when_fired"					"1"
       
 	// Sound
-	"fire_sound_1_player_1p"						"diag_sp_bossFight_STS676_04_01_imc_viper"
+	"fire_sound_1_player_1p"						"marvin_legmove_prebuzz_right"
 	"fire_sound_1_player_3p"						""
-      "charge_sound_1p"								"diag_sp_bossFight_STS676_05_01_imc_viper"
+      "charge_sound_1p"								"marvin_headmove_medium"
       "charge_sound_3p"								""
 	"sound_dryfire"									"titan_dryfire"
 	"sound_weapon_ready"							"HUD_TitanUtilityAbility_replenished_1P"

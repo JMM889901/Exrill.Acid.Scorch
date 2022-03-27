@@ -73,7 +73,7 @@ WeaponData
 	"projectile_adjust_to_gun_barrel"				"1"
 	"show_grenade_indicator" 						"0"
 	"projectile_ignores_vortex"						"mirror"
-	//"projectile_trail_effect_0" 					"P_xo_meteorWave_trail"
+	"projectile_trail_effect_0" 					"P_xo_meteorWave_trail_acid"
 	"vortex_drain"									"0.0" //Vortex should ignore this core
 	
 	// TEMP: SCRIPT WAVE SETTINGS

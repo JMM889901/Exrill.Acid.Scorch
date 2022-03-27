@@ -126,9 +126,9 @@ WeaponData
 	"vortex_refire_behavior"  						"absorb"
 
 	// Sounds
-	"fire_sound_1_player_1p"						"Weapon_ShoulderLaser_Fire_3P"
+	"fire_sound_1_player_1p"						"marvin_headmove_short"
 	"fire_sound_1_player_3p"						"Weapon_ShoulderLaser_Fire_3P"
-	"charge_sound_1p"								"wilds_anim_bt_1st_battery_fall_2ch_v1_01"
+	"charge_sound_1p"								"marvin_armmove_small"
 	"charge_sound_3p"								"Weapon_ShoulderLaser_StutterBuild_3P"
 	"gesture_attack_anim"							"0"
 
