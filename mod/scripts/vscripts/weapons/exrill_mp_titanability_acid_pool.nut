@@ -469,7 +469,7 @@ void function AcidPool_DamagedPlayerOrNPC( entity ent, var damageInfo )
 	else
 		Scorch_SelfDamageReduction( ent, damageInfo )
 
-	DamageInfo_ScaleDamage( damageInfo, 0.3 )
+	DamageInfo_ScaleDamage( damageInfo, 0.3 )//why yes i reduce the damage when its dealt instead of just dealing less damage, how could you tell?
 	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 0.7, 1, 1 )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() ){

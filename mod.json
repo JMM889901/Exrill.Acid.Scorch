@@ -1,6 +1,6 @@
 {
-	"Name": "Acid scorch",
-	"Description": "EXRILLs Notes: By turbo charging the capacitors in the Ronins sword per Iniquity´s specifications a strong signature purple glow emits from the sword this will indeed set him part on the battlefield and might aswell be the last thing many pilots see before thier demise.",
+	"Name": "Venom Standalone",
+	"Description": "Standalone venom version for testing",
 	"LoadPriority": 4,
 	"RequiredOnClient": true,
 	"Version": "1.0.0",
@@ -13,46 +13,11 @@
             }
 		},
 		{
-			"Path": "weapons/pp_mp_titanweapon_point_defence.nut",
-			"RunOn": "SERVER || CLIENT"
-		},
-		{
-			"Path": "weapons/pp_mp_titanweapon_charge_cannon.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "pp_MpTitanWeapon_Energy_cannonInit"
-			}
-		},
-		{
 			"Path": "weapons/exrill_mp_titanweapon_acid_wall.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "MpTitanweaponAcidWall_Init"
             }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_rod_from_god.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "pp_MpTitanWeapon_rod_from_godInit"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_mortar_rockets.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "exrill_TitanAbilityMortarInit"
-			},
-			"ClientCallback": {
-				"After": "exrill_TitanAbilityMortarInit"
-			}
-		},
-		{
-			"Path": "weapons/pp_mp_titanability_mortar.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "pp_TitanAbilityMortarInit"
-			}
 		},
 		{
 			"Path": "weapons/exrill_mp_titanweapon_viral_shot.nut",
@@ -73,13 +38,6 @@
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "MpTitanAbilityAcidPool_Init"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_hybridlauncher.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "exrill_MpTitanWeapon_hybidlauncherInit"
             }
 		},
 		{

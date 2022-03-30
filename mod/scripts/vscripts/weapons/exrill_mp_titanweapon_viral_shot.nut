@@ -67,7 +67,8 @@ void function ViralShot_DamagedTarget( entity target, var damageInfo )
 	thread CreateSmoke(attacker, target, 10.0)
 }
 
-void function StartVirus(entity attacker, entity target, float duration){
+void function StartVirus(entity attacker, entity target, float duration)
+{
 	if(!IsValid(target))
 		return
 	target.EndSignal("OnDestroy")
@@ -76,9 +77,10 @@ void function StartVirus(entity attacker, entity target, float duration){
 	while(timeleft > 0){
 		wait 0.5
 		timeleft = timeleft - 0.5
-		target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+		if(IsValid(target))
+			target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
 	}
-	}
+}
 void function StartVirusSpread(entity attacker, entity target, float duration){
 	if(!IsValid(target))
 		return
@@ -88,15 +90,21 @@ void function StartVirusSpread(entity attacker, entity target, float duration){
 	target.EndSignal("OnDestroy")
 	target.EndSignal("OnDeath")
 	float timeleft = duration 
-	while(timeleft > 0){
+	while(timeleft > 0)
+	{
 		wait 0.5
 		timeleft = timeleft - 0.5
-		foreach(entity player in GetTitanArrayOfEnemies( attacker.GetTeam() )){
-			if(Distance( target.GetOrigin(), player.GetOrigin() ) < 1000){
-				thread StartVirus(attacker, player, timeleft)
-				thread StartVirusSpread(attacker  ,player, timeleft)
-				if(attacker != player)
-					thread CreateSmoke(attacker, player, timeleft)
+		if(IsValid(target) && IsValid(attacker))
+		{
+			foreach(entity player in GetTitanArrayOfEnemies( attacker.GetTeam() ))
+			{
+				if(Distance( target.GetOrigin(), player.GetOrigin() ) < 1000)
+				{
+					thread StartVirus(attacker, player, timeleft)
+					thread StartVirusSpread(attacker  ,player, timeleft)
+					if(attacker != player)
+						thread CreateSmoke(attacker, player, timeleft)
+				}
 			}
 		}
 	}
@@ -112,5 +120,5 @@ entity function CreateSmoke(entity attacker, entity titan, float timeleft)
 	wait timeleft
 	if ( IsValid( particleSystem ) ){
 		particleSystem.Destroy()}
-		}
+}
 #endif
