@@ -7,6 +7,9 @@ global function DamageSourceIDHasString
 global function RegisterWeaponDamageSource
 global function RegisterWeaponDamageSources
 
+global function ShouldGiveTimerCredit
+global function RegisterNoDamageReward
+global function RegisterNoDamageRewards
 struct
 {
 	table<int,string> damageSourceIDToName
@@ -684,4 +687,44 @@ void function RegisterWeaponDamageSources(table<string, string> newValueTable) {
         file.damageSourceIDToName[ trgt ] <- stringVal
         trgt++;
     }
+}
+array<int> DamageSourcesToNotReward
+void function RegisterNoDamageReward(int SourceId)
+{
+	DamageSourcesToNotReward.append(SourceId)
+}
+void function RegisterNoDamageRewards(array<int> SourceIds)
+{
+	foreach(SourceId in SourceIds)
+	{
+		DamageSourcesToNotReward.append(SourceId)
+	}
+}
+bool function ShouldGiveTimerCredit( entity player, entity victim, var damageInfo )
+{
+    if ( player == victim )
+        return false
+
+    if ( player.IsTitan() && !IsCoreAvailable( player ) )
+        return false
+
+    if ( GAMETYPE == FREE_AGENCY && !player.IsTitan() )
+        return false
+
+    int damageSourceID = DamageInfo_GetDamageSourceIdentifier( damageInfo )
+    switch ( damageSourceID )
+    {
+		//case eDamageSourceId.exrill_mp_titancore_acid_river: //bruh
+        //case eDamageSourceId.mp_titancore_storm_core: // Modded damageSourceID
+        case eDamageSourceId.mp_titancore_flame_wave:
+        case eDamageSourceId.mp_titancore_flame_wave_secondary:
+        case eDamageSourceId.mp_titancore_salvo_core:
+        case damagedef_titan_fall:
+        case damagedef_nuclear_core:
+            return false
+    }
+	if(DamageSourcesToNotReward.contains(damageSourceID))
+		return false
+
+    return true
 }

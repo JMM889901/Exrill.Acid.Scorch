@@ -1,6 +1,8 @@
 global function PrimeTitanPlus_Init
-
 void function PrimeTitanPlus_Init() {
+	#if SERVER
+        SetGameModeRulesShouldGiveTimerCredit( ShouldGiveTimerCredit )
+	#endif
     PrecacheModel( $"models/titans/buddy/titan_buddy.mdl" )
 	PrecacheModel( $"models/weapons/arms/buddypov.mdl" )
 	PrecacheModel( $"models/weapons/empty_handed/w_laser_cannon.mdl")
@@ -41,6 +43,7 @@ void function PrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanweapon_colder_war_acid"] <- "Acid"
 	RegisterWeaponDamageSources(WeaponIds) //This entire thing is just scuffed, oh well!
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
+	RegisterNoDamageReward(eDamageSourceId.exrill_mp_titancore_acid_river)
     #if SERVER
 
 		AddSpawnCallback("npc_titan", SetTitanLoadout );
@@ -51,6 +54,7 @@ void function PrimeTitanPlus_Init() {
 	Minimap_SetSizeScale( 2.5 )
 	#endif
 }
+
 
 //Apply loadout
 

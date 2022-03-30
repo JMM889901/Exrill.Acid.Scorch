@@ -81,15 +81,22 @@ void function StartVirus(entity attacker, entity target, float duration)
 			target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
 	}
 }
-void function StartVirusSpread(entity attacker, entity target, float duration){
+array<entity> infected
+void function StartVirusSpread(entity attacker, entity target, float duration)
+{
 	if(!IsValid(target))
 		return
 	print(target)
-	target.Signal("VirusSpreadStart")
-	target.EndSignal("VirusSpreadStart")
 	target.EndSignal("OnDestroy")
 	target.EndSignal("OnDeath")
 	float timeleft = duration 
+	infected.append(target)
+	OnThreadEnd(
+		function() : ( target )
+		{
+			infected.fastremovebyvalue(target)
+		}
+	)
 	while(timeleft > 0)
 	{
 		wait 0.5
@@ -98,12 +105,16 @@ void function StartVirusSpread(entity attacker, entity target, float duration){
 		{
 			foreach(entity player in GetTitanArrayOfEnemies( attacker.GetTeam() ))
 			{
-				if(Distance( target.GetOrigin(), player.GetOrigin() ) < 1000)
+				print(player)
+				if(Distance( target.GetOrigin(), player.GetOrigin() ) < 350)
 				{
 					thread StartVirus(attacker, player, timeleft)
-					thread StartVirusSpread(attacker  ,player, timeleft)
+					if(!infected.contains(player))
+					{
+						thread StartVirusSpread(attacker ,player, timeleft)
 					if(attacker != player)
 						thread CreateSmoke(attacker, player, timeleft)
+					}
 				}
 			}
 		}
@@ -113,12 +124,13 @@ table<entity, array<entity> > ToxinFXArrays = {}
 const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas_acid"
 entity function CreateSmoke(entity attacker, entity titan, float timeleft)
 {
-	print("shoud make smoke")
 	int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
 	int attachID = titan.LookupAttachment( "exp_torso_front" )
 	entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( titan, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )
 	wait timeleft
-	if ( IsValid( particleSystem ) ){
-		particleSystem.Destroy()}
+	if ( IsValid( particleSystem ) )
+	{
+		particleSystem.Destroy()
+	}
 }
 #endif

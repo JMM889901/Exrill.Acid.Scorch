@@ -27,6 +27,8 @@ const string ACID_WALL_GROUND_BEGINNING_SFX = "flamewall_flame_burn_front"
 const string ACID_WALL_GROUND_MIDDLE_SFX = "flamewall_flame_burn_middle"
 const string ACID_WALL_GROUND_END_SFX = "flamewall_flame_burn_end"
 
+
+
 void function MpTitanWeaponAcidWave_Init()
 {
 	PrecacheParticleSystem( ACID_WAVE_IMPACT_TITAN )
