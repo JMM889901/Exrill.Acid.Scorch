@@ -37,6 +37,8 @@ WeaponData
 
 	//"projectilemodel" 								"models/weapons/bullets/triple_threat_projectile.mdl"
 
+	"npc_use_check_type"							"shared_energy" //This makes the energy bar show up, now sure why it uses this to decide but respawn moment i guess
+
 	"bolt_hitsize"									"0.5"
 	"bolt_hitsize_grow1_time"						"0.075"
 	"bolt_hitsize_grow1_size"						"16.0"
@@ -57,10 +59,10 @@ WeaponData
 	{
 	    "damage_near_distance"							"1500"		// 1500
 	    "damage_far_distance" 							"3000"		// 3000
-	    "damage_near_value"   							"310"		// 310
-	    "damage_far_value"								"310"		// 310
-	    "damage_near_value_titanarmor"					"800"		// 900
-	    "damage_far_value_titanarmor" 					"800"		// 900
+	    "damage_near_value"   							"60"		// 310
+	    "damage_far_value"								"60"		// 310
+	    "damage_near_value_titanarmor"					"100"		// 900
+	    "damage_far_value_titanarmor" 					"100"		// 900
 
 		"deploy_time" 									"0.85"
 

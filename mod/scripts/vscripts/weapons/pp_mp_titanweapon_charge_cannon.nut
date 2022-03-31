@@ -24,7 +24,6 @@ struct {
 } file
 void function pp_OnProjectileCollision_titanweapon_energy_cannon( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
 {
-	print("testing")
 	#if SERVER
 		int ChargeLevel = expect int(projectile.s.bulletsToFire)
 		if(ChargeLevel < 2)

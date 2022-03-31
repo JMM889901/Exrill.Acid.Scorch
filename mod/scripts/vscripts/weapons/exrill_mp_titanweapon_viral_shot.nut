@@ -60,11 +60,14 @@ void function ViralShot_DamagedTarget( entity target, var damageInfo )
 		DamageInfo_SetDamage( damageInfo, 0 )
 		return
 	}
-	print("what")
+
 	DamageInfo_SetDamage( damageInfo, 2 )
 	thread StartVirus(attacker, target, 10.0)
+	if(target.IsTitan())
+	{
 	thread StartVirusSpread(attacker, target, 10.0)
 	thread CreateSmoke(attacker, target, 10.0)
+	}
 }
 
 void function StartVirus(entity attacker, entity target, float duration){
@@ -82,7 +85,6 @@ void function StartVirus(entity attacker, entity target, float duration){
 void function StartVirusSpread(entity attacker, entity target, float duration){
 	if(!IsValid(target))
 		return
-	print(target)
 	target.Signal("VirusSpreadStart")
 	target.EndSignal("VirusSpreadStart")
 	target.EndSignal("OnDestroy")
@@ -105,7 +107,6 @@ table<entity, array<entity> > ToxinFXArrays = {}
 const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas_acid"
 entity function CreateSmoke(entity attacker, entity titan, float timeleft)
 {
-	print("shoud make smoke")
 	int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
 	int attachID = titan.LookupAttachment( "exp_torso_front" )
 	entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( titan, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )

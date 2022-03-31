@@ -130,7 +130,6 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 {
 	int chargeLevel = GetTitanSniperChargeLevel( weapon )
 	entity weaponOwner = weapon.GetWeaponOwner()
-	print(chargeLevel)
 	bool weaponHasInstantShotMod = weapon.HasMod( "instant_shot" )
 
 	//printt( "GetTitanSniperChargeLevel():", chargeLevel )
@@ -238,8 +237,6 @@ void function exrill_OnWeaponStartZoomOut_titanweapon_hybidlauncher( entity weap
 void function FixBeam(entity weapon, array<string> mods){
 	#if SERVER
 	ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
-	print(weapon.IsSustainedDischargeWeapon())
-	print(weapon.IsDischarging())
 	if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
 		weapon.ForceSustainedDischargeEnd()
 		wait 0.2}
@@ -263,12 +260,9 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 {
 
 	entity weaponOwner = weapon.GetWeaponOwner()
-	print( weaponOwner.GetSharedEnergyCount())
 	if( weaponOwner.GetSharedEnergyCount() < 800){
 		#if SERVER
 		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
-		print(weapon.IsSustainedDischargeWeapon())
-		print(weapon.IsDischarging())
 		if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
 			weapon.ForceSustainedDischargeEnd()
 			wait 0.2}
@@ -329,13 +323,10 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 {
 	entity weaponOwner = weapon.GetWeaponOwner()
-	print(weaponOwner.GetSharedEnergyCount())
 	OnAbilityStart_TitanCore( weapon )
 	if( weaponOwner.GetSharedEnergyCount() < 800){
 		#if SERVER
 		ForceTitanSustainedDischargeEnd(weapon.GetWeaponOwner())
-		print(weapon.IsSustainedDischargeWeapon())
-		print(weapon.IsDischarging())
 		if ( weapon.IsSustainedDischargeWeapon() && weapon.IsDischarging() ){
 			weapon.ForceSustainedDischargeEnd()
 			wait 0.2}

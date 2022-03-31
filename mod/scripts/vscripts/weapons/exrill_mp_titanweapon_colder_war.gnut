@@ -10,11 +10,11 @@ global function pp_OnWeaponDeactivate_ColderWar
 global function pp_OnWeaponNpcPrimaryAttack_ColderWar
 global function pp_Venom_SelfDamageReduction
 global function pp_GetColderWarRadiusDamage
-global const PLAYER_ACID_DAMAGE_TICK = 100.0
-global const PLAYER_ACID_DAMAGE_TICK_PILOT = 20.0
+global const PLAYER_ACID_DAMAGE_TICK = 15.0
+global const PLAYER_ACID_DAMAGE_TICK_PILOT = 15.0
 
-global const NPC_ACID_DAMAGE_TICK = 100.0
-global const NPC_ACID_DAMAGE_TICK_PILOT = 20.0
+global const NPC_ACID_DAMAGE_TICK = 15.0
+global const NPC_ACID_DAMAGE_TICK_PILOT = 15.0
 
 global struct ColderWarRadiusDamage
 {
@@ -59,7 +59,7 @@ void function pp_MpTitanweaponColderWar_Init()
 	PrecacheParticleSystem( ACID_FX_CHARGED )
 
 	#if SERVER
-	AddDamageCallbackSourceID( eDamageSourceId.mp_titanweapon_meteor_thermite, ColderWarThermite_DamagedTarget )
+	AddDamageCallbackSourceID( eDamageSourceId.exrill_mp_titanweapon_colder_war_acid, ColderWarThermite_DamagedTarget )
 
 	PrecacheParticleSystem( THERMITE_GRENADE_FX )
 	PrecacheModel( ACID_SHELL_EJECT )
@@ -103,7 +103,7 @@ void function ColderWarThermite_DamagedTarget( entity target, var damageInfo )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == target.GetTeam() )
 		return
-
+	StatusEffect_AddTimed( target, eStatusEffect.move_slow, 0.3, 0.3, 0 )
 	array<entity> weapons = attacker.GetMainWeapons()
 	if ( weapons.len() > 0 )
 	{
@@ -122,7 +122,7 @@ void function pp_Venom_SelfDamageReduction( entity target, var damageInfo )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) )
 		return
-
+	
 	if ( target != attacker )
 		return
 
@@ -189,7 +189,7 @@ function Proto_ColderWarCreatesThermite( entity projectile, entity hitEnt = null
 		}
 	}
 	entity inflictor = CreateOncePerTickDamageInflictorHelper( thermiteLifetimeMax )
-	entity base = CreatePhysicsThermiteTrail( origin, owner, inflictor, projectile, velocity, thermiteLifetimeMax, ACID_FX_BASE, eDamageSourceId.mp_titanweapon_meteor_thermite )
+	entity base = CreatePhysicsAcidTrail( origin, owner, inflictor, projectile, velocity, thermiteLifetimeMax, ACID_FX_BASE, eDamageSourceId.exrill_mp_titanweapon_colder_war_acid )
 
 	base.SetAngles( AnglesCompose( angles, <90,0,0> ) )
 
@@ -216,12 +216,53 @@ function Proto_ColderWarCreatesThermite( entity projectile, entity hitEnt = null
 		vector forward = AnglesToForward( trailAngles )
 		vector up = AnglesToUp( trailAngles )
 		vector v = velocity + forward * fireSpeed + up * fireSpeed
-		entity prop = CreatePhysicsThermiteTrail( origin, owner, inflictor, projectile, v, RandomFloatRange( thermiteLifetimeMin, thermiteLifetimeMax ), ACID_FX_TRAIL, eDamageSourceId.mp_titanweapon_meteor_thermite )
+		entity prop = CreatePhysicsAcidTrail( origin, owner, inflictor, projectile, v, RandomFloatRange( thermiteLifetimeMin, thermiteLifetimeMax ), ACID_FX_TRAIL, eDamageSourceId.exrill_mp_titanweapon_colder_war_acid )
 
 		trailAngles = VectorToAngles( v )
 		prop.SetAngles( trailAngles )
 	}
 }
+
+entity function CreatePhysicsAcidTrail( vector origin, entity owner, entity inflictor, entity projectile, vector velocity, float killDelay, asset overrideFX = METEOR_FX_TRAIL, int damageSourceId = eDamageSourceId.mp_titanweapon_meteor_thermite )
+{
+	Assert( IsValid( owner ) )
+	entity prop_physics = CreateEntity( "prop_physics" )
+	prop_physics.SetValueForModelKey( $"models/dev/empty_physics.mdl" )
+	prop_physics.kv.fadedist = 2000
+	prop_physics.kv.renderamt = 255
+	prop_physics.kv.rendercolor = "255 255 255"
+	prop_physics.kv.CollisionGroup = TRACE_COLLISION_GROUP_DEBRIS
+	prop_physics.kv.spawnflags = 4 /* SF_PHYSPROP_DEBRIS */
+
+	prop_physics.kv.minhealthdmg = 9999
+	prop_physics.kv.nodamageforces = 1
+	prop_physics.kv.inertiaScale = 1.0
+
+	prop_physics.SetOrigin( origin )
+	prop_physics.Hide()
+	DispatchSpawn( prop_physics )
+
+	int particleSystemIndex = GetParticleSystemIndex( overrideFX )
+	int attachIdx = prop_physics.LookupAttachment( "origin" )
+
+	entity fx = StartParticleEffectOnEntity_ReturnEntity( prop_physics, particleSystemIndex, FX_PATTACH_POINT_FOLLOW_NOROTATE, attachIdx )
+	fx.SetOwner( owner )
+	AddActiveThermiteBurn( fx )
+
+	prop_physics.e.fxArray.append( fx )
+
+	prop_physics.SetVelocity( velocity )
+	if ( killDelay > 0 )
+		EntFireByHandle( prop_physics, "Kill", "", killDelay, null, null )
+
+	prop_physics.SetOwner( owner )
+	AI_CreateDangerousArea( prop_physics, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, false )
+
+	thread PROTO_PhysicsThermiteCausesDamage( prop_physics, inflictor, damageSourceId )
+
+	return prop_physics
+}
+
 
 ColderWarRadiusDamage function pp_GetColderWarRadiusDamage( entity owner )
 {

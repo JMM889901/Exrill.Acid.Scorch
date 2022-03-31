@@ -154,9 +154,6 @@ void function OnPoisonWallPlanted( entity projectile )
 			{
 				vector angles = < 0, 360/24 * i, 0 >
 			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
-			print("origin "+origin)
-			print("direction "+direction)
-			print("initial angles "+angles)
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread BeginAcidWave( projectile, 0, inflictor, origin+direction*150, direction )
@@ -313,7 +310,7 @@ void function AcidWave_DamagedPlayerOrNPC( entity ent, var damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() ){
 		DamageInfo_ScaleDamage( damageInfo, 0.0 )
 		return}
-	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 1, 1, 1 )
+		StatusEffect_AddTimed( ent, eStatusEffect.damage_received_multiplier, 2, 1, 1 )
 	array<entity> weapons = attacker.GetMainWeapons()
 	if ( weapons.len() > 0 )
 	{

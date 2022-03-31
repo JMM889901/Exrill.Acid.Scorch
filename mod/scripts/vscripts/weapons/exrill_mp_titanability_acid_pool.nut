@@ -91,9 +91,7 @@ var function OnWeaponPrimaryAttack_titanweapon_acid_pool( entity weapon, WeaponP
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
 		if ( deployable )
 		{
-			print(weapon.GetWeaponChargeLevel())
 			deployable.proj.isChargedShot = (weapon.GetWeaponChargeLevel() > 0)
-			print(deployable.proj.isChargedShot)
 			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
 			Grenade_Init( deployable, weapon )
 			thread OnProjectilePlanted( deployable, OnPoisonWallPlanted )
@@ -158,8 +156,6 @@ void function OnPoisonWallPlanted( entity projectile )
 				vector angles = < 0, 30 * i, 0 >
 
 			vector direction =AnglesToForward( <angles.x,angles.y,angles.z> )
-			print("direction "+direction)
-			print("initial angles "+angles)
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin, direction )
@@ -470,7 +466,7 @@ void function AcidPool_DamagedPlayerOrNPC( entity ent, var damageInfo )
 		Scorch_SelfDamageReduction( ent, damageInfo )
 
 	DamageInfo_ScaleDamage( damageInfo, 0.3 )
-	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 0.7, 1, 1 )
+	StatusEffect_AddTimed( ent, eStatusEffect.damage_received_multiplier, 2, 1, 1 )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() ){
 		return}
