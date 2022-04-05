@@ -81,7 +81,7 @@ void function StartVirus(entity attacker, entity target, float duration){
 		timeleft = timeleft - 0.5
 		target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
 	}
-	}
+}
 void function StartVirusSpread(entity attacker, entity target, float duration){
 	if(!IsValid(target))
 		return

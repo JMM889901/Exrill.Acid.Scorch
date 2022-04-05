@@ -38,7 +38,7 @@ void function PrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_rod_from_god")
 	PrecacheWeapon("pp_mp_titanweapon_point_defence")
 	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
-	PrecacheWeapon("pp_mp_titanweapon_parasite_launcher")
+	PrecacheWeapon("pp_mp_titanability_viral_matrix")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
@@ -131,6 +131,33 @@ void function SetTitanLoadout( entity titan )
 				//Titan Core
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
 				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
+				
+			}
+			//PLACEHOLDER
+			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_legion_prime.mdl")
+			{
+				SendHudMessage(player, "PLACEHOLDER Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+				
+				//Offence
+				//titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
+				//titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_ANTIRODEO ) 
+				
+				
+				//Defence
+				//titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
+				//titan.GiveOffhandWeapon("pp_mp_titanweapon_point_defence", OFFHAND_SPECIAL )
+				
+				//Tactical
+				//titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+				//titan.GiveOffhandWeapon("exrill_mp_titanweapon_rod_from_god", OFFHAND_RIGHT )
+
+				//Weapon
+				//titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
+				//titan.GiveWeapon ("pp_mp_titanweapon_energy_cannon")
+				
+				//Titan Core
+				//titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
+				//titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
 				
 			}
 		}

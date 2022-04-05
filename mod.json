@@ -88,6 +88,10 @@
 			"ServerCallback": {
 				"After": "pp_MpTitanweaponColderWar_Init"
 			}
+		},
+		{
+			"Path": "weapons/pp_mp_titanweapon_parasite_shot.gnut",
+			"RunOn": "SERVER || CLIENT"	
 		}
 	]
 }
