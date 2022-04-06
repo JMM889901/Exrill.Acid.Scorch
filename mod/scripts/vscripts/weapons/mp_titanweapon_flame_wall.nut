@@ -8,9 +8,12 @@ global function OnWeaponActivate_titancore_flame_wall
 global function OnWeaponNpcPrimaryAttack_FlameWall
 global function CreateThermiteWallSegment
 #endif
-const asset FLAME_WALL_FX_2 = $"P_impact_exp_XLG_slime"
-const asset FLAME_WALL_FX = $"P_impact_exp_triplethreat_full"
-const asset FLAME_WALL_FX_S2S = $"P_impact_exp_triplethreat_full"
+const asset FLAME_WALL_FX_5 = $"TT_mag_elec_1"
+const asset FLAME_WALL_FX_4 = $"exp_xlg_slime_CH_fill1"
+const asset FLAME_WALL_FX_3 = $"exp_xlg_slime_CH_burst"
+const asset FLAME_WALL_FX_2 = $"exp_triplethreat_refrac" 
+const asset FLAME_WALL_FX = $"exp_triplethreat_refrac"
+const asset FLAME_WALL_FX_S2S = $"exp_triplethreat_refrac"
 const asset FLAME_WALL_CHARGED_ADD_FX = $"P_impact_exp_triplethreat_full"
 
 const string FLAME_WALL_PROJECTILE_SFX = "flamewall_flame_start"
@@ -25,7 +28,10 @@ global const float SP_FLAME_WALL_DURATION_SCALE = 1.75
 
 void function MpTitanweaponFlameWall_Init()
 {
-	PrecacheParticleSystem( FLAME_WALL_FX_2 )
+	PrecacheParticleSystem( FLAME_WALL_FX_5 )
+        PrecacheParticleSystem( FLAME_WALL_FX_4 )
+        PrecacheParticleSystem( FLAME_WALL_FX_3 )
+        PrecacheParticleSystem( FLAME_WALL_FX_2 )
         PrecacheParticleSystem( FLAME_WALL_FX )
 	PrecacheParticleSystem( FLAME_WALL_CHARGED_ADD_FX )
 
@@ -151,11 +157,17 @@ bool function CreateThermiteWallSegment( entity projectile, int projectileCount,
 
 		entity thermiteParticle
 		entity thermiteParticle2
+                entity thermiteParticle5
+                entity thermiteParticle3
+                entity thermiteParticle4
 		//regular script path
 		if ( !movingGeo )
 		{
-			thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX, damageSource )
+			thermiteParticle5 = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX_5, damageSource )
+                        thermiteParticle = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX, damageSource )
 			thermiteParticle2 = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX_2, damageSource )
+			thermiteParticle3 = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX_3, damageSource )
+			thermiteParticle4 = CreateThermiteTrail( pos, angles, owner, inflictor, duration, FLAME_WALL_FX_4, damageSource )
 			EffectSetControlPointVector( thermiteParticle, 1, projectile.proj.savedOrigin )
 			AI_CreateDangerousArea_Static( thermiteParticle, projectile, METEOR_THERMITE_DAMAGE_RADIUS_DEF, TEAM_INVALID, true, true, pos )
 		}
@@ -168,8 +180,11 @@ bool function CreateThermiteWallSegment( entity projectile, int projectileCount,
 			}
 			else
 			{
-				thermiteParticle2 = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_2, damageSource )
+				thermiteParticle5 = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_5, damageSource )
+                                thermiteParticle2 = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_2, damageSource )
 				thermiteParticle = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX, damageSource )
+				thermiteParticle3 = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_3, damageSource )
+				thermiteParticle4 = CreateThermiteTrailOnMovingGeo( movingGeo, pos, angles, owner, inflictor, duration, FLAME_WALL_FX_4, damageSource )
 			}
 
 			if ( movingGeo == projectile.proj.savedMovingGeo )
