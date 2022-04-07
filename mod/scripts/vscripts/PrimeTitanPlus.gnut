@@ -133,10 +133,10 @@ void function SetTitanLoadout( entity titan )
 				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
 				
 			}
-			//PLACEHOLDER
+			//Shocker
 			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_legion_prime.mdl")
 			{
-				SendHudMessage(player, "PLACEHOLDER Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+				SendHudMessage(player, "Shocker Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
 				
 				//Offence
 				//titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
