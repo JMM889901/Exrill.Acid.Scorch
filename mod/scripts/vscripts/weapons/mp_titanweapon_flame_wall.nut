@@ -8,8 +8,8 @@ global function OnWeaponActivate_titancore_flame_wall
 global function OnWeaponNpcPrimaryAttack_FlameWall
 global function CreateThermiteWallSegment
 #endif
-const asset FLAME_WALL_FX_5 = $"TT_mag_elec_1"
-const asset FLAME_WALL_FX_4 = $"exp_xlg_slime_CH_fill1"
+const asset FLAME_WALL_FX_5 = $"exp_xlg_slime_CH_spray2"
+const asset FLAME_WALL_FX_4 = $"exp_xlg_slime_CH_spray3"
 const asset FLAME_WALL_FX_3 = $"exp_xlg_slime_CH_burst"
 const asset FLAME_WALL_FX_2 = $"exp_triplethreat_refrac" 
 const asset FLAME_WALL_FX = $"exp_triplethreat_refrac"
