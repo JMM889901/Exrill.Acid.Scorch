@@ -7,8 +7,8 @@ global function OnWeaponPrimaryAttack_titanweapon_acid_pool
 #if SERVER
 global function OnWeaponNPCPrimaryAttack_titanweapon_acid_pool
 #endif
-const asset ACID_WALL_FX = $"P_wpn_meteor_wall_acid"
-const asset ACID_WALL_FX_S2S = $"P_wpn_meteor_wall_s2s_acid"
+const asset ACID_WALL_FX = $"exp_xlg_slime_CH_burst"
+const asset ACID_WALL_FX_S2S = $"exp_xlg_slime_CH_spray3"
 const asset ACID_WALL_CHARGED_ADD_FX = $"impact_exp_burst_FRAG_2_acid"
 
 const string ACID_WALL_PROJECTILE_SFX = "amb_emit_boiling_steam_02"
