@@ -20,18 +20,14 @@ WeaponData
 	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_monarch_pods.mdl"
 
 	// Ammo
-    "cooldown_type"                                 "ammo_instant"
-	"ammo_clip_size"   								"200"
-	"ammo_default_total"							"200"
-	//"ammo_display"								"bar"
-	"ammo_min_to_fire"								"200"
-	"ammo_per_shot"									"200"
-	"ammo_stockpile_max"							"200"
-	"fire_rate"   									"2"
-	"regen_ammo_refill_rate"						"11.333"
-	"regen_ammo_refill_start_delay"					"0.0"
-
-	"offhand_keep_primary_in_hand" 					"1"
+		"ammo_clip_size"   								"200"
+		"ammo_default_total"							"0"
+		"ammo_display"									"bar"
+		"ammo_min_to_fire"								"10"
+		"ammo_per_shot"									"10"
+		"ammo_stockpile_max"							"200"
+		"regen_ammo_refill_rate"						"0.01"
+		"regen_ammo_refill_start_delay"					"0.0"
 
 	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_ViralMatrix"
 	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanability_rearm"

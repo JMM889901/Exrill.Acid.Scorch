@@ -10,6 +10,7 @@ struct InactiveViralStackStruct
     entity target
     entity owner
     float duration = DURATION
+    int ID
 }
 struct ActiveViralStacksStruct
 {
@@ -17,6 +18,7 @@ struct ActiveViralStacksStruct
     entity owner
     float duration = DURATION
     int StackCount
+    int ID
 }
 struct PlayerStacksStruct
 {
@@ -26,10 +28,13 @@ struct PlayerStacksStruct
 }
 table<entity, PlayerStacksStruct> PlayerStackStuff
 void function pp_OnProjectileCollision_weapon_parasite_launcher( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
-{
+{ //SetWeaponPrimaryClipCount(0)
     #if SERVER
+    if(!hitEnt.IsTitan())
+        return
     entity Owner = projectile.GetOwner()
     entity Target = hitEnt
+    print(Owner)
     if(!(Owner in PlayerStackStuff))
     {
         PlayerStacksStruct NewStackStruct
@@ -38,21 +43,38 @@ void function pp_OnProjectileCollision_weapon_parasite_launcher( entity projecti
     InactiveViralStackStruct HitStruct
     HitStruct.target = Target
     HitStruct.owner = Owner
+    HitStruct.ID = PlayerStackStuff[Owner].InactiveStacks.len()
     PlayerStackStuff[Owner].InactiveStacks.append(HitStruct)
     //make max stacks
+    foreach(entity weapon in Owner.GetOffhandWeapons())
+    {
+        if(weapon.GetWeaponClassName() == "pp_mp_titanability_viral_matrix")
+        {
+            if(weapon.GetWeaponPrimaryClipCount() == weapon.GetWeaponPrimaryClipCountMax())
+                PlayerStackStuff[Owner].InactiveStacks.remove(0)
+            else
+                weapon.SetWeaponPrimaryClipCount(PlayerStackStuff[Owner].InactiveStacks.len()*10)
+        }
+    }
     //make energy bar show inactive stacks
     #endif
 }
 var function pp_OnWeaponPrimaryAttack_ViralMatrix( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
     #if SERVER
-    table<entity,int> StacksToDamage
+    weapon.SetWeaponPrimaryClipCount(0)
+    table<entity,int> StacksToDamage = {}
     entity owner = weapon.GetWeaponOwner()
-    PlayerStacksStruct Struct = PlayerStackStuff[owner]
-    foreach(InactiveViralStackStruct InactiveStack in Struct.InactiveStacks)
+    print(owner)
+    if(!(owner in PlayerStackStuff) )
+        return
+    print(PlayerStackStuff[owner].InactiveStacks.len())
+    InactiveViralStackStruct InactiveStack
+    while(PlayerStackStuff[owner].InactiveStacks.len() > 0)
     {
+        InactiveStack = PlayerStackStuff[owner].InactiveStacks.remove(0)
         entity Target = InactiveStack.target
-        if((!Target.IsTitan()) && (!IsNPCTitan(Target)))
+        if(!IsNPCTitan(Target) && (!Target.IsTitan()))
             Target = Target.GetPetTitan()
         if(IsValid(Target))
         {
@@ -61,15 +83,18 @@ var function pp_OnWeaponPrimaryAttack_ViralMatrix( entity weapon, WeaponPrimaryA
             else
                 StacksToDamage[Target] <- 1
         }
+        PlayerStackStuff[owner].InactiveStacks.fastremovebyvalue(InactiveStack)
     }
+    print(PlayerStackStuff[owner].InactiveStacks.len())
     foreach(entity key, int value in StacksToDamage)
     {
         ActiveViralStacksStruct ActiveStruct
+        ActiveStruct.ID = PlayerStackStuff[owner].ActiveStacks.len()
         ActiveStruct.target = key
         ActiveStruct.StackCount = value
         ActiveStruct.owner = owner
         thread AcidStackThink(ActiveStruct)
-        Struct.ActiveStacks.append(ActiveStruct)
+        PlayerStackStuff[owner].ActiveStacks.append(ActiveStruct)
     }
     #endif
     return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
@@ -87,10 +112,13 @@ void function AcidStackThink(ActiveViralStacksStruct ActiveStruct)
     while(ActiveStruct.duration > 0)
     {
 		target.TakeDamage( 1*StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+        wait TICKTIME
+        ActiveStruct.duration = ActiveStruct.duration - TICKTIME
     }
     if ( IsValid( particleSystem ) )
     {
 		particleSystem.Destroy()
     }
+    PlayerStackStuff[owner].InactiveStacks.fastremovebyvalue(ActiveStruct)
     #endif
 }

@@ -6,11 +6,25 @@
 	"Version": "1.0.0",
 	"Scripts": [
 		{
-			"Path": "PrimeTitanPlus.gnut",
+			"Path": "VenomPrimeTitanPlus.gnut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
-                "After": "PrimeTitanPlus_Init"
+                "After": "VenomPrimeTitanPlus_Init"
             }
+		},
+		{
+			"Path": "VenomUIStuff.gnut",
+			"RunOn": "UI || SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "ExampleScript"
+	        },
+			
+			"ClientCallback": {
+				"After": "ExampleScript"
+			},
+			"UICallback": {
+				"After": "ExampleScript"
+			}
 		},
 		{
 			"Path": "weapons/pp_mp_titanweapon_point_defence.nut",
