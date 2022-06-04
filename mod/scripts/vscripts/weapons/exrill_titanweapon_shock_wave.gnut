@@ -1,0 +1,133 @@
+global function exrill_OnWeaponPrimaryAttack_titanweapon_shock_wave
+global function ShockwavePrecache
+#if SERVER
+global function exrill_OnWeaponNpcPrimaryAttack_titanweapon_shock_wave
+#endif
+global function exrill_OnProjectileCollision_weapon_shockwave
+
+const asset ACID_WALL_FX_5 = $"exp_xlg_slime_CH_spray2"
+const asset ACID_WALL_FX_4 = $"exp_xlg_slime_CH_spray3"
+const asset ACID_WALL_FX_3 = $"exp_xlg_slime_CH_burst"
+const asset ACID_WALL_FX_2 = $"exp_triplethreat_refrac" 
+const asset ACID_WALL_FX = $"exp_triplethreat_refrac"
+void function ShockwavePrecache()
+{
+    PrecacheParticleSystem(ACID_WALL_FX_5)
+    PrecacheParticleSystem(ACID_WALL_FX_4)
+    PrecacheParticleSystem(ACID_WALL_FX_3)
+    PrecacheParticleSystem(ACID_WALL_FX_2)
+    PrecacheParticleSystem(ACID_WALL_FX)
+}
+void function exrill_OnProjectileCollision_weapon_shockwave( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+{
+
+}
+var function exrill_OnWeaponPrimaryAttack_titanweapon_shock_wave( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	entity weaponOwner = weapon.GetWeaponOwner()
+
+	bool shouldPredict = weapon.ShouldPredictProjectiles()
+	#if CLIENT
+		if ( !shouldPredict )
+			return 1
+	#endif
+
+	const float FUSE_TIME = 99.0
+	entity projectile = weapon.FireWeaponGrenade( attackParams.pos, attackParams.dir, < 0,0,0 >, FUSE_TIME, damageTypes.projectileImpact, damageTypes.explosive, shouldPredict, true, true )
+	if ( IsValid( projectile ) )
+	{
+		entity owner = weapon.GetWeaponOwner()
+		if ( owner.IsPlayer() && PlayerHasPassive( owner, ePassives.PAS_SHIFT_CORE ) )
+		{
+			#if SERVER
+				projectile.proj.isChargedShot = true
+			#endif
+		}
+
+		if ( owner.IsPlayer() )
+			PlayerUsedOffhand( owner, weapon )
+
+		#if SERVER
+			thread BeginEmpWave( projectile, attackParams )
+		#endif
+	}
+
+	return weapon.GetWeaponSettingInt( eWeaponVar.ammo_min_to_fire )
+}
+#if SERVER
+var function exrill_OnWeaponNpcPrimaryAttack_titanweapon_shock_wave( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	const float FUSE_TIME = 99.0
+	entity projectile = weapon.FireWeaponGrenade( attackParams.pos, attackParams.dir, < 0,0,0 >, FUSE_TIME, damageTypes.projectileImpact, damageTypes.explosive, false, true, true )
+	if ( IsValid( projectile ) )
+		thread BeginEmpWave( projectile, attackParams )
+
+	return 1
+}
+
+void function BeginEmpWave( entity projectile, WeaponPrimaryAttackParams attackParams )
+{
+	projectile.EndSignal( "OnDestroy" )
+	projectile.SetAbsOrigin( projectile.GetOrigin() )
+	projectile.SetAbsAngles( projectile.GetAngles() )
+	projectile.SetVelocity( Vector( 0, 0, 0 ) )
+	projectile.StopPhysics()
+	projectile.SetTakeDamageType( DAMAGE_NO )
+	projectile.Hide()
+	projectile.NotSolid()
+	projectile.e.onlyDamageEntitiesOnce = true
+	EmitSoundOnEntity( projectile, "arcwave_tail_3p" )
+	waitthread WeaponAttackWave( projectile, 0, projectile, attackParams.pos, attackParams.dir, CreateEmpWaveSegment )
+	StopSoundOnEntity( projectile, "arcwave_tail_3p" )
+	projectile.Destroy()
+}
+
+bool function CreateEmpWaveSegment( entity projectile, int projectileCount, entity inflictor, entity movingGeo, vector pos, vector angles, int waveCount )
+{
+	projectile.SetOrigin( pos )
+
+	float damageScalar
+	int fxId1
+    int fxId2
+    int fxId3
+    int fxId4
+    int fxId5
+	//if ( !projectile.proj.isChargedShot )
+	//{
+		damageScalar = 1.0
+		fxId1 = GetParticleSystemIndex(ACID_WALL_FX)
+        fxId2 = GetParticleSystemIndex(ACID_WALL_FX_2)
+        fxId3 = GetParticleSystemIndex(ACID_WALL_FX_3)
+        fxId4 = GetParticleSystemIndex(ACID_WALL_FX_4)
+        fxId5 = GetParticleSystemIndex(ACID_WALL_FX_5)
+	//}
+	//else
+	//{
+	//	damageScalar = 1.5
+	//	fxId = GetParticleSystemIndex( $"P_arcwave_exp_charged" )
+	//}
+	StartParticleEffectInWorld( fxId1, pos, angles )
+    StartParticleEffectInWorld( fxId2, pos, angles )
+    StartParticleEffectInWorld( fxId3, pos, angles )
+    StartParticleEffectInWorld( fxId4, pos, angles )
+    StartParticleEffectInWorld( fxId5, pos, angles )
+	int pilotDamage = int( float( projectile.GetProjectileWeaponSettingInt( eWeaponVar.damage_near_value ) ) * damageScalar )
+	int titanDamage = int( float( projectile.GetProjectileWeaponSettingInt( eWeaponVar.damage_near_value_titanarmor ) ) * damageScalar )
+
+	RadiusDamage(
+		pos,
+		projectile.GetOwner(), //attacker
+		inflictor, //inflictor
+		pilotDamage,
+		titanDamage,
+		112, // inner radius
+		112, // outer radius
+		SF_ENVEXPLOSION_NO_DAMAGEOWNER | SF_ENVEXPLOSION_MASK_BRUSHONLY | SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,
+		0, // distanceFromAttacker
+		50000000, // explosionForce
+		DF_ELECTRICAL | DF_STOPS_TITAN_REGEN,
+		eDamageSourceId.exrill_titanweapon_shock_wave )
+
+	return true
+}
+#endif

@@ -1,97 +1,40 @@
 {
-	"Name": "Acid scorch",
-	"Description": "EXRILLs Notes: By turbo charging the capacitors in the Ronins sword per Iniquity´s specifications a strong signature purple glow emits from the sword this will indeed set him part on the battlefield and might aswell be the last thing many pilots see before thier demise.",
-	"LoadPriority": 4,
+	"Name": "TremorTitan",
+	"Description": "Tremor Titan",
+	"LoadPriority": 5,
 	"RequiredOnClient": true,
 	"Version": "1.0.0",
 	"Scripts": [
 		{
-			"Path": "PrimeTitanPlus.gnut",
+			"Path": "TremorPrimeTitanPlus.gnut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
-                "After": "PrimeTitanPlus_Init"
+                "After": "TremorPrimeTitanPlus_Init"
             }
 		},
 		{
-			"Path": "weapons/pp_mp_titanweapon_point_defence.nut",
-			"RunOn": "SERVER || CLIENT"
-		},
-		{
-			"Path": "weapons/pp_mp_titanweapon_charge_cannon.nut",
-			"RunOn": "SERVER || CLIENT",
+			"Path": "TremorUIStuff.gnut",
+			"RunOn": "UI || SERVER || CLIENT",
 			"ServerCallback": {
-				"After": "pp_MpTitanWeapon_Energy_cannonInit"
+                "After": "TremorTitanUIInit"
+            },
+			
+			"ClientCallback": {
+				"After": "TremorTitanUIInit"
+			},
+			"UICallback": {
+				"After": "TremorTitanUIInit"
 			}
 		},
 		{
-			"Path": "weapons/exrill_mp_titanweapon_acid_wall.nut",
+			"Path": "weapons/exrill_titanweapon_shock_wave.gnut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
-                "After": "MpTitanweaponAcidWall_Init"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_rod_from_god.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "pp_MpTitanWeapon_rod_from_godInit"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_mortar_rockets.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "exrill_TitanAbilityMortarInit"
+				"After": "ShockwavePrecache"
 			},
 			"ClientCallback": {
-				"After": "exrill_TitanAbilityMortarInit"
+				"After": "ShockwavePrecache"
 			}
-		},
-		{
-			"Path": "weapons/pp_mp_titanability_mortar.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "pp_TitanAbilityMortarInit"
-			}
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_viral_shot.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "MpTitanWeaponVirus_shot"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titancore_acid_river.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "MpTitanWeaponAcidWave_Init"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanability_acid_pool.nut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "MpTitanAbilityAcidPool_Init"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_hybridlauncher.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-                "After": "exrill_MpTitanWeapon_hybidlauncherInit"
-            }
-		},
-		{
-			"Path": "weapons/exrill_mp_titanweapon_colder_war.gnut",
-			"RunOn": "SERVER || CLIENT",
-			"ServerCallback": {
-				"After": "pp_MpTitanweaponColderWar_Init"
-			}
-		},
-		{
-			"Path": "weapons/pp_mp_titanweapon_parasite_shot.gnut",
-			"RunOn": "SERVER || CLIENT"	
 		}
 	]
 }
