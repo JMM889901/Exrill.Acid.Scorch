@@ -70,8 +70,8 @@ WeaponData
 
 	"reload_enabled"								"0"
 
-	"fire_sound_1_player_1p"						"arcwave_fire_1p"
-	"fire_sound_1_player_3p"						"arcwave_fire_3p"
+	"fire_sound_1_player_1p"						"flamewall_start_1p"
+	"fire_sound_1_player_3p"						"flamewall_start_3p"
 
 	//"charge_time" 									"30.0"
 	//"charge_cooldown_time"							"0.0"
@@ -134,9 +134,9 @@ WeaponData
 	"fx_muzzle_flash_world"							"P_wpn_muzzleflash_smr"
 	"fx_muzzle_flash_attach"						"muzzle_flash"
 
-	"fire_rate"   									"1.5"
+	"fire_rate"   									"1.25"
 	"holster_time"									"0.5"
-	"deploy_time" 									"0.2"
+	"deploy_time" 									"0.15"
 	"lower_time"  									"0.5"
 	"raise_time"  									"0.2"
 
