@@ -7,7 +7,7 @@ global function exrill_OnProjectileCollision_weapon_shockwave
 
 const asset ACID_WALL_FX_5 = $"exp_xlg_slime_CH_spray2"
 const asset ACID_WALL_FX_4 = $"exp_xlg_slime_CH_spray3"
-const asset ACID_WALL_FX_3 = $"exp_xlg_slime_CH_burst"
+const asset ACID_WALL_FX_3 = $"droppod_impact"
 const asset ACID_WALL_FX_2 = $"exp_triplethreat_refrac" 
 const asset ACID_WALL_FX = $"exp_triplethreat_refrac"
 void function ShockwavePrecache()
@@ -76,9 +76,9 @@ void function BeginEmpWave( entity projectile, WeaponPrimaryAttackParams attackP
 	projectile.Hide()
 	projectile.NotSolid()
 	projectile.e.onlyDamageEntitiesOnce = true
-	EmitSoundOnEntity( projectile, "arcwave_tail_3p" )
+	EmitSoundOnEntity( projectile, "flamewall_start_3p" )
 	waitthread WeaponAttackWave( projectile, 0, projectile, attackParams.pos, attackParams.dir, CreateEmpWaveSegment )
-	StopSoundOnEntity( projectile, "arcwave_tail_3p" )
+	StopSoundOnEntity( projectile, "flamewall_start_3p" )
 	projectile.Destroy()
 }
 
