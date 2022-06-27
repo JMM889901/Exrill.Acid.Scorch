@@ -7,15 +7,17 @@ global function ExampleScriptP2
 array<string> ModdedTitanClasses
 void function ExampleScript(){
 	RegisterNewItemInitCallback(ExampleScriptP2)
-	RegisterModdedTitan("Venom", "exrill_mp_titanweapon_colder_war", 
+	RegisterModdedTitan("Venom", "pp_mp_titanweapon_cutting_beam", 
 	"mp_titanweapon_homing_rockets", "pp_mp_titanability_viral_matrix",
 	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
-	"titan_ogre_venom", "titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
-	eItemTypes.TITAN_SCORCH_EXECUTION //[
-		//["pp_pas_highcaptanks", "Why does the pain not stop", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu"],
-	//["pp_pas_enhancedacid", "Enhanced nanofoundries", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu"],
-	//["pp_pas_stickyacid", "Adhesive compound", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu"],
-	//[ "pp_pas_radaracid", "Hijack comms", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu"]]
+	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
+	eItemTypes.TITAN_SCORCH_EXECUTION
+	)
+	RegisterModdedTitan("Templar", "pp_mp_titanweapon_energy_cannon", 
+	"pp_mp_titanweapon_point_defence", "exrill_mp_titanweapon_rod_from_god",
+	"exrill_mp_titanweapon_mortar_2", "exrill_mp_titancore_acid_river", 
+	"titan_atlas_tracker", "tone", 2, "TITAN_TONE_PASSIVE",
+	eItemTypes.TITAN_TONE_EXECUTION
 	)
 	ExampleScriptP2()
 	
@@ -23,14 +25,26 @@ void function ExampleScript(){
 void function ExampleScriptP2(){
 	print("/////////GENERATING ITEMS FOR VENOM")
 	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "pp_mp_titanability_viral_matrix", "Viral Matrix", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "exrill_mp_titanweapon_colder_war", "Colder war [placeholder name?]", "The pain does not stop", "please stop", $"ui/temp", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_cutting_beam", "Cutting beam", "The pain does not stop", "please stop", $"ui/temp", 0, false)
 	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "exrill_mp_titancore_acid_river", "Acid core", "AAAAAAAA", "My sanity is rapidly dwindling", $"rui/titan_loadout/core/titan_core_flame_wave", 0, false)
 	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "exrill_mp_titanweapon_acid_wall", "Acid wall", "im out of funny things to say", ":)", $"ui/temp", 0, false)
 
-	RegisterModdedTitanItems("Venom", "exrill_mp_titanweapon_colder_war", 
+	RegisterModdedTitanItems("Venom", "pp_mp_titanweapon_cutting_beam", 
 	"mp_titanweapon_homing_rockets", "pp_mp_titanability_viral_matrix",
 	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
-	"titan_ogre_venom", "titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
+	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
 	eItemTypes.TITAN_SCORCH_EXECUTION
+	)
+	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanweapon_mortar_2", "Mortar", "I am in pain", "If you hit everything at once you can't miss", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_energy_cannon", "IDK what to do for this", "The pain does not stop", "Charge and release a devastating burst of energy", $"ui/temp", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "exrill_mp_titancore_acid_river", "Artillery core", "AAAAAAAA", "No core yet lol", $"rui/titan_loadout/core/titan_core_flame_wave", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "pp_mp_titanweapon_point_defence", "Point defence", "Use gun to stop gun", "Best way to stop a bullet is to shoot it", $"ui/temp", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "exrill_mp_titanweapon_rod_from_god", "Rod from god", "Smol railgun", "Smol railgun", $"ui/temp", 0, false)
+
+	RegisterModdedTitanItems("Templar", "pp_mp_titanweapon_energy_cannon", 
+	"pp_mp_titanweapon_point_defence", "exrill_mp_titanweapon_rod_from_god",
+	"exrill_mp_titanweapon_mortar_2", "exrill_mp_titancore_acid_river", 
+	"titan_atlas_tracker", "tone", 2, "TITAN_TONE_PASSIVE",
+	eItemTypes.TITAN_TONE_EXECUTION
 	)
 }

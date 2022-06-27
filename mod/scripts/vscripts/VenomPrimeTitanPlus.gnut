@@ -23,6 +23,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_titan_sniper3_tem")
 	PrecacheParticleSystem( $"P_wpn_defender_charge_FP_burn_tem")
 	PrecacheParticleSystem( $"P_wpn_meteor_exp_acid")
+	//PrecacheParticleSystem( $"wpn_rocket_fx_mod_acid")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
 	#endif
@@ -39,6 +40,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("pp_mp_titanweapon_point_defence")
 	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
 	PrecacheWeapon("pp_mp_titanability_viral_matrix")
+	PrecacheWeapon("pp_mp_titanweapon_cutting_beam")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
@@ -50,17 +52,15 @@ void function VenomPrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanweapon_rod_from_god"] <- "Rod from god"
 	WeaponIds["pp_mp_titanweapon_energy_cannon"] <- "Energy Cannon"
 	WeaponIds["exrill_mp_titanweapon_colder_war_acid"] <- "Acid"
-	RegisterWeaponDamageSources(WeaponIds)//This entire thing is just scuffed, oh well!
+	WeaponIds["pp_mp_titanweapon_cutting_beam"] <- "Cutting beam"
+	WeaponIds["exrill_mp_titanweapon_mortar_2"] <-"Mortar"
+	RegisterWeaponDamageSources(WeaponIds)
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
     #if SERVER
 
-		AddSpawnCallback("npc_titan", SetTitanLoadout );
+		//AddSpawnCallback("npc_titan", SetTitanLoadout );
 		
     #endif
-	#if CLIENT
-	Minimap_SetZoomScale( 1000000.0 )
-	Minimap_SetSizeScale( 2.5 )
-	#endif
 }
 
 //Apply loadout

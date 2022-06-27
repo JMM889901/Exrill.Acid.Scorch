@@ -267,7 +267,8 @@ bool function CreateAcidWallSegment( entity projectile, int projectileCount, ent
 		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
 		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
 		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
-		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )}
+		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 200>, <angles.x, angles.y-270, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
+	}
 	else{
 		CreateShieldWithSettings(<pos.x, pos.y, pos.z>, <angles.x, angles.y+90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )
 		CreateShieldWithSettings(<pos.x, pos.y, pos.z + 125>, <angles.x, angles.y+90, angles.z>,100,125,360,duration,524200, $"P_wpn_HeatShield_acid" )

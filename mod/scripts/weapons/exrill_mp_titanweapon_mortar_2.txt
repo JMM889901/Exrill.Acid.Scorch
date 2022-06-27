@@ -245,7 +245,11 @@ WeaponData
 		{
 			"burst_fire_delay"   						"/20"
 		}
-
+		pas_tone_rockets
+		{
+			//"burst_fire_count"								"8"
+			//"smart_ammo_max_targeted_burst"					"8"
+		}
 		burn_mod_titan_salvo_rockets
 		{
 			"burst_fire_delay"							"/1.55"

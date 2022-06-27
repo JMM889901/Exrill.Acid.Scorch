@@ -111,7 +111,8 @@ void function AcidStackThink(ActiveViralStacksStruct ActiveStruct)
     int StackCount = ActiveStruct.StackCount
     while(ActiveStruct.duration > 0)
     {
-		target.TakeDamage( 1*StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+        print( 1*StackCount)
+		target.TakeDamage( 10*StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
         wait TICKTIME
         ActiveStruct.duration = ActiveStruct.duration - TICKTIME
     }
