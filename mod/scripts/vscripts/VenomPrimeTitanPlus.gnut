@@ -41,6 +41,9 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
 	PrecacheWeapon("pp_mp_titanability_viral_matrix")
 	PrecacheWeapon("pp_mp_titanweapon_cutting_beam")
+	PrecacheWeapon("pp_mp_titanweapon_heavy_25mm")
+	PrecacheWeapon("pp_mp_titanability_vent_heat")
+	PrecacheWeapon("pp_mp_titancore_rampage_core")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
@@ -56,6 +59,8 @@ void function VenomPrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanweapon_mortar_2"] <-"Mortar"
 	RegisterWeaponDamageSources(WeaponIds)
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
+	RegisterNewVortexIgnoreClassname("exrill_mp_titanweapon_rod_from_god", true)
+	
     #if SERVER
 
 		//AddSpawnCallback("npc_titan", SetTitanLoadout );

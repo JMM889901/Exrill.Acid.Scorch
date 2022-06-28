@@ -179,7 +179,10 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 	{
 		bolt.kv.gravity = 0.001
 		bolt.s.bulletsToFire <- chargeLevel
-
+		#if SERVER
+		if(chargeLevel == 6)
+			HandleShieldPenetration(weaponOwner, bolt, weapon, attackParams)
+		#endif
 		bolt.s.extraDamagePerBullet <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets )
 		bolt.s.extraDamagePerBullet_Titan <- weapon.GetWeaponSettingInt( eWeaponVar.damage_additional_bullets_titanarmor )
 		if ( weaponHasInstantShotMod )
@@ -203,9 +206,26 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 
 	return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
 }
+#if SERVER
+void function HandleShieldPenetration(entity owner, entity projectile, entity weapon, WeaponPrimaryAttackParams attackParams)
+{
+	vector traceStart = attackParams.pos
+	vector traceEnd = traceStart + attackParams.dir * 10000
+VortexBulletHit ornull vortexHit = VortexBulletHitCheck( owner, traceStart, traceEnd )
+if ( vortexHit )
+	{
+		expect VortexBulletHit( vortexHit )
+		entity vortexWeapon = vortexHit.vortex.GetOwnerWeapon()
 
-
-
+		if ( vortexWeapon && ( vortexWeapon.GetWeaponClassName() == "mp_titanweapon_vortex_shield" || vortexWeapon.GetWeaponClassName() == "mp_titanweapon_vortex_shield_ion"))
+			VortexDrainedByImpact( vortexWeapon, weapon, projectile, null ) // drain the vortex shield
+		else if ( IsVortexSphere( vortexHit.vortex ) )
+		{
+			VortexSphereDrainHealthForDamage( vortexHit.vortex, 10000 )
+		}
+	}
+}
+#endif
 void function pp_OnWeaponStartZoomIn_titanweapon_rod_from_god( entity weapon )
 {
 	#if SERVER

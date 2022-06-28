@@ -1,0 +1,58 @@
+global function pp_OnWeaponPrimaryAttack_VentHeat
+global function pp_OnWeaponActivate_titanability_VentHeat
+var function pp_OnWeaponPrimaryAttack_VentHeat(entity weapon, WeaponPrimaryAttackParams attackParams)
+{
+    entity player = weapon.GetWeaponOwner()
+    player.AddSharedEnergy(player.GetSharedEnergyTotal() - player.GetSharedEnergyCount())
+}
+void function pp_OnWeaponActivate_titanability_VentHeat(entity weapon)
+{
+    array<string> Mods = weapon.GetMods()
+    array<string> HeatMods = ["HeatLevel4", "HeatLevel3", "HeatLevel2", "HeatLevel1", "HeatLevel5"]
+    string ValidMod = ""
+    entity player = weapon.GetWeaponOwner()
+    int energy = player.GetSharedEnergyCount()
+
+    float Duration
+
+    if(energy < 800)
+    {
+        ValidMod = "HeatLevel1"
+        Duration = 1
+    }
+    if(energy < 600)
+    {
+        ValidMod = "HeatLevel2"
+        Duration = 2
+    }
+        if(energy < 400)
+    {
+        ValidMod = "HeatLevel3"
+        Duration = 3
+    }
+    if(energy < 200)
+    {
+        ValidMod = "HeatLevel4"
+        Duration = 4
+    }
+    if(energy < 50)
+    {
+        ValidMod = "HeatLevel5"
+        #if SERVER
+        player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
+        #endif
+        Duration = 5
+    }
+
+
+    foreach(string mod in HeatMods)
+    {
+        if(mod != ValidMod)
+            Mods.fastremovebyvalue(mod)
+        else if(!Mods.contains(mod))
+            Mods.append(mod)
+    }
+    weapon.SetMods(Mods)
+    weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.turn_slow, 0.3, Duration, 0 ) )
+    weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.move_slow, 0.5, Duration, 0 ) )
+}

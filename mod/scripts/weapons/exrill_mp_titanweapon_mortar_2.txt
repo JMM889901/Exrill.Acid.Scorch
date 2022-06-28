@@ -159,8 +159,8 @@ WeaponData
 	"trigger_snipercam"   							"1"
 	"allow_headshots" 								"0"
 
-	"projectile_launch_speed"						"2000"
-	"projectile_gravity_scale"						"0.7"
+	"projectile_launch_speed"						"3000"
+	"projectile_gravity_scale"						"1.4"
 	"projectile_launch_pitch_offset"				"0"
 
 

@@ -62,8 +62,8 @@ void function showicon(entity weapon){
 		if(IsValid(weapon))
 		{
 			float speed = DefaultSpeed
-			if(weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) > 0)
-				speed = speed*(weapon.GetWeaponChargeFraction()+0.3)
+			//if(weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) > 0)
+				//speed = speed*((weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) - weapon.GetWeaponChargeFraction())+0.3)
 			vector origin = weapon.GetAttachmentOrigin( attachID )
 			vector eyangles = weaponOwner.EyeAngles()
 			vector direction = AnglesToForward(<eyangles.x+ weapon.GetWeaponSettingFloat( eWeaponVar.projectile_launch_pitch_offset ), eyangles.y, eyangles.z>)

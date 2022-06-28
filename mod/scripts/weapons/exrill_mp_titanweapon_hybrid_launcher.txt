@@ -634,7 +634,7 @@ WeaponData
 			"allow_headshots" 								"0"
 			"bypass_semiauto_hold_protection"				"1"
 			"vortex_drain"									"0.01"
-			"shared_energy_cost"							"0"
+			"shared_energy_cost"							"-111"
 			"aimassist_disable_hipfire_humansonly"			"1"
 			"aimassist_disable_ads_humansonly"				"1"
 			//"charge_time" 									"2.25"

@@ -32,20 +32,40 @@ void function pp_OnProjectileCollision_titanweapon_energy_cannon( entity project
 		EmitSoundAtPosition( TEAM_UNASSIGNED, projectile.GetOrigin(), "incendiary_trap_explode_large" )
 		}
 		entity owner = projectile.GetOwner()
-		RadiusDamage(
-			pos,												// origin
-			owner,												// owner
-			projectile,		 									// inflictor
-			25,													// pilot damage
-			1000/ChargeLevel,									// heavy armor damage
-			750/ChargeLevel,									// inner radius
-			750/ChargeLevel,									// outer radius
-			SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
-			0, 													// distanceFromAttacker
-			0, 													// explosionForce
-			DF_EXPLOSION,										// damage flags
-			eDamageSourceId.pp_mp_titanweapon_energy_cannon		// damage source id
-		)
+		if(ChargeLevel > 0)
+		{
+			RadiusDamage(
+				pos,												// origin
+				owner,												// owner
+				projectile,		 									// inflictor
+				25,													// pilot damage
+				1000/ChargeLevel,									// heavy armor damage
+				750/ChargeLevel,									// inner radius
+				750/ChargeLevel,									// outer radius
+				SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+				0, 													// distanceFromAttacker
+				0, 													// explosionForce
+				DF_EXPLOSION,										// damage flags
+				eDamageSourceId.pp_mp_titanweapon_energy_cannon		// damage source id
+			)
+		}
+		else
+		{
+			RadiusDamage(
+				pos,												// origin
+				owner,												// owner
+				projectile,		 									// inflictor
+				50,													// pilot damage
+				1500,									// heavy armor damage
+				1000,									// inner radius
+				1000,									// outer radius
+				SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+				0, 													// distanceFromAttacker
+				0, 													// explosionForce
+				DF_EXPLOSION,										// damage flags
+				eDamageSourceId.pp_mp_titanweapon_energy_cannon		// damage source id
+			)
+		}
 	#endif
 
 }
@@ -145,7 +165,8 @@ function FireEnergy_cannon( entity weapon, WeaponPrimaryAttackParams attackParam
 	bool weaponHasInstantShotMod = weapon.HasMod( "instant_shot" )
 	if ( chargeLevel == 0 )
 		return 0
-	chargeLevel = weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) - chargeLevel
+
+	chargeLevel = weapon.GetWeaponSettingInt( eWeaponVar.charge_levels ) - (chargeLevel-1)
 	//printt( "GetTitanEnergy_cannonChargeLevel():", chargeLevel )
 
 	if ( chargeLevel > 4 )
@@ -201,7 +222,7 @@ function FireEnergy_cannon( entity weapon, WeaponPrimaryAttackParams attackParam
 	if ( !shouldCreateProjectile )
 		return 1
 
-	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,(1-weapon.GetWeaponChargeFraction())+0.3, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
+	entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir,1+0.3, DF_GIB | DF_BULLET | DF_ELECTRICAL, DF_EXPLOSION | DF_RAGDOLL, playerFired, 0 )
 	if ( bolt )
 	{
 		bolt.s.bulletsToFire <- chargeLevel

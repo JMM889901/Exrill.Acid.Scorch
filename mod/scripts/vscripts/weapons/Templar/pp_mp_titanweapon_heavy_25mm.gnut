@@ -1,0 +1,104 @@
+global function pp_OnWeaponPrimaryAttack_titanweapon_25mm
+global function OnWeaponActivate_25mm
+#if SERVER
+global function OnWeaponNpcPrimaryAttack_titanweapon_25mm
+#endif // #if SERVER
+var function pp_OnWeaponPrimaryAttack_titanweapon_25mm( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+
+	return FireWeaponPlayerAndNPC( attackParams, true, weapon )
+}
+
+#if SERVER
+var function OnWeaponNpcPrimaryAttack_titanweapon_25mm( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+
+	return FireWeaponPlayerAndNPC( attackParams, false, weapon )
+}
+#endif // #if SERVER
+void function OnWeaponActivate_25mm( entity weapon )
+{
+    entity player = weapon.GetOwner()
+    player.SetSharedEnergyRegenRate(50)
+    #if CLIENT
+	UpdateViewmodelAmmo( false, weapon )
+    #endif // #if CLIENT
+    #if SERVER
+    player.Signal("RemovedWeapon")
+    thread HeatManagement(player, weapon)
+    #endif
+}
+void function HeatManagement(entity player, entity weapon)
+{
+    player.EndSignal("RemovedWeapon")
+    player.EndSignal("OnDeath")
+    player.EndSignal("OnDestroy")
+    #if SERVER
+    while(IsValid(weapon))
+    {
+        array<string> Mods = weapon.GetMods()
+        array<string> HeatMods = ["HeatLevel4", "HeatLevel3", "HeatLevel2", "HeatLevel1", "HeatLevel5"]
+        string ValidMod = ""
+        int energy = player.GetSharedEnergyCount()
+
+        if(Mods.contains("RampageCore"))
+        {
+            wait(0.1)
+            continue
+        }
+            if(energy < 800)
+            ValidMod = "HeatLevel1"
+        if(energy < 600)
+            ValidMod = "HeatLevel2"
+        if(energy < 400)
+            ValidMod = "HeatLevel3"
+        if(energy < 200)
+            ValidMod = "HeatLevel4"
+        if(energy < 50)
+        {
+            ValidMod = "HeatLevel5"
+            player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
+        }
+
+
+        foreach(string mod in HeatMods)
+        {
+            if(mod != ValidMod)
+                Mods.fastremovebyvalue(mod)
+            else if(!Mods.contains(mod) && mod != "")
+                Mods.append(mod)
+        }
+        weapon.SetMods(Mods)
+        wait(0.1)
+    }
+    #endif
+}
+int function FireWeaponPlayerAndNPC( WeaponPrimaryAttackParams attackParams, bool playerFired, entity weapon )
+{
+	entity owner = weapon.GetWeaponOwner()
+
+	bool shouldCreateProjectile = false
+	if ( IsServer() || weapon.ShouldPredictProjectiles() )
+		shouldCreateProjectile = true
+	#if CLIENT
+		if ( !playerFired )
+			shouldCreateProjectile = false
+	#endif
+
+	if ( shouldCreateProjectile )
+	{
+		float speed = PROJECTILE_SPEED_40MM
+
+		//TODO:: Calculate better attackParams.dir if auto-titan using mortarShots
+		entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir, speed, damageTypes.gibBullet | DF_IMPACT | DF_RAGDOLL | DF_KNOCK_BACK, DF_RAGDOLL | DF_KNOCK_BACK, playerFired , 0 )
+		if ( bolt )
+        {
+            bolt.kv.gravity = 0.05
+		}
+	}
+
+	weapon.w.lastFireTime = Time()
+	return 1
+}

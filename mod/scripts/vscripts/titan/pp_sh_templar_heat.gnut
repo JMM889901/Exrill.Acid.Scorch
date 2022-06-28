@@ -1,0 +1,99 @@
+
+global function TemplarHeat_Init
+#if CLIENT
+global function Templar_CreateHeatBar
+global function Templar_DestroyHeatBar
+#endif
+
+global const float TEMPLAR_HEAT_RELEASE_INTERVAL = 0.1
+global const int TEMPLAR_HEAT_MIN = 1000 //heat is inverted, 1000 heat is an empty bar
+
+#if CLIENT
+global function FlashHeatNeeded_Bar
+
+struct
+{
+	var ionEnergyBarRui = null
+} file
+#endif
+
+void function TemplarHeat_Init()
+{
+	#if CLIENT
+		AddLocalPlayerDidDamageCallback( Ion_CritHitIndicator )
+		AddTitanCockpitManagedRUI( Templar_CreateHeatBar, Templar_DestroyHeatBar, Ion_ShouldCreateEnergyBar, RUI_DRAW_COCKPIT )
+	#endif
+    RegisterSignal("RemovedWeapon")
+}
+
+#if CLIENT
+var function Templar_CreateHeatBar()
+{
+    Ion_DestroyEnergyBar()
+	Assert( file.ionEnergyBarRui == null )
+
+	entity player = GetLocalViewPlayer()
+	float energyMax = float( player.GetSharedEnergyTotal() )
+	var rui
+	if ( energyMax > TEMPLAR_HEAT_MIN )
+		rui = CreateTitanCockpitRui( $"ui/ion_energy_bar_Fd.rpak" )
+	else
+		rui = CreateTitanCockpitRui( $"ui/ion_energy_bar_Fd.rpak" )
+
+	file.ionEnergyBarRui = rui
+	RuiSetFloat( file.ionEnergyBarRui, "energyMax", energyMax )
+	//RuiTrackFloat( file.ionEnergyBarRui, "energy", GetLocalViewPlayer(), RUI_TRACK_PLAYER_SHARED_ENERGY )
+    thread HeatTrack(energyMax)
+	return file.ionEnergyBarRui
+}
+void function HeatTrack(float energyMax)
+{
+    while(file.ionEnergyBarRui != null)
+    {
+        RuiSetFloat( file.ionEnergyBarRui, "energy", energyMax-GetLocalViewPlayer().GetSharedEnergyCount() )
+        WaitFrame()
+    }
+}
+void function Templar_DestroyHeatBar()
+{
+	TitanCockpitDestroyRui( file.ionEnergyBarRui )
+	file.ionEnergyBarRui = null
+}
+
+bool function Ion_ShouldCreateEnergyBar()
+{
+	entity player = GetLocalViewPlayer()
+
+	if ( !IsAlive( player ) )
+		return false
+
+	array<entity> mainWeapons = player.GetMainWeapons()
+	if ( mainWeapons.len() == 0 )
+		return false
+
+	entity primaryWeapon = mainWeapons[0]
+	if ( primaryWeapon.GetWeaponInfoFileKeyField( "npc_use_check_type" ) != "shared_energy" )
+		return false
+    if ( primaryWeapon.GetWeaponInfoFileKeyField( "TemplarHeat" ) != "Templar" )
+        return false
+	return true
+}
+
+void function FlashHeatNeeded_Bar( int neededEnergy )
+{
+	if ( file.ionEnergyBarRui == null )
+		return
+
+	RuiSetFloat( file.ionEnergyBarRui, "energyNeededRatio", float( neededEnergy ) / float( ION_ENERGY_MAX ) )
+	RuiSetGameTime( file.ionEnergyBarRui, "energyNeededFlashStartTime", Time() )
+}
+
+void function Ion_CritHitIndicator( entity attacker, entity victim, vector damagePos, int damageType )
+{
+	if ( file.ionEnergyBarRui == null )
+		return
+
+	if ( damageType & DF_CRITICAL )
+		RuiSetGameTime( file.ionEnergyBarRui, "criticalHitFlashStartTime", Time() )
+}
+#endif

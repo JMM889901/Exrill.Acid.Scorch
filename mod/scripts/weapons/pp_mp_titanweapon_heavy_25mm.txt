@@ -11,28 +11,29 @@ WeaponData
 	"hud_icon"										"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_40mm"
 
 	"weaponClass" 									"titan"
-	"fire_mode"   									"semi-auto"
+	"fire_mode"   									"auto"
 	"pickup_hold_prompt"  							"Hold [USE] [WEAPONNAME]"
 	"pickup_press_prompt" 							"[USE] [WEAPONNAME]"
 	"minimap_reveal_distance"						"32000"
 
-	"OnWeaponPrimaryAttack"							"exrill_OnWeaponPrimaryAttack_titanweapon_mortar_rockets"
-	"OnWeaponNpcPrimaryAttack"						"exrill_OnWeaponNPCPrimaryAttack_titanweapon_mortar_rockets"
-	"OnWeaponActivate"								"OnWeaponActivate_updateViewmodelAmmo"
+	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_25mm"
+	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_titanweapon_40mm"
+	"OnWeaponActivate"								"OnWeaponActivate_25mm"
 	"OnWeaponDeactivate"							"OnWeaponDeactivate_titanweapon_40mm"
 	"OnClientAnimEvent"								"OnClientAnimEvent_titanweapon_40mm"
 	"OnWeaponOwnerChanged"							"OnWeaponOwnerChanged_titanweapon_40mm"
-	"OnProjectileCollision"							"OnProjectileCollision_titanweapon_sticky_40mm"
-	"OnWeaponChargeLevelIncreased"					"OnWeaponChargeLevelIncreased_titanweapon_sticky_40mm"
-	"OnWeaponStartZoomIn"							"exrill_OnWeaponActivate_titanweapon_mortar_rockets"
 	"OnWeaponReadyToFire"							"OnWeaponReadyToFire_titanweapon_sticky_40mm"
-	"OnWeaponStartZoomOut"							"exrill_OnWeaponDeactivate_titanweapon_mortar_rockets"
-	
-	"bolt_hitsize"									"6.5"
+	"bolt_hitsize"									"3.5"
+
+	"fire_rate"   					"3"
+
 
 	"npc_use_check_type"							"shared_energy"
 
-	"shared_energy_cost"							"10"
+	"shared_energy_cost"							"15"
+	"TemplarHeat"									"Templar"
+	"regen_ammo_refill_rate"						"99"
+	"regen_ammo_refill_start_delay"					"0.0"
 
 	// Damage - When Used by Players
 	"damage_type" 									"bullet"
@@ -46,15 +47,15 @@ WeaponData
 
 	MP_BASE
 	{
-		"damage_near_value"   						"600"
-		"damage_far_value"							"600"
-		"damage_near_value_titanarmor"				"1500"
-		"damage_far_value_titanarmor" 				"1500"
+		"damage_near_value"   						"150"
+		"damage_far_value"							"150"
+		"damage_near_value_titanarmor"				"150"
+		"damage_far_value_titanarmor" 				"150"
 		"npc_explosion_damage"						"<KEEP_DEFAULT>"
-		"explosion_damage"							"100"
-		"explosion_damage_heavy_armor"				"600"
-		"explosion_inner_radius"  					"17"
-		"explosionradius" 							"150"
+		//"explosion_damage"							"75"
+		//"explosion_damage_heavy_armor"				"200"
+		//"explosion_inner_radius"  					"17"
+		//"explosionradius" 							"150"
 
 		"deploy_time" 								"0.85"
 
@@ -98,10 +99,10 @@ WeaponData
 
 	// Damage - When Used by NPCs
 	"impulse_force"   								"20000" //"15000"
-	"explosion_shake_radius"						"250"
-	"explosion_shake_amplitude"						"10"
-	"explosion_shake_frequency"						"50"
-	"explosion_shake_duration"						"0.6"
+	//"explosion_shake_radius"						"250"
+	//"explosion_shake_amplitude"						"10"
+	//"explosion_shake_frequency"						"50"
+	//"explosion_shake_duration"						"0.6"
 
 	// Menu Stats
 	"stat_damage" 									"70"
@@ -116,7 +117,7 @@ WeaponData
 
 	// Effects
 	"tracer_effect"   								"weapon_tracers_40mm"
-	"impact_effect_table" 							"40mm_splasher_rounds"
+	"impact_effect_table" 							"titan_bullet"
 	"projectile_trail_effect_0" 					"weapon_40mm_projectile"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_40mm_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_40mm"
@@ -143,7 +144,7 @@ WeaponData
 
 	// Ammo
 	"ammo_stockpile_max"							"1500"
-	"ammo_clip_size"   								"1"
+	"ammo_clip_size"   								"1000"
 	"ammo_default_total"							"1500"
 
 	// Behavior
@@ -151,18 +152,18 @@ WeaponData
 	"zoom_time_in"									"0.1"
 	"zoom_time_out"   								"0.1"
 	"zoom_fov"										"50"
-	"reload_time"									"4"
-	"reload_time_late1"								"4"
-	"reload_time_late2"								"4"
-	"reloadempty_time"								"4"
-	"reloadempty_time_late1"						"4"
-	"reloadempty_time_late2"						"4"
+	"reload_time"									"3"
+	"reload_time_late1"								"2"
+	"reload_time_late2"								"1"
+	"reloadempty_time"								"3"
+	"reloadempty_time_late1"						"2"
+	"reloadempty_time_late2"						"1"
 	"holster_time"									".45"
 	"lower_time"  									".1"
 	"raise_time"  									".4"
 	"vortex_refire_behavior"  						"explosive_round"
 	"allow_empty_fire"								"0"
-	"reload_enabled"  								"1"
+	"reload_enabled"  								"0"
 	"allow_empty_click"   							"1"
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
@@ -176,23 +177,15 @@ WeaponData
 	"aimassist_disable_hipfire_humansonly"			"1"
 	"aimassist_disable_ads_humansonly"				"1"
 
-    "grenade_arc_indicator_effect"					"P_grenade_arc_proto_red"
-    "grenade_arc_impact_indicator_effect"			"P_grenade_arc_proto_red"
-	    "grenade_arc_indicator_show_from_hip"			"0"
-
-	"projectile_launch_speed"						"4000"
-	"projectile_gravity_scale"						"1"
-	"projectile_launch_pitch_offset"				"1"
-
 	// Spread
 	"spread_stand_hip"								"1.5"
 	"spread_stand_hip_sprint"                       "3.5"
 	"spread_stand_hip_run"							"3.5"
-	"spread_stand_ads"								"0.1"
+	"spread_stand_ads"								"1.0"
 	"spread_crouch_hip"   							"1.5"
-	"spread_crouch_ads"   							"0.1"
+	"spread_crouch_ads"   							"1.0"
 	"spread_air_hip"  								"3.5"
-	"spread_air_ads"  								"0.1"
+	"spread_air_ads"  								"1.5"
 
 	"spread_kick_on_fire_stand_hip"					"0.35"
 	"spread_kick_on_fire_stand_ads"					"0.35"
@@ -406,63 +399,88 @@ WeaponData
 
 	Mods
 	{
-		gunship_gunner
+		HeatLevel1
 		{
-			// Used for action block sp_ab_trainride01
-			"explosion_inner_radius"  						"100"
-			"explosionradius" 								"225"
-			"reload_time"									"*0.2"
-			"reload_time_late1"								"*0.2"
-			"reloadempty_time"								"*0.2"
-			"reloadempty_time_late1"						"*0.2"
-			"ammo_stockpile_max"							"1500"
-			"ammo_clip_size"   								"40"
-			"ammo_default_total"							"1500"
-			"fire_mode"										"auto"
-			"fire_rate"   									"3"
+			"fire_rate"   									"*1.2"
+			"spread_stand_hip"								"*1.2"
+			"spread_stand_hip_sprint"                       "*1.2"
+			"spread_stand_hip_run"							"*1.2"
+			"spread_stand_ads"								"*1.2"
+			"spread_crouch_hip"   							"*1.2"
+			"spread_crouch_ads"   							"*1.2"
+			"spread_air_hip"  								"*1.2"
+			"spread_air_ads"  								"*1.2"
 		}
-		splasher_rounds
+		HeatLevel2
 		{
-			//Splasher Rounds
-			//Pros: Increased area of effect
-			//Cons: Reduced damage
-			"explosion_inner_radius"  						"100"
-			"explosionradius" 								"225"
-			"impact_effect_table" 							"40mm_splasher_rounds"
+			"shared_energy_cost"							"10"
+			"fire_rate"   									"*1.5"
+			"spread_stand_hip"								"*1.4"
+			"spread_stand_hip_sprint"                       "*1.4"
+			"spread_stand_hip_run"							"*1.4"
+			"spread_stand_ads"								"*1.4"
+			"spread_crouch_hip"   							"*1.4"
+			"spread_crouch_ads"   							"*1.4"
+			"spread_air_hip"  								"*1.4"
+			"spread_air_ads"  								"*1.4"
+		}
+		HeatLevel3
+		{
+			"shared_energy_cost"							"8"
+			"fire_rate"   									"*2"
+			"spread_stand_hip"								"*2"
+			"spread_stand_hip_sprint"                       "*2"
+			"spread_stand_hip_run"							"*2"
+			"spread_stand_ads"								"*2"
+			"spread_crouch_hip"   							"*2"
+			"spread_crouch_ads"   							"*2"
+			"spread_air_hip"  								"*2"
+			"spread_air_ads"  								"*2"
+		}
+		HeatLevel4
+		{
+			//"shared_energy_cost"							"15"
+			"shared_energy_cost"							"5"
+			"fire_rate"   									"*3"
+			"spread_stand_hip"								"*3"
+			"spread_stand_hip_sprint"                       "*3"
+			"spread_stand_hip_run"							"*3"
+			"spread_stand_ads"								"*3"
+			"spread_crouch_hip"   							"*3"
+			"spread_crouch_ads"   							"*3"
+			"spread_air_hip"  								"*3"
+			"spread_air_ads"  								"*3"
+			
+		}
+		HeatLevel5
+		{
+			"fire_rate"   									"0.1"
+			"ammo_clip_size"   								"0"
+			"fire_mode"   									"semi"
+		}
+		RampageCore
+		{
+			"fire_rate"   									"8"
+			"spread_stand_hip"								"*0.5"
+			"spread_stand_hip_sprint"                       "*0.5"
+			"spread_stand_hip_run"							"*0.5"
+			"spread_stand_ads"								"*0.5"
+			"spread_crouch_hip"   							"*0.5"
+			"spread_crouch_ads"   							"*0.5"
+			"spread_air_hip"  								"*0.5"
+			"spread_air_ads"  								"*0.5"
+			"shared_energy_cost"							"0"
 
-			"damage_near_value"   							"250"
-			"damage_far_value"								"250"
-			"damage_near_value_titanarmor"					"600"
-			"damage_far_value_titanarmor" 					"600"
-			"explosion_damage"								"125"
-			"explosion_damage_heavy_armor"					"125"
-		}
-		fast_reload
-		{
-			"reload_time"								"*0.7"
-			"reload_time_late1"							"*0.7"
-			"reloadempty_time"							"*0.7"
-			"reloadempty_time_late1"					"*0.7"
-		}
-		extended_ammo
-		{
-			"ammo_stockpile_max"						"1500"
-			"ammo_clip_size"   							"16"
-			"ammo_default_total"						"1500"
-		}
-		mortar_shots
-		{
-			"impact_effect_table" 							"40mm_mortar_shots"
-			"explosion_inner_radius"  						"100"
-			"explosionradius" 								"225"
+			"spread_kick_on_fire_stand_hip"					"0.05"
+			"spread_kick_on_fire_stand_ads"					"0.05"
+			"spread_kick_on_fire_crouch_hip"  				"0.05"
+			"spread_kick_on_fire_crouch_ads"  				"0.05"
+			"spread_kick_on_fire_air_hip" 					"0.05"
+			"spread_kick_on_fire_air_ads" 					"0.05"
 
-			"damage_near_value"   							"*1.2"
-			"damage_far_value"								"*1.2"
-			"damage_near_value_titanarmor"					"*1.2"
-			"damage_far_value_titanarmor" 					"*1.2"
-			"explosion_damage"								"*1.2"
-			"explosion_damage_heavy_armor"					"*1.2"
-			"ammo_clip_size"   								"10"
+
+			"viewkick_pitch_base" 							"-0.2"
+			"viewkick_pitch_random"   						"0.3"
 		}
 		burn_mod_titan_40mm
 		{

@@ -18,12 +18,13 @@ WeaponData
 	"pickup_press_prompt" 							"[USE] [WEAPONNAME]"
 	"minimap_reveal_distance"						"32000"
 
+	"OnWeaponAttemptOffhandSwitch" 					"OnWeaponAttemptOffhandSwitch_titanweapon_laser_lite"
 	"OnWeaponActivate"								"OnWeaponActivate_titanweapon_sniper"
 	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_rod_from_god"
 	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_titanweapon_sniper"
 	"OnWeaponChargeLevelIncreased"					"OnWeaponChargeLevelIncreased_titanweapon_sniper"
-	"OnWeaponStartZoomIn"							"OnWeaponStartZoomIn_titanweapon_sniper"
-	"OnWeaponStartZoomOut"							"OnWeaponStartZoomOut_titanweapon_sniper"
+	//"OnWeaponStartZoomIn"							"OnWeaponStartZoomIn_titanweapon_sniper"
+	//"OnWeaponStartZoomOut"							"OnWeaponStartZoomOut_titanweapon_sniper"
 	"OnWeaponOwnerChanged"							"OnWeaponOwnerChanged_titanweapon_sniper"
 
 
@@ -74,19 +75,19 @@ WeaponData
 	"critical_hit_damage_scale"						"1.5"
 
 	// Ammo
-	"ammo_display"									"bar"
 	"ammo_stockpile_max"							"120"
 	"ammo_clip_size"   								"120"
 	"ammo_default_total"							"120"
-	"ammo_min_to_fire"								"120"
-	"cooldown_type"                                 "ammo_per_shot"
-	"reload_enabled"								"0"
-	"ammo_per_shot"									"120"
-	// Regen Ammo
-	"regen_ammo_refill_rate"						"10.0"
-	"regen_ammo_refill_start_delay"					"1.0"
+	"cooldown_type"                                 "shared_energy"
 
-	"damage_additional_bullets"						"250"		// each additional bullet after the first does this much
+	"npc_use_check_type"							"shared_energy"
+
+	"shared_energy_cost"							"400"
+
+	"reload_enabled"								"0"
+	// Regen Ammo
+
+	"damage_additional_bullets"						"5"		// each additional bullet after the first does this much
 	"damage_additional_bullets_titanarmor"			"300"		// each additional bullet after the first does this much
 	"bolt_hitsize"									"0.0"
 	"bolt_hitsize_grow1_time"						"0.035"
@@ -101,8 +102,8 @@ WeaponData
 		// Damage - When Used by Players
 		"damage_near_distance"							"500"
 		"damage_far_distance" 							"1000"
-		"damage_near_value"   							"250"
-		"damage_far_value"								"250"
+		"damage_near_value"   							"100"
+		"damage_far_value"								"100"
 		"damage_near_value_titanarmor"					"250"
 		"damage_far_value_titanarmor" 					"250"
 
@@ -123,7 +124,7 @@ WeaponData
 		"npc_damage_near_value_titanarmor"				"200"
 		"npc_damage_far_value_titanarmor" 				"200"
 
-		"ammo_min_to_fire"								"120"
+		//"ammo_min_to_fire"								"120"
 		"enable_highlight_networking_on_creation"		"<KEEP_DEFAULT>"
 		"pass_through_depth"							"0"
 	}
@@ -159,28 +160,30 @@ WeaponData
 		"pass_through_depth"							"500"// Not sure how long a dropship is, probably the biggest entity
 	}
 
-	"ammo_no_remove_from_stockpile"					"0"
+	//"ammo_no_remove_from_stockpile"					"0"
 
 	// Ammo
 	"ammo_stockpile_max"							"120"
 	"ammo_clip_size"   								"120"
 	"ammo_default_total"							"120"
-	"ammo_no_remove_from_stockpile"					"1"
-	"ammo_no_remove_from_clip"						"0"
 
 	// Behavior
 	"burst_fire_delay"								"0.7"
 	"zoom_time_in"									"0.1"
 	"zoom_time_out"   								"0.1"
 	"zoom_fov"										"50"
-	"reload_time" 									"0"
+	"reload_time" 									"3.5"
+	"reloadempty_time"								"3.5"
+	"reloadempty_time_late1"						"2.5"
+	"reloadempty_time_late2"						"1.5"
+	"reloadempty_time_late3"						"0.5"
 	"holster_time"									"0.1"
 	"deploy_time" 									"0.25"
 	"lower_time"  									"0.1"
 	"raise_time"  									"0.25"
 	"vortex_refire_behavior"  						"rocket"
 	"allow_empty_fire"								"0"
-	"reload_enabled"  								"1"
+	"reload_enabled"  								"0"
 	"allow_empty_click"   							"1"
 	"empty_reload_only"   							"0"
 	"trigger_snipercam"   							"1"
@@ -439,11 +442,21 @@ WeaponData
 
 	Mods
 	{
+		pas_tone_rockets
+		{
+			//"burst_fire_count"								"8"
+			//"smart_ammo_max_targeted_burst"					"8"
+		}
 		stryder_sniper
 		{
 
 		}
-
+		RampageCore
+		{
+			"deploy_time" 									"0.2"
+			"shared_energy_cost"							"0"
+			"charge_time" 									"1.0"
+		}
 		fast_reload
 		{
 			"reload_time"								"*0.6"

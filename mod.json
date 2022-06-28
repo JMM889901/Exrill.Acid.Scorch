@@ -1,7 +1,7 @@
 {
 	"Name": "Acid scorch",
 	"Description": "EXRILLs Notes: By turbo charging the capacitors in the Ronins sword per Iniquity´s specifications a strong signature purple glow emits from the sword this will indeed set him part on the battlefield and might aswell be the last thing many pilots see before thier demise.",
-	"LoadPriority": 1,
+	"LoadPriority": 10,
 	"RequiredOnClient": true,
 	"Version": "1.0.0",
 	"Scripts": [
@@ -14,7 +14,7 @@
 		},
 		{
 			"Path": "VenomUIStuff.gnut",
-			"RunOn": "UI || SERVER || CLIENT",
+			"RunOn": "(UI || SERVER || CLIENT) && MP",
 			"ServerCallback": {
                 "After": "ExampleScript"
 	        },
@@ -27,7 +27,7 @@
 			}
 		},
 		{
-			"Path": "weapons/pp_mp_titanweapon_point_defence.nut",
+			"Path": "weapons/Templar/pp_mp_titanweapon_point_defence.nut",
 			"RunOn": "SERVER || CLIENT"
 		},
 		{
@@ -45,7 +45,7 @@
             }
 		},
 		{
-			"Path": "weapons/exrill_mp_titanweapon_rod_from_god.nut",
+			"Path": "weapons/Templar/exrill_mp_titanweapon_rod_from_god.nut",
 			"RunOn": "SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "pp_MpTitanWeapon_rod_from_godInit"
@@ -105,6 +105,32 @@
 		},
 		{
 			"Path": "weapons/pp_mp_titanweapon_parasite_shot.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "titan/pp_sh_templar_heat.gnut",
+			"RunOn": "UI || SERVER || CLIENT",
+			"ServerCallback": {
+                "After": "TemplarHeat_Init"
+	        },
+			
+			"ClientCallback": {
+				"After": "TemplarHeat_Init"
+			},
+			"UICallback": {
+				"After": "TemplarHeat_Init"
+			}
+		},
+		{
+			"Path": "weapons/Templar/pp_mp_titanweapon_heavy_25mm.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Templar/pp_mp_titancore_rampage_core.nut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Templar/pp_mp_titanability_vent_heat.gnut",
 			"RunOn": "SERVER || CLIENT"	
 		}
 	]
