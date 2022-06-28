@@ -8,7 +8,7 @@ void function TremorTitanUIInit(){
 	RegisterModdedTitan("Tremor", "mp_titanweapon_predator_cannon", 
 	"exrill_titanweapon_shock_wave", "mp_titanability_sonar_pulse",
 	"mp_titanweapon_heat_shield", "mp_titancore_salvo_core", 
-	"titan_ogre_minigun", "titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
+	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION
 	)
 	TremorTitanUIInitP2()
@@ -21,7 +21,7 @@ void function TremorTitanUIInitP2(){
 	RegisterModdedTitanItems("Tremor", "mp_titanweapon_predator_cannon", 
 	"exrill_titanweapon_shock_wave", "mp_titanability_sonar_pulse",
 	"mp_titanweapon_heat_shield", "mp_titancore_salvo_core", 
-	"titan_ogre_minigun", "titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
+	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION
 	)
 }

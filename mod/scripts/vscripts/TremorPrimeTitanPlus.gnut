@@ -1,28 +1,7 @@
 global function TremorPrimeTitanPlus_Init
 
 void function TremorPrimeTitanPlus_Init() {
-    PrecacheModel( $"models/titans/buddy/titan_buddy.mdl" )
-	PrecacheModel( $"models/weapons/arms/buddypov.mdl" )
-	PrecacheModel( $"models/weapons/empty_handed/w_laser_cannon.mdl")
 	PrecacheParticleSystem( $"P_BT_eye_SM" )
-	PrecacheParticleSystem( $"P_wpn_lasercannon_FP_acid" )
-	PrecacheParticleSystem( $"P_wpn_lasercannon_acid" )
-	PrecacheParticleSystem( $"P_lasercannon_endglow_acid" )
-	PrecacheParticleSystem($"P_wpn_lasercannon_aim_acid" )
-	PrecacheParticleSystem( $"P_lasercannon_core_acid" )
-	PrecacheParticleSystem( $"P_handlaser_charge_acid" )
-	PrecacheParticleSystem( $"P_muz_TPA_acid" )
-	PrecacheParticleSystem( $"P_muz_TPA_FP_acid" )
-	PrecacheParticleSystem( $"P_wpn_HeatShield_acid" )
-	PrecacheParticleSystem( $"P_wpn_hand_laser_beam_acid" )
-	PrecacheParticleSystem( $"Rocket_Smoke_SMALL_Titan_mod_acid")
-	PrecacheParticleSystem( $"P_grenade_arc_proto_red")
-	PrecacheParticleSystem( $"wpn_arc_cannon_electricity_fp")
-	PrecacheParticleSystem( $"P_titan_sniper1_tem")
-	PrecacheParticleSystem( $"P_titan_sniper2_tem")
-	PrecacheParticleSystem( $"P_titan_sniper3_tem")
-	PrecacheParticleSystem( $"P_wpn_defender_charge_FP_burn_tem")
-	PrecacheParticleSystem( $"P_wpn_meteor_exp_acid")
 	PrecacheWeapon("exrill_titanweapon_shock_wave")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
@@ -33,7 +12,7 @@ void function TremorPrimeTitanPlus_Init() {
 
     #if SERVER
 
-		AddSpawnCallback("npc_titan", SetTitanLoadout );
+		//AddSpawnCallback("npc_titan", SetTitanLoadout );
 		
     #endif
 
