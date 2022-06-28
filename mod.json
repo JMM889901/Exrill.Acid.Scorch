@@ -14,7 +14,7 @@
 		},
 		{
 			"Path": "VenomUIStuff.gnut",
-			"RunOn": "(UI || SERVER || CLIENT) && MP",
+			"RunOn": "UI || SERVER || CLIENT",
 			"ServerCallback": {
                 "After": "ExampleScript"
 	        },
