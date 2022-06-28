@@ -11,8 +11,9 @@ void function TremorTitanUIInit(){
 	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION
 	)
+	#if MP
 	TremorTitanUIInitP2()
-	
+	#endif
 }
 void function TremorTitanUIInitP2(){
 	print("/////////GENERATING ITEMS FOR TREMOR")
