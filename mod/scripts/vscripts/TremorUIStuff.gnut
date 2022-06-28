@@ -11,7 +11,7 @@ void function TremorTitanUIInit(){
 	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION
 	)
-	TremorTitanUIInitP2()
+	//TremorTitanUIInitP2()
 	
 }
 void function TremorTitanUIInitP2(){

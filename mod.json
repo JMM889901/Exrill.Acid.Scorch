@@ -14,7 +14,7 @@
 		},
 		{
 			"Path": "TremorUIStuff.gnut",
-			"RunOn": "UI || SERVER || CLIENT",
+			"RunOn": "(UI || SERVER || CLIENT) && MP",
 			"ServerCallback": {
                 "After": "TremorTitanUIInit"
             },
