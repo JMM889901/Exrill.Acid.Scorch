@@ -19,7 +19,7 @@ void function ExampleScript(){
 	"titan_atlas_tracker", "tone", 2, "TITAN_TONE_PASSIVE",
 	eItemTypes.TITAN_TONE_EXECUTION
 	)
-	//ExampleScriptP2()
+	ExampleScriptP2()
 	
 }
 void function ExampleScriptP2(){
