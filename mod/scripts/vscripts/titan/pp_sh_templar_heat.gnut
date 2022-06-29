@@ -34,14 +34,17 @@ var function Templar_CreateHeatBar()
 
 	entity player = GetLocalViewPlayer()
 	float energyMax = float( player.GetSharedEnergyTotal() )
-	var rui
-	if ( energyMax > TEMPLAR_HEAT_MIN )
-		rui = CreateTitanCockpitRui( $"ui/ion_energy_bar_Fd.rpak" )
-	else
-		rui = CreateTitanCockpitRui( $"ui/ion_energy_bar_Fd.rpak" )
+	
+	//var rui
+	//if ( energyMax > TEMPLAR_HEAT_MIN )
+	//	rui = CreateTitanCockpitRui( $"ui/scorch_hotstreak_bar.rpak" )
+	//else
+	//	rui = CreateTitanCockpitRui( $"ui/ion_energy_bar_Fd.rpak" )
+	
+	var rui = CreateTitanCockpitRui( $"ui/scorch_hotstreak_bar.rpak" )
 
 	file.ionEnergyBarRui = rui
-	RuiSetFloat( file.ionEnergyBarRui, "energyMax", energyMax )
+	//RuiSetFloat( file.ionEnergyBarRui, "energyMax", energyMax )
 	//RuiTrackFloat( file.ionEnergyBarRui, "energy", GetLocalViewPlayer(), RUI_TRACK_PLAYER_SHARED_ENERGY )
     thread HeatTrack(energyMax)
 	return file.ionEnergyBarRui
@@ -50,7 +53,7 @@ void function HeatTrack(float energyMax)
 {
     while(file.ionEnergyBarRui != null)
     {
-        RuiSetFloat( file.ionEnergyBarRui, "energy", energyMax-GetLocalViewPlayer().GetSharedEnergyCount() )
+        RuiSetFloat( file.ionEnergyBarRui, "coreMeterMultiplier", (energyMax-GetLocalViewPlayer().GetSharedEnergyCount())/(2*energyMax) )
         WaitFrame()
     }
 }
@@ -84,8 +87,8 @@ void function FlashHeatNeeded_Bar( int neededEnergy )
 	if ( file.ionEnergyBarRui == null )
 		return
 
-	RuiSetFloat( file.ionEnergyBarRui, "energyNeededRatio", float( neededEnergy ) / float( ION_ENERGY_MAX ) )
-	RuiSetGameTime( file.ionEnergyBarRui, "energyNeededFlashStartTime", Time() )
+	//RuiSetFloat( file.ionEnergyBarRui, "energyNeededRatio", float( neededEnergy ) / float( ION_ENERGY_MAX ) )
+	//RuiSetGameTime( file.ionEnergyBarRui, "energyNeededFlashStartTime", Time() )
 }
 
 void function Ion_CritHitIndicator( entity attacker, entity victim, vector damagePos, int damageType )
@@ -93,7 +96,7 @@ void function Ion_CritHitIndicator( entity attacker, entity victim, vector damag
 	if ( file.ionEnergyBarRui == null )
 		return
 
-	if ( damageType & DF_CRITICAL )
-		RuiSetGameTime( file.ionEnergyBarRui, "criticalHitFlashStartTime", Time() )
+	//if ( damageType & DF_CRITICAL )
+		//RuiSetGameTime( file.ionEnergyBarRui, "criticalHitFlashStartTime", Time() )
 }
 #endif

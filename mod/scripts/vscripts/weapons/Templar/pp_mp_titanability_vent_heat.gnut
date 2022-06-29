@@ -4,6 +4,7 @@ var function pp_OnWeaponPrimaryAttack_VentHeat(entity weapon, WeaponPrimaryAttac
 {
     entity player = weapon.GetWeaponOwner()
     player.AddSharedEnergy(player.GetSharedEnergyTotal() - player.GetSharedEnergyCount())
+    player.SetSharedEnergyRegenRate(50)
 }
 void function pp_OnWeaponActivate_titanability_VentHeat(entity weapon)
 {

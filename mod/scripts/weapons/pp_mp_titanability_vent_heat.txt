@@ -1,7 +1,7 @@
 WeaponData
 {
 	// General
-	"printname"   									"#WPN_TITANABILITY_REARM"
+	"printname"   									"Vent heat"
 	"shortprintname"   								"#WPN_TITANABILITY_REARM"
 	"description" 									"#WPN_TITANABILITY_REARM_DESC"
 	"longdesc" 										"#WPN_TITANABILITY_REARM_LONGDESC"

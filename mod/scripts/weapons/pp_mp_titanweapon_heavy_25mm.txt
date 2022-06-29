@@ -1,9 +1,9 @@
 WeaponData
 {
-	"printname"   									"#WPN_TITAN_40MM_TRACKER"
-    "shortprintname"                              	"#WPN_TITAN_40MM_TRACKER_SHORT"
-	"description" 									"#WPN_TITAN_40MM_TRACKER_DESC"
-	"longdesc"										"#WPN_TITAN_40MM_TRACKER_LONGDESC"
+	"printname"   									"25MM Autocannon"
+    "shortprintname"                              	"25MM Autocannon"
+	"description" 									"A heavy 25MM Autocannon"
+	"longdesc"										"A heavy 25MM Autocannon that builds heat as it fires"
 
 	"leveled_pickup"								"1"
 
@@ -178,28 +178,28 @@ WeaponData
 	"aimassist_disable_ads_humansonly"				"1"
 
 	// Spread
-	"spread_stand_hip"								"1.5"
-	"spread_stand_hip_sprint"                       "3.5"
-	"spread_stand_hip_run"							"3.5"
-	"spread_stand_ads"								"1.0"
-	"spread_crouch_hip"   							"1.5"
-	"spread_crouch_ads"   							"1.0"
-	"spread_air_hip"  								"3.5"
-	"spread_air_ads"  								"1.5"
+	"spread_stand_hip"								"1.7"
+	"spread_stand_hip_sprint"                       "3.7"
+	"spread_stand_hip_run"							"3.7"
+	"spread_stand_ads"								"1.4"
+	"spread_crouch_hip"   							"1.7"
+	"spread_crouch_ads"   							"1.4"
+	"spread_air_hip"  								"3.7"
+	"spread_air_ads"  								"1.7"
 
-	"spread_kick_on_fire_stand_hip"					"0.35"
-	"spread_kick_on_fire_stand_ads"					"0.35"
-	"spread_kick_on_fire_crouch_hip"  				"0.25"
-	"spread_kick_on_fire_crouch_ads"  				"0.25"
-	"spread_kick_on_fire_air_hip" 					"0.35"
-	"spread_kick_on_fire_air_ads" 					"0.35"
+	"spread_kick_on_fire_stand_hip"					"0.55"
+	"spread_kick_on_fire_stand_ads"					"0.55"
+	"spread_kick_on_fire_crouch_hip"  				"0.55"
+	"spread_kick_on_fire_crouch_ads"  				"0.55"
+	"spread_kick_on_fire_air_hip" 					"0.55"
+	"spread_kick_on_fire_air_ads" 					"0.55"
 
 	"spread_max_kick_stand_hip"						"4.0"
-	"spread_max_kick_stand_ads"						"0.0"
+	"spread_max_kick_stand_ads"						"2.0"
 	"spread_max_kick_crouch_hip"  					"4.0"
-	"spread_max_kick_crouch_ads"  					"0.0"
+	"spread_max_kick_crouch_ads"  					"2.0"
 	"spread_max_kick_air_hip" 						"4.0"
-	"spread_max_kick_air_ads" 						"0.0"
+	"spread_max_kick_air_ads" 						"2.0"
 
 	"spread_decay_rate"   							"3.5"
 	"spread_decay_delay"  							"1.05"
@@ -454,8 +454,8 @@ WeaponData
 		}
 		HeatLevel5
 		{
-			"fire_rate"   									"0.1"
-			"ammo_clip_size"   								"0"
+			"fire_rate"   									"1"
+			"ammo_clip_size"   								"1"
 			"fire_mode"   									"semi"
 		}
 		RampageCore
