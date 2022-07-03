@@ -6,7 +6,7 @@ array<string> ModdedTitanClasses
 void function TremorTitanUIInit(){
 	RegisterNewItemInitCallback(TremorTitanUIInitP2)
 	RegisterModdedTitan("Tremor", "mp_titanweapon_predator_cannon", 
-	"exrill_titanweapon_shock_wave", "mp_titanability_sonar_pulse",
+	"exrill_titanweapon_shock_wave", "exrill_titanweapon_rock_yeet",
 	"mp_titanweapon_heat_shield", "mp_titancore_salvo_core", 
 	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION
@@ -20,7 +20,7 @@ void function TremorTitanUIInitP2(){
 	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_titanweapon_shock_wave", "Shock wave", "bonk", "Bonk", $"ui/temp", 0, false)
 	
 	RegisterModdedTitanItems("Tremor", "mp_titanweapon_predator_cannon", 
-	"exrill_titanweapon_shock_wave", "mp_titanability_sonar_pulse",
+	"exrill_titanweapon_shock_wave", "exrill_titanweapon_rock_yeet",
 	"mp_titanweapon_heat_shield", "mp_titancore_salvo_core", 
 	"titan_ogre_minigun", "legion", 1, "TITAN_LEGION_PASSIVE",
 	eItemTypes.TITAN_LEGION_EXECUTION

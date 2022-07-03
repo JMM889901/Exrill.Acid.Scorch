@@ -35,6 +35,10 @@
 			"ClientCallback": {
 				"After": "ShockwavePrecache"
 			}
+		},
+		{
+			"Path": "weapons/exrill_titanweapon_rock_yeet.gnut",
+			"RunOn": "SERVER || CLIENT"
 		}
 	]
 }

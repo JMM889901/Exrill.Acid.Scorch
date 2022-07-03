@@ -3,6 +3,7 @@ global function TremorPrimeTitanPlus_Init
 void function TremorPrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_BT_eye_SM" )
 	PrecacheWeapon("exrill_titanweapon_shock_wave")
+	PrecacheWeapon("exrill_titanweapon_rock_yeet")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
 	#endif
