@@ -19,8 +19,8 @@ WeaponData
 	"minimap_reveal_distance"						"32000"
 
 	//"OnWeaponAttemptOffhandSwitch" 					"OnWeaponAttemptOffhandSwitch_titanweapon_laser_lite"
-	"OnWeaponActivate"								"OnWeaponActivate_titanweapon_sniper"
-	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_rod_from_god"
+	"OnWeaponActivate"								"pp_OnWeaponActivate_titanweapon_rock_throw"
+	"OnWeaponPrimaryAttack"							"pp_OnWeaponPrimaryAttack_titanweapon_rock_throw"
 	"OnWeaponNpcPrimaryAttack"						"OnWeaponNpcPrimaryAttack_titanweapon_sniper"
     "OnWeaponChargeBegin"							"OnWeaponChargeBegin_titanweapon_rock_throw"
 	"OnWeaponChargeEnd"								"OnWeaponChargeEnd_titanweapon_rock_throw"
