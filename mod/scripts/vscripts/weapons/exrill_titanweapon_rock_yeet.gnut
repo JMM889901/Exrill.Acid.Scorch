@@ -16,10 +16,10 @@ global function pp_OnWeaponNpcPrimaryAttack_titanweapon_rock_throw
 const ACTIVATION_COST_FRAC = 0.0
 const SHOCK_ARM_EFFECT_FP = $"P_wpn_grenade_gravity_rock"
 const SHOCK_ARM_EFFECT =  $"P_wpn_grenade_gravity_rock"
-const SHOCK_HOLD_EFFECT_FP = $"vHeat_CH_refract"
-const SHOCK_HOLD_EFFECT = $"vHeat_CH_refract"
-const SHOCK_RELEASE_EFFECT_FP = $"P_wpn_muzzleflash_epg_FP"
-const SHOCK_RELEASE_EFFECT = $"P_wpn_muzzleflash_epg"
+const SHOCK_HOLD_EFFECT_FP = $"P_wpn_grenade_gravity_rock"
+const SHOCK_HOLD_EFFECT = $"P_wpn_grenade_gravity_rock"
+const SHOCK_RELEASE_EFFECT_FP = $"P_muz_TPA_FP"
+const SHOCK_RELEASE_EFFECT = $"P_muz_TPA"
 const INSTANT_SHOT_DAMAGE 				= 1200
 //const INSTANT_SHOT_MAX_CHARGES		= 2 // can't change this without updating crosshair
 //const INSTANT_SHOT_TIME_PER_CHARGE	= 0
