@@ -14,10 +14,10 @@ global function OnWeaponChargeBegin_titanweapon_rock_throw
 global function pp_OnWeaponNpcPrimaryAttack_titanweapon_rock_throw
 #endif // #if SERVER
 const ACTIVATION_COST_FRAC = 0.0
-const SHOCK_ARM_EFFECT_FP = $"wpn_arc_cannon_electricity_fp"
-const SHOCK_ARM_EFFECT =  $"P_wpn_HeatShield_FP"
-const SHOCK_HOLD_EFFECT_FP = $"P_wpn_HeatShield_FP"
-const SHOCK_HOLD_EFFECT = $"P_wpn_HeatShield"
+const SHOCK_ARM_EFFECT_FP = $"P_wpn_grenade_gravity_rock"
+const SHOCK_ARM_EFFECT =  $"P_wpn_grenade_gravity_rock"
+const SHOCK_HOLD_EFFECT_FP = $"vHeat_CH_refract"
+const SHOCK_HOLD_EFFECT = $"vHeat_CH_refract"
 const SHOCK_RELEASE_EFFECT_FP = $"P_wpn_muzzleflash_epg_FP"
 const SHOCK_RELEASE_EFFECT = $"P_wpn_muzzleflash_epg"
 const INSTANT_SHOT_DAMAGE 				= 1200
