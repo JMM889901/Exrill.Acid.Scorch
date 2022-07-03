@@ -18,7 +18,9 @@ void function TremorTitanUIInit(){
 void function TremorTitanUIInitP2(){
 	print("/////////GENERATING ITEMS FOR TREMOR")
 	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_titanweapon_shock_wave", "Shock wave", "bonk", "Bonk", $"ui/temp", 0, false)
-	
+	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "exrill_titanweapon_rock_yeet", "Yeet rock", "I am in pain", "bruh", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
+
+
 	RegisterModdedTitanItems("Tremor", "mp_titanweapon_predator_cannon", 
 	"exrill_titanweapon_shock_wave", "exrill_titanweapon_rock_yeet",
 	"mp_titanweapon_heat_shield", "mp_titancore_salvo_core", 
