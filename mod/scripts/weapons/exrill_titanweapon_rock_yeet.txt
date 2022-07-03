@@ -50,14 +50,14 @@ WeaponData
 
 	// Effects
 	//"tracer_effect"   							"weapon_tracers_40mm_tem"
-	//"tracer_effect"   							"P_wpn_tracer_sniper"
+	//"tracer_effect"   							"dpod_impact_CH_debri_out"
 	//"tracer_effect_first_person"  				"P_wpn_tracer_sniper"
 	//"projectile_trail_effect_0" 					"P_titan_sniper1_tem"
 	//"projectile_trail_effect_1" 					"P_titan_sniper2_tem"
 	//"projectile_trail_effect_2" 					"P_titan_sniper3_tem"
-	"projectile_trail_effect_0" 					"P_proj_predator_alt_pwr"
-	"projectile_trail_effect_1" 					"P_proj_predator_alt_pwr"
-	"projectile_trail_effect_2" 					"P_proj_predator_alt_pwr"
+	"projectile_trail_effect_0" 					"titan_sniper_CH_refract"
+	"projectile_trail_effect_1" 					"titan_sniper_CH_rope_glow"
+	"projectile_trail_effect_2" 					"titan_sniper_CH_refract"
 	"impact_effect_table" 							"titan_sniper"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_40mm_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_40mm"
@@ -65,8 +65,8 @@ WeaponData
 	"vortex_absorb_sound_1p_vs_3p"					"Vortex_Shield_AbsorbBulletLarge_1P_VS_3P"
 	"projectile_adjust_to_gun_barrel"				"1"
 
-	"fx_muzzle_flash_view"							"P_wpn_mflash_arcball_FP"
-	"fx_muzzle_flash_world"							"P_wpn_xo_sniper_muzzleflash"
+	"fx_muzzle_flash_view"							"dpod_impact_CH_debri_out"
+	"fx_muzzle_flash_world"							"dpod_impact_CH_debri_out"
 	"fx_muzzle_flash_attach"						"muzzle_flash"
 
 	"sound_dryfire"									"titan_dryfire"
@@ -109,7 +109,7 @@ WeaponData
 		"damage_near_value_titanarmor"					"250"
 		"damage_far_value_titanarmor" 					"250"
 
-		"deploy_time" 									"0.85"
+		"deploy_time" 									"0.10"
 
 		"bolt_hitsize_growfinal_size"					"6.0"
 		"explosionradius" 								"0"
@@ -180,7 +180,7 @@ WeaponData
 	"reloadempty_time_late2"						"1.5"
 	"reloadempty_time_late3"						"0.5"
 	"holster_time"									"0.1"
-	"deploy_time" 									"0.25"
+	"deploy_time" 									"1.85"
 	"lower_time"  									"0.1"
 	"raise_time"  									"0.25"
 	"vortex_refire_behavior"  						"rocket"
@@ -197,12 +197,12 @@ WeaponData
 	"play_offhand_fire_anim"						"1"
 
 
-	"charge_time" 									"2.25"
-	"charge_levels"									"5"
+	"charge_time" 									"1.5"
+	"charge_levels"									"1"
 	"charge_cooldown_time"							"0.5"
 	"charge_cooldown_delay"   						"0.0"
 	"charge_is_triggered_by_ADS"					"0"
-	"charge_end_forces_fire"						"0"
+	"charge_end_forces_fire"						"1"
 	"charge_require_input"							"1"
 	"charge_sound_1p"								"Weapon_Titan_Sniper_WindUp"
 	"charge_sound_stop_when_full"					"0"
@@ -211,8 +211,8 @@ WeaponData
 	"charge_drain_sound_1p"							"Weapon_Titan_Sniper_WindDown"
 	"charge_drain_sound_stop_when_empty"			"1"
 	"charge_drain_sound_seek_to_charge_fraction"	"1"
-	"charge_effect_1p"								"wpn_arc_cannon_electricity_fp"
-	"charge_effect_3p"								"P_wpn_xo_sniper_charge"
+	"charge_effect_1p"								"P_wpn_grenade_gravity_rock"
+	"charge_effect_3p"								"P_wpn_grenade_gravity_rock"
 	"charge_effect_attachment"						"muzzle_flash"
 
 
