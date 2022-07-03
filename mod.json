@@ -27,7 +27,7 @@
 			}
 		},
 		{
-			"Path": "weapons/Templar/pp_mp_titanweapon_point_defence.nut",
+			"Path": "weapons/Templar/pp_mp_titanability_point_defence_turret.gnut",
 			"RunOn": "SERVER || CLIENT"
 		},
 		{

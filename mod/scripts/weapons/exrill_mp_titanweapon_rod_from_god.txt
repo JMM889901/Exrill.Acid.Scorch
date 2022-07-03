@@ -1,7 +1,7 @@
 WeaponData
 {
 	// General
-	"printname"   									"#WPN_TITAN_SNIPER"
+	"printname"   									"Disrupter shell"
     "shortprintname"                              	"#WPN_TITAN_SNIPER_SHORT"
 	"description" 									"#WPN_TITAN_SNIPER_DESC"
 	"longdesc"										"#WPN_TITAN_SNIPER_LONGDESC"

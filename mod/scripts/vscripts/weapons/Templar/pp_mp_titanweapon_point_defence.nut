@@ -353,6 +353,7 @@ bool function pp_OnWeaponVortexHitBullet_titanweapon_pont_defence( entity weapon
 	#if CLIENT
 		return true
 	#else
+		return false //can't block hitscan
 		if ( !ValidateVortexImpact( vortexSphere ) )
 			return false
 
@@ -414,25 +415,28 @@ bool function pp_OnWeaponVortexHitProjectile_titanweapon_pont_defence( entity we
 		//Generate point defence projectile
 		entity weaponOwner = weapon.GetWeaponOwner()
 		//choose muzzle to use
-		int attachID = weapon.LookupAttachment( "muzzle_flash_2" )
+		int attachID = weapon.LookupAttachment( "muzzle_flash" )
 		vector attackPos = weapon.GetAttachmentOrigin( attachID )
 		vector dirToTarget = contactPos - attackPos
 		dirToTarget = Normalize( dirToTarget )
 		float dot = DotProduct( AnglesToForward(weapon.GetAngles()), dirToTarget )
 		float degToTarget = (acos( dot ) * 180 / PI)
 
-		int attachID2 = weapon.LookupAttachment( "muzzle_flash" )
+		int attachID2 = weapon.LookupAttachment( "muzzle_flash_2" )
 		vector attackPos2 = weapon.GetAttachmentOrigin( attachID2 )
 		vector dirToTarget2 = contactPos - attackPos2
 		dirToTarget2 = Normalize( dirToTarget2 )
 		float dot2 = DotProduct( AnglesToForward(weapon.GetAngles()), dirToTarget2 )
 		float degToTarget2 = (acos( dot ) * 180 / PI)
-		if(max(degToTarget, degToTarget2) == degToTarget2){
+		if(max(degToTarget, degToTarget2) == degToTarget2)
+		{
 			attackPos = attackPos2
-			dirToTarget = dirToTarget2}
+			dirToTarget = dirToTarget2
+		}
 
-
+		//Fire projectile 
 		entity bolt = weapon.FireWeaponBolt( attackPos, dirToTarget, 1, damageTypes.gibBullet | DF_IMPACT | DF_EXPLOSION | DF_RAGDOLL | DF_KNOCK_BACK, DF_EXPLOSION | DF_RAGDOLL | DF_KNOCK_BACK, false, 0 )
+		//Set projectile to detonate at the correct time
 		bolt.kv.lifetime = Distance(contactPos, attackPos)/Distance(<0,0,0>,bolt.GetVelocity())
 		return true
 	#endif

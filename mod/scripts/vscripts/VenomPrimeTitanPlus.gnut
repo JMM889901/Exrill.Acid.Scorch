@@ -37,13 +37,14 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_colder_war")
 	PrecacheWeapon("exrill_mp_titanweapon_150mm")
 	PrecacheWeapon("exrill_mp_titanweapon_rod_from_god")
-	PrecacheWeapon("pp_mp_titanweapon_point_defence")
+	//PrecacheWeapon("pp_mp_titanweapon_point_defence")
 	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
 	PrecacheWeapon("pp_mp_titanability_viral_matrix")
 	PrecacheWeapon("pp_mp_titanweapon_cutting_beam")
 	PrecacheWeapon("pp_mp_titanweapon_heavy_25mm")
 	PrecacheWeapon("pp_mp_titanability_vent_heat")
 	PrecacheWeapon("pp_mp_titancore_rampage_core")
+	PrecacheWeapon("pp_mp_titanability_point_defense_turret")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"

@@ -14,7 +14,7 @@ var function pp_OnWeaponPrimaryAttack_titanweapon_25mm( entity weapon, WeaponPri
 var function OnWeaponNpcPrimaryAttack_titanweapon_25mm( entity weapon, WeaponPrimaryAttackParams attackParams )
 {
 	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
-
+    print("bruh")
 	return FireWeaponPlayerAndNPC( attackParams, false, weapon )
 }
 #endif // #if SERVER
@@ -36,7 +36,7 @@ void function HeatManagement(entity player, entity weapon)
     player.EndSignal("OnDeath")
     player.EndSignal("OnDestroy")
     #if SERVER
-    while(IsValid(weapon))
+    while(IsValid(weapon) && IsValid(player) && player.IsTitan())
     {
         array<string> Mods = weapon.GetMods()
         array<string> HeatMods = ["HeatLevel4", "HeatLevel3", "HeatLevel2", "HeatLevel1", "HeatLevel5"]
@@ -91,7 +91,6 @@ int function FireWeaponPlayerAndNPC( WeaponPrimaryAttackParams attackParams, boo
 	{
 		float speed = PROJECTILE_SPEED_40MM
 
-		//TODO:: Calculate better attackParams.dir if auto-titan using mortarShots
 		entity bolt = weapon.FireWeaponBolt( attackParams.pos, attackParams.dir, speed, damageTypes.gibBullet | DF_IMPACT | DF_RAGDOLL | DF_KNOCK_BACK, DF_RAGDOLL | DF_KNOCK_BACK, playerFired , 0 )
 		if ( bolt )
         {
