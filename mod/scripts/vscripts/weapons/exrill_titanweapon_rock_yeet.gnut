@@ -113,7 +113,7 @@ bool function OnWeaponChargeBegin_titanweapon_rock_throw( entity weapon )
 	weapon.PlayWeaponEffect( SHOCK_ARM_EFFECT_FP, SHOCK_ARM_EFFECT, "vortex_center")
 	weapon.PlayWeaponEffect( SHOCK_HOLD_EFFECT_FP, SHOCK_HOLD_EFFECT, "vortex_center")
 	//weapon.PlayWeaponEffect( SHOCK_HOLD_EFFECT_FP, SHOCK_HOLD_EFFECT, "vortex_center")
-	weapon.EmitWeaponSound("EMP_Titan_Electrical_Field")
+	weapon.EmitWeaponSound("marvin_legmove_actuator_right")
 
 	return true
 }
@@ -132,7 +132,7 @@ void function OnWeaponChargeEnd_titanweapon_rock_throw( entity weapon )
 	#endif
 	weapon.StopWeaponEffect( SHOCK_HOLD_EFFECT_FP, SHOCK_HOLD_EFFECT )
 	weapon.StopWeaponEffect( SHOCK_ARM_EFFECT_FP, SHOCK_ARM_EFFECT )
-	weapon.StopWeaponSound("EMP_Titan_Electrical_Field")
+	weapon.StopWeaponSound("marvin_legmove_actuator_right")
 
 }
 
@@ -168,13 +168,13 @@ function FireSniper( entity weapon, WeaponPrimaryAttackParams attackParams, bool
 	//printt( "GetTitanSniperChargeLevel():", chargeLevel )
 
 	if ( chargeLevel > 4 )
-		weapon.EmitWeaponSound_1p3p( "Weapon_Titan_Sniper_Level_4_1P", "Weapon_Titan_Sniper_Level_4_3P" )
+		weapon.EmitWeaponSound_1p3p( "marvin_legmove_actuator_left", "Weapon_Titan_Sniper_Level_4_3P" )
 	else if ( chargeLevel > 3 || weaponHasInstantShotMod )
-		weapon.EmitWeaponSound_1p3p( "Weapon_Titan_Sniper_Level_3_1P", "Weapon_Titan_Sniper_Level_3_3P" )
+		weapon.EmitWeaponSound_1p3p( "marvin_legmove_actuator_left", "Weapon_Titan_Sniper_Level_3_3P" )
 	else if ( chargeLevel > 2  )
-		weapon.EmitWeaponSound_1p3p( "Weapon_Titan_Sniper_Level_2_1P", "Weapon_Titan_Sniper_Level_2_3P" )
+		weapon.EmitWeaponSound_1p3p( "marvin_legmove_actuator_left", "Weapon_Titan_Sniper_Level_2_3P" )
 	else
-		weapon.EmitWeaponSound_1p3p( "Weapon_Titan_Sniper_Level_1_1P", "Weapon_Titan_Sniper_Level_1_3P" )
+		weapon.EmitWeaponSound_1p3p( "marvin_legmove_actuator_left", "Weapon_Titan_Sniper_Level_1_3P" )
 
 	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 * chargeLevel )
 
