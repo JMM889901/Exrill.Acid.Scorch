@@ -1,0 +1,2718 @@
+<!-- dmx encoding keyvalues2 1 format tex 1 -->
+"DmElement"
+{
+	"id" "elementid" "49577507-4bae-4a2c-ab58-871067fcd55a"
+	"name" "string" "untitled"
+	"particleSystemDefinitions" "element_array" 
+	[
+		"element" "e7f233a7-5099-4d7a-a7e1-c29a7e03d765",
+		"element" "5268ed6e-45d4-4550-8e31-60b020fa3ac2",
+		"element" "5fb82ae2-0035-479d-b955-ca07e015cef1",
+		"element" "c810a87c-7867-40e2-9869-ced93ce3f522",
+		"element" "1c54b2b2-23e5-47d4-8289-3b414806d304",
+		"element" "57923e90-10a4-46a8-b509-b62f9fb5e093",
+		"DmeParticleSystemDefinition"
+		{
+			"id" "elementid" "f0974714-f152-433b-8057-3a3a1e63b73d"
+			"name" "string" "P_wpn_grenade_gravity_rock"
+			"renderers" "element_array" 
+			[
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "b1084416-b4e2-40f7-8471-fda5bd493ee8"
+					"name" "string" "render_animated_sprites"
+					"functionName" "string" "render_animated_sprites"
+					"Visibility input distance minimum" "float" "1000"
+					"Visibility Proxy Input Control Point Number" "int" "0"
+				}
+			]
+			"operators" "element_array" 
+			[
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "adc6277b-d474-44e3-a502-cf144ffcfc6b"
+					"name" "string" "Movement Lock to Control Point"
+					"functionName" "string" "Movement Lock to Control Point"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "28b3f943-a84e-478d-8859-8b5862e89a27"
+					"name" "string" "Movement Basic"
+					"functionName" "string" "Movement Basic"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "27e2a367-abbc-44f7-b1b0-a015468b2d7e"
+					"name" "string" "Lifespan Decay"
+					"functionName" "string" "Lifespan Decay"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "9aeb30ef-089a-4093-8dda-179b68156b2d"
+					"name" "string" "Rotation Spin Roll"
+					"functionName" "string" "Rotation Spin Roll"
+					"spin_rate_min" "int" "4"
+					"spin_rate_degrees" "int" "4"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "d0234467-7de0-4f2e-b229-c893b0ef3287"
+					"name" "string" "Graph Scalar"
+					"functionName" "string" "Graph Scalar"
+					"output op" "int" "1"
+					"output minimum" "float" "0.25"
+					"graph" "vector2_array" 
+					[
+						"0 1",
+						"0.386687994 0.5",
+						"0.6830430031 0.2196259946",
+						"1 0"
+					]
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "ec242101-7cfc-4671-94e6-df8313bbd35d"
+					"name" "string" "Graph Scalar"
+					"functionName" "string" "Graph Scalar"
+					"graph" "vector2_array" 
+					[
+						"0 0",
+						"0.0443740003 0.553737998",
+						"0.1188590005 0.2640190125",
+						"0.2488110065 0.7406539917",
+						"0.3676699996 0.0654210001",
+						"0.4992080033 0.5",
+						"1 0"
+					]
+					"output op" "int" "1"
+					"output field" "int" "7"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "0c6434cc-1156-492e-aec8-8aee38789dc0"
+					"name" "string" "Restart Effect after Duration"
+					"functionName" "string" "Restart Effect after Duration"
+					"Child Group ID" "int" "1"
+					"Kill particles on restart" "bool" "1"
+					"Only Restart Children" "bool" "1"
+					"Minimum Restart Time" "float" "0.25"
+					"mute" "bool" "1"
+				}
+			]
+			"initializers" "element_array" 
+			[
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "fb411206-b6bc-4476-865a-c1473a3aed52"
+					"name" "string" "Position Within Sphere Random"
+					"functionName" "string" "Position Within Sphere Random"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "85572523-c1a3-4a7e-b7b3-26655212c7a1"
+					"name" "string" "Position Modify Offset Random"
+					"functionName" "string" "Position Modify Offset Random"
+					"offset in local space 0/1" "bool" "1"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "2eb1614c-4404-471a-8494-087aad4c464d"
+					"name" "string" "Lifetime Random"
+					"functionName" "string" "Lifetime Random"
+					"lifetime_min" "float" "1"
+					"lifetime_max" "float" "1"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "52d95455-c0ec-4eb6-b4e9-ef41a2e75859"
+					"name" "string" "Radius Random"
+					"functionName" "string" "Radius Random"
+					"radius_random_exponent" "float" "0"
+					"radius_min" "float" "128"
+					"radius_max" "float" "128"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "10acb4fe-aad5-4099-9de9-f6b55349d0d3"
+					"name" "string" "Rotation Random"
+					"functionName" "string" "Rotation Random"
+					"rotation_offset_max" "float" "0"
+					"randomly_flip_direction" "bool" "0"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "4795d65b-9d26-46a3-9985-adab28484d98"
+					"name" "string" "Alpha Random"
+					"functionName" "string" "Alpha Random"
+					"alpha_max" "int" "64"
+					"alpha_random_exponent" "float" "0"
+				},
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "398ca412-2136-41e5-b837-331b637cf0f5"
+					"name" "string" "Color Random"
+					"functionName" "string" "Color Random"
+					"color1" "color" "255 153 44 0"
+					"color2" "color" "255 153 44 0"
+				}
+			]
+			"emitters" "element_array" 
+			[
+				"DmeParticleOperator"
+				{
+					"id" "elementid" "9f6b69d1-9a65-4093-be8e-a737441913fc"
+					"name" "string" "emit_continuously"
+					"functionName" "string" "emit_continuously"
+					"emission_rate" "float" "10"
+				}
+			]
+			"children" "element_array" 
+			[
+				"DmeParticleChild"
+				{
+					"id" "elementid" "941a2d0d-d5e2-4d68-8280-26522d5cba59"
+					"name" "string" "gravity_CH_dust_rock"
+					"child" "element" "206635c2-9643-4eaf-9b81-f996c8a680da"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "9cbc97ac-1847-4083-a337-21cf0b9500b0"
+					"name" "string" "grav_ent_FLARE_core_rock"
+					"child" "element" "597a892a-39aa-4df2-bdc0-b81084482e6f"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "42eaeac3-c0ea-493a-9680-5a1745126747"
+					"name" "string" "gravity_CH_streaks_rock"
+					"child" "element" "5268ed6e-45d4-4550-8e31-60b020fa3ac2"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "53ca4b39-3e36-48f9-9c04-cf718900bc37"
+					"name" "string" "gravity_CH_dlight_rock"
+					"child" "element" "5fb82ae2-0035-479d-b955-ca07e015cef1"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "014d2a8b-4d35-42b6-bc86-01fb57ee3640"
+					"name" "string" "gravity_CH_points_rock"
+					"child" "element" "c810a87c-7867-40e2-9869-ced93ce3f522"
+					"mute" "bool" "1"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "4a339592-c703-4068-8ed2-bab6786643f9"
+					"name" "string" "gravity_CH_points_endcap_rock"
+					"child" "element" "57923e90-10a4-46a8-b509-b62f9fb5e093"
+					"end cap effect" "bool" "1"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "242ed11a-a625-42fd-b256-206a51d4beb8"
+					"name" "string" "gravity_CH_arcs_rock"
+					"child" "element" "8df0d464-9893-4ff6-a753-e1ef60fb83f8"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "1cbadaf1-e3d4-45f1-b6d5-c381f43c8988"
+					"name" "string" "gravity_CH_chunks_rock"
+					"child" "element" "3887e102-5773-4bc4-811a-09da560b5388"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "f16b6be6-5ea7-4f08-8428-ac8cf9c14971"
+					"name" "string" "gravity_CH_chunks_endcap_rock"
+					"child" "element" "32c592c6-4176-4643-87cc-35a36e630262"
+					"end cap effect" "bool" "1"
+				},
+				"DmeParticleChild"
+				{
+					"id" "elementid" "c51d8da6-0a4a-41de-a528-b92af626c076"
+					"name" "string" "gravity_CH_streak2_rock"
+					"child" "element" "1c54b2b2-23e5-47d4-8289-3b414806d304"
+				}
+			]
+			"scripts" "element_array" 
+			[
+			]
+			"forces" "element_array" 
+			[
+			]
+			"constraints" "element_array" 
+			[
+			]
+			"preventNameBasedLookup" "bool" "0"
+			"scripted" "bool" "0"
+			"max_particles" "int" "10"
+			"material" "string" "particle\\refract\\shockwave_add.vmt"
+			"fallback replacement definition" "string" ""
+			"Sort particles" "bool" "0"
+		},
+		"element" "597a892a-39aa-4df2-bdc0-b81084482e6f",
+		"element" "94c304ad-de8f-47c8-bd51-76e643854a81",
+		"element" "da476e95-2af4-4655-afa0-32a996753c3b",
+		"element" "8df0d464-9893-4ff6-a753-e1ef60fb83f8",
+		"element" "32c592c6-4176-4643-87cc-35a36e630262",
+		"element" "3887e102-5773-4bc4-811a-09da560b5388",
+		"element" "206635c2-9643-4eaf-9b81-f996c8a680da"
+	]
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "e7f233a7-5099-4d7a-a7e1-c29a7e03d765"
+	"name" "string" "grav_ent_FLARE_CH_streak_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ddd39390-e846-40b7-8c63-b580312478dc"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility input dot maximum" "float" "-0.1000000015"
+			"Visibility input dot minimum" "float" "0.0199999996"
+			"Visibility Radius Scale minimum" "float" "0.25"
+			"Visibility Proxy Radius" "float" "5"
+			"Visibility Radius Scale maximum" "float" "2"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6c32765f-eea9-49ea-bf8c-2bd5c0e04c75"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "fcfe1807-a386-4c1a-9bb6-167db6584bde"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d565778a-eee3-4bf0-9ea1-6413747b3405"
+			"name" "string" "Set Position Between Two Control Points"
+			"functionName" "string" "Set Position Between Two Control Points"
+			"clamp delta factor" "vector3" "1 0 1"
+			"input field" "int" "18"
+			"output maximum" "float" "10"
+			"output minimum" "float" "-10"
+			"input maximum" "float" "10"
+			"input minimum" "float" "-10"
+			"starting control point" "int" "2"
+			"ending control point" "int" "10"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3f82c333-48aa-4b08-b308-29b39efb5c90"
+			"name" "string" "Remap Distance Between Two Control Points to Scalar"
+			"functionName" "string" "Remap Distance Between Two Control Points to Scalar"
+			"ending control point" "int" "10"
+			"starting control point" "int" "2"
+			"output maximum" "float" "0"
+			"output minimum" "float" "1"
+			"distance maximum" "float" "180"
+			"output is scalar of initial random range" "bool" "1"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2ffd752b-fff6-4196-9af5-a3cd8ae1af0f"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5afe85f3-7fde-4cc4-bfe3-85ede7221d13"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"1 1"
+			]
+			"graph time" "float" "0.25"
+			"output op" "int" "1"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "24bafcc1-592b-403d-9d1b-ce410a2a27fd"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_max" "float" "160"
+			"radius_min" "float" "160"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1abc7ce3-9d36-4e83-8acf-fcb114633ffc"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"run for killed parent particles" "bool" "0"
+			"lifetime_max" "float" "1"
+			"lifetime_min" "float" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b164b573-bf1d-46a3-8b5e-949d97601d65"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_min" "int" "128"
+			"alpha_max" "int" "128"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6700ddef-6d7c-4fad-a52e-a428eab0be12"
+			"name" "string" "Color Random"
+			"functionName" "string" "Color Random"
+			"color1" "color" "255 10 10 255"
+			"color2" "color" "255 10 10 255"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3ba90629-d862-4401-bc7d-c500968783ba"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_bias" "vector3" "1 0 0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6e8af52a-892d-46a3-b7e5-de5e0fdc8da7"
+			"name" "string" "Remap Initial Scalar"
+			"functionName" "string" "Remap Initial Scalar"
+			"input field" "int" "12"
+			"output field" "int" "12"
+			"output minimum" "float" "28"
+			"output maximum" "float" "28"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a42a1272-c9cd-43fb-a137-13227d16cf38"
+			"name" "string" "Inherit Initial Value From Parent Particle"
+			"functionName" "string" "Inherit Initial Value From Parent Particle"
+			"Inherited Field" "int" "6"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "288f9568-3baf-4e0a-9916-b75dc486e415"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "1"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "25"
+	"material" "string" "particle\\glows\\glow_pointlight_noz.vmt"
+	"bounding_box_min" "vector3" "-100 -100 -100"
+	"bounding_box_max" "vector3" "100 100 100"
+	"fallback replacement definition" "string" ""
+	"color" "color" "255 153 44 255"
+	"Sort particles" "bool" "0"
+	"use height in yaw" "bool" "1"
+	"inherit alpha visibility" "bool" "1"
+	"inherit proxy visibility" "bool" "1"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "5268ed6e-45d4-4550-8e31-60b020fa3ac2"
+	"name" "string" "gravity_CH_streaks_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1ed66afe-0494-4974-89fb-94567c633e46"
+			"name" "string" "render_sprite_trail"
+			"functionName" "string" "render_sprite_trail"
+			"length fade in time" "float" "0.25"
+			"max length" "float" "1000"
+			"constrain radius to length" "bool" "0"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a670b708-8d72-4916-9b7b-bb652d69bcac"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "56341420-05e1-40ca-b2eb-f533c96b89b9"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "99eca70c-62ee-4797-9444-e0b4fcbb75f6"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+			"operator end cap state" "int" "0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ced8e5be-d0eb-4b2b-bd92-2bb0513cfb90"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0586370006 1",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6f7291ac-a065-4919-a123-8c6b504f5adc"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0586370006 1",
+				"1 0"
+			]
+			"output op" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "625bc4ed-4e0c-413c-acb5-95312154761f"
+			"name" "string" "Lerp EndCap Scalar"
+			"functionName" "string" "Lerp EndCap Scalar"
+			"operator end cap state" "int" "1"
+			"lerp time" "float" "0.5"
+			"output field" "int" "10"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b681d097-a649-4601-86fa-0ff3d07ebd49"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "0.5"
+			"lifetime_min" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "8581500d-053f-4b56-bda2-62d4023b1a21"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3d0a5af3-69b2-422c-98e6-75fbb04656a6"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_random_exponent" "float" "20"
+			"radius_min" "float" "30"
+			"radius_max" "float" "60"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b054fc68-93df-48ed-bde6-5dd4f793e7f9"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b0fd7d4a-e592-4894-8f09-10a2f4cc262d"
+			"name" "string" "Position Modify Offset Random"
+			"functionName" "string" "Position Modify Offset Random"
+			"mute" "bool" "1"
+			"offset min" "vector3" "0 -64 2"
+			"offset max" "vector3" "0 64 128"
+			"offset in local space 0/1" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a186f26e-aea4-49bc-869c-566b5ec0cbf9"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"mute" "bool" "1"
+			"speed_in_local_coordinate_system_min" "vector3" "0 0 50"
+			"speed_in_local_coordinate_system_max" "vector3" "0 0 50"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6eaf49b0-23d5-4a7c-a54e-580e76e99203"
+			"name" "string" "Trail Length Random"
+			"functionName" "string" "Trail Length Random"
+			"length_min" "float" "0.25"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "863a882a-9f05-4134-bd84-18472674dccf"
+			"name" "string" "Scalar Random"
+			"functionName" "string" "Scalar Random"
+			"output field" "int" "23"
+			"max" "float" "100"
+			"min" "float" "200"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d7db8492-2f54-490b-bd9c-bfd20d28b217"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_max" "float" "128"
+			"distance_min" "float" "90"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1774b32d-80f0-468d-a119-6adb8a93afc0"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cc749f4f-c200-4d69-b0d0-7048906ff71a"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0"
+			"amount of force" "float" "900"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e9c5f87e-d84b-4476-a6d9-6a92bd2d04ff"
+			"name" "string" "twist around axis"
+			"functionName" "string" "twist around axis"
+			"mute" "bool" "1"
+			"amount of force" "float" "900"
+			"object local space axis 0/1" "bool" "1"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "30"
+	"material" "string" "particle\\glare_spike_add_reverse.vmt"
+	"fallback replacement definition" "string" ""
+	"radius" "float" "1"
+	"color" "color" "255 12 6 255"
+	"color HDR scale" "float" "2"
+	"maximum draw distance" "float" "1500"
+	"apply draw distance when child" "bool" "1"
+	"Sort particles" "bool" "0"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "5fb82ae2-0035-479d-b955-ca07e015cef1"
+	"name" "string" "gravity_CH_dlight_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a677cc3a-4502-41e7-9776-2b8585418886"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "384b7895-09fc-4fc3-b987-f0f3af8181e2"
+			"name" "string" "Render light source"
+			"functionName" "string" "Render light source"
+			"falloff halfway fraction" "float" "0.0099999998"
+			"color scale" "float" "30"
+			"color scale by alpha" "bool" "1"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9ea64915-a053-46bf-a69b-a867825220e3"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d4eca443-c19a-4751-8f47-2734f44da80c"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "8eef3e4a-4766-48b6-8e64-69350aede74d"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "00221607-3565-4fe8-8519-b25b284edbac"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0602219999 0",
+				"0.1267829984 0.023364",
+				"0.2155310065 0.0864489973",
+				"0.3977810144 0.2663550079",
+				"1 1"
+			]
+			"output op" "int" "1"
+			"graph time" "float" "0.25"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d0a463b6-97c8-4914-ba03-da8fc422d7b8"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph loop" "bool" "1"
+			"graph time is in lifespans" "bool" "0"
+			"output field" "int" "7"
+			"output op" "int" "3"
+			"output minimum" "float" "0.25"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0443740003 0.553737998",
+				"0.1188590005 0.2640190125",
+				"0.2488110065 0.7406539917",
+				"0.3676699996 0.0654210001",
+				"0.4992080033 0.5",
+				"0.6212360263 0.5023360252",
+				"0.7416800261 1",
+				"0.8161649704 0.348131001",
+				"0.9397779703 0.3411209881",
+				"1 0"
+			]
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9be58ea6-93f8-4405-b12c-56cb62a14478"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"run for killed parent particles" "bool" "0"
+			"lifetime_max" "float" "1"
+			"lifetime_min" "float" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "36078303-ab9d-48ce-aabd-560fc165cab8"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_max" "float" "300"
+			"radius_min" "float" "300"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9aaeb4c1-e210-4ec9-a8a4-dbf42cb924db"
+			"name" "string" "Color Random"
+			"functionName" "string" "Color Random"
+			"color1" "color" "146 164 103 255"
+			"color2" "color" "146 164 103 255"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7d8ce954-8b32-4bec-9f7f-6705813c4c66"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ce727cf1-8ee6-4923-9772-13e5614ea69d"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "1"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "1"
+	"material" "string" "particle\\glows\\glow_soft_linear_add_noz.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+	"color" "color" "255 53 6 255"
+	"maximum draw distance" "float" "1000"
+	"apply draw distance when child" "bool" "1"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "c810a87c-7867-40e2-9869-ced93ce3f522"
+	"name" "string" "gravity_CH_points_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5c012d34-b791-48d3-b213-9f91a3496000"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"animation rate" "float" "1"
+			"Visibility Radius Scale maximum" "float" "0.6000000238"
+			"Visibility input minimum" "float" "1"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7a7c63be-28bd-451c-adae-6d6c58433192"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+			"drag" "float" "0.1000000015"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9a2f6e0c-dace-4084-bf49-48301f241e69"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b83a71d2-1666-49c3-b9ed-6d449df2dc2f"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1679870039 1",
+				"0.7527729869 1",
+				"1 0"
+			]
+			"output field" "int" "7"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7a8157a9-9aea-4cdd-8c56-48e3290b938e"
+			"name" "string" "Color Fade"
+			"functionName" "string" "Color Fade"
+			"fade_end_time" "float" "0.5"
+			"color_fade" "color" "210 105 3 255"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ea0e3630-74ee-427e-8258-f5d67a03b032"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output maximum" "float" "5"
+			"output minimum" "float" "1"
+			"output op" "int" "1"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1061810032 0.2850469947",
+				"0.2757529914 0.6191589832",
+				"0.4896990061 0.8271030188",
+				"0.7389240265 0.651868999",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "764fcee5-01e4-4637-8fdb-ea55db2d202f"
+			"name" "string" "Rotation Spin Yaw"
+			"functionName" "string" "Rotation Spin Yaw"
+			"yaw_rate_degrees" "int" "45"
+			"mute" "bool" "1"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "afb221df-0bdf-4ee9-8509-4314f3db4099"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_min" "int" "20"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "11deb346-cc21-40b4-8c73-d3d4884bb26a"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_min" "float" "0.5"
+			"lifetime_max" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "4b821cf0-9de1-4ad9-9b82-a958ee3c01f2"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_random_exponent" "float" "5"
+			"radius_max" "float" "8"
+			"radius_min" "float" "4"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "73dc27ce-a877-4956-bf78-dd1df0e76fd7"
+			"name" "string" "Scalar Random"
+			"functionName" "string" "Scalar Random"
+			"output field" "int" "24"
+			"max" "float" "0.1000000015"
+			"min" "float" "0.0500000007"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2ea562ff-11fd-454d-a352-eabe1178d41d"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cb394f87-3c33-4d62-90c9-687ebda8aa89"
+			"name" "string" "Position Modify Place On Ground"
+			"functionName" "string" "Position Modify Place On Ground"
+			"set normal" "bool" "1"
+			"include water" "bool" "1"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2b207265-39ba-4b84-a9d6-51bcbefe9c5a"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_min" "float" "150"
+			"distance_max" "float" "200"
+			"speed_min" "float" "100"
+			"speed_max" "float" "100"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c46d656f-1f4d-4f9f-a8ce-3492a3689853"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"operator end cap state" "int" "1"
+			"mute" "bool" "1"
+			"speed_in_local_coordinate_system_min" "vector3" "-1000 -1000 -1000"
+			"speed_in_local_coordinate_system_max" "vector3" "1000 1000 1000"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "207cbef1-f4a5-4d97-9601-5d14e3e9af4b"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+			"emission_rate" "float" "50"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2cc6f444-e1f5-4fac-bfe7-7f78954f8341"
+			"name" "string" "twist around axis"
+			"functionName" "string" "twist around axis"
+			"amount of force" "float" "900"
+			"object local space axis 0/1" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f451d472-c8da-4f08-8b89-b71bc6f92db5"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"amount of force" "float" "900"
+			"falloff power" "float" "0.2399999946"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\glows\\glow_pointlight_db5.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+	"color" "color" "229 119 70 255"
+	"color HDR scale" "float" "3"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "1c54b2b2-23e5-47d4-8289-3b414806d304"
+	"name" "string" "gravity_CH_streak2_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "17c92354-f73d-4924-b479-9196d328c45d"
+			"name" "string" "render_sprite_trail"
+			"functionName" "string" "render_sprite_trail"
+			"Visibility Radius Scale minimum" "float" "0"
+			"max length" "float" "1200"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a545e357-d6cf-4e89-bb5f-61f581ac92ca"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+			"drag" "float" "0.1000000015"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "85b10434-e7dc-4899-a9ba-7ae3dc075ab7"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cc40e0aa-ad93-4d2a-b89c-f4d4c97c8785"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1679870039 1",
+				"0.7527729869 1",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "267ecb12-5123-4028-b3b6-875b3c03f270"
+			"name" "string" "Color Fade"
+			"functionName" "string" "Color Fade"
+			"mute" "bool" "1"
+			"color_fade" "color" "210 105 3 255"
+			"fade_end_time" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "128ead9e-aa73-4b95-a176-b7b3a6c9d67a"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1061810032 0.2850469947",
+				"0.2757529914 0.6191589832",
+				"0.4896990061 0.8271030188",
+				"0.7389240265 0.651868999",
+				"1 0"
+			]
+			"output op" "int" "1"
+			"output minimum" "float" "1"
+			"output maximum" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f19b7d70-38e2-497f-b18f-85f9b369c680"
+			"name" "string" "Rotation Spin Yaw"
+			"functionName" "string" "Rotation Spin Yaw"
+			"mute" "bool" "1"
+			"yaw_rate_degrees" "int" "45"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1e19f4e9-110f-4ef9-8505-11dffce26e71"
+			"name" "string" "Lerp Initial Scalar"
+			"functionName" "string" "Lerp Initial Scalar"
+			"value to lerp to" "float" "0"
+			"output field" "int" "10"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "02798eee-4edb-43f2-a6db-302b6506dff7"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_min" "int" "20"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9983d28b-f4b6-4da0-8d92-1ff18e0e5823"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "0.75"
+			"lifetime_min" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f6d281e6-dfd0-4ac3-8735-52a4d1fc532e"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "4"
+			"radius_max" "float" "8"
+			"radius_random_exponent" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b138d627-1ab5-4072-8857-504bbe109065"
+			"name" "string" "Scalar Random"
+			"functionName" "string" "Scalar Random"
+			"min" "float" "0.0500000007"
+			"max" "float" "0.1000000015"
+			"output field" "int" "24"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1c3d3567-80a4-4585-9b4e-e1f7e6648d6e"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "23d82085-0224-4d44-aa30-1a0be034ef61"
+			"name" "string" "Position Modify Place On Ground"
+			"functionName" "string" "Position Modify Place On Ground"
+			"mute" "bool" "1"
+			"include water" "bool" "1"
+			"set normal" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "078f6ef8-2924-4ac9-95f2-7d13e8fa488d"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"speed_max" "float" "100"
+			"speed_min" "float" "100"
+			"distance_max" "float" "200"
+			"distance_min" "float" "150"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "31db0b76-3712-4b4e-81b0-c411ae1d8d1a"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"speed_in_local_coordinate_system_max" "vector3" "1000 1000 1000"
+			"speed_in_local_coordinate_system_min" "vector3" "-1000 -1000 -1000"
+			"mute" "bool" "1"
+			"operator end cap state" "int" "1"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f04c4c9b-689c-4aab-96fa-a4827a59cb2b"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+			"emission_rate" "float" "50"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "912f9f80-f0ee-45f1-8539-7dc06c3daec6"
+			"name" "string" "twist around axis"
+			"functionName" "string" "twist around axis"
+			"object local space axis 0/1" "bool" "1"
+			"amount of force" "float" "900"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e940cbbe-bf86-4966-beb7-0e4989d36055"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0.2399999946"
+			"amount of force" "float" "900"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\particle_spark_ob.vmt"
+	"fallback replacement definition" "string" ""
+	"radius" "float" "0.5"
+	"color" "color" "255 76 41 255"
+	"color HDR scale" "float" "3"
+	"maximum draw distance" "float" "1500"
+	"Sort particles" "bool" "0"
+	"aggregation radius" "float" "2048"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "57923e90-10a4-46a8-b509-b62f9fb5e093"
+	"name" "string" "gravity_CH_points_endcap_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "42ea6e9b-7d6d-44f7-b0bf-f0789f4cb4c7"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+			"Visibility input minimum" "float" "1"
+			"Visibility Radius Scale maximum" "float" "0.6000000238"
+			"animation rate" "float" "0.6014999747"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "02fc85b7-22d0-4bcd-b737-570a8538d53d"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "be805f08-65f5-46ee-9593-4643dd2b2089"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "74eabd08-5127-458c-850f-75308634abd4"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0.7733640075",
+				"0.2044370025 0.9766359925",
+				"0.242471993 1",
+				"0.3264659941 0.6542059779",
+				"0.4976229966 0.2640190125",
+				"0.6751189828 0.1261679977",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "079196bc-220f-47bb-bd25-06bf0553704f"
+			"name" "string" "Color Fade"
+			"functionName" "string" "Color Fade"
+			"color_fade" "color" "210 105 3 255"
+			"fade_end_time" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "fa12d121-cf53-4cbd-9848-cc53aba2a7c8"
+			"name" "string" "Set Control Point Positions"
+			"functionName" "string" "Set Control Point Positions"
+			"First Control Point Location" "vector3" "0 0 64"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9396a53d-73ea-4016-94b9-e4e1301fff5f"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 1",
+				"0.2408870012 0.0794389993",
+				"1 0"
+			]
+			"output op" "int" "1"
+			"output minimum" "float" "1"
+			"output maximum" "float" "40"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e2bc8afb-f066-4144-9670-59a3777b64bd"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_min" "int" "20"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "92a141fd-2af9-4037-8d59-71a515dfd141"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "1"
+			"lifetime_min" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a75bb5fa-2803-4c08-99fa-5e28c5e9098d"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_max" "float" "128"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "456196ff-fa71-4167-bb3a-75dc0ea30051"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "3"
+			"radius_max" "float" "5"
+			"radius_random_exponent" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6ad06a31-ebfa-4f11-9006-b0d02a68f609"
+			"name" "string" "Set CP Position"
+			"functionName" "string" "Set CP Position"
+			"position" "vector3" "0 0 64"
+			"output control point" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ecb1d64e-880c-41af-931b-b57d95afc478"
+			"name" "string" "Position Modify Warp Random"
+			"functionName" "string" "Position Modify Warp Random"
+			"warp max" "vector3" "1 1 0"
+			"warp min" "vector3" "1 1 0"
+			"mute" "bool" "1"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "01f3f99a-9cb6-4e5a-b347-9fe4cc60fbf9"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1aee5d8c-6ab0-4091-af54-2a8a0f7c0382"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0"
+			"amount of force" "float" "-500"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "892f7036-b9c1-4905-85a6-89eb2fe892e0"
+			"name" "string" "turbulent force"
+			"functionName" "string" "turbulent force"
+			"Noise amount 3" "vector3" "0 0 0"
+			"Noise amount 2" "vector3" "0 0 0"
+			"Noise amount 1" "vector3" "100 100 100"
+			"Noise scale 1" "float" "0.5"
+			"Noise amount 0" "vector3" "100 100 100"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\glows\\glow_pointlight.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+	"color" "color" "255 135 6 255"
+	"color HDR scale" "float" "2"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "206635c2-9643-4eaf-9b81-f996c8a680da"
+	"name" "string" "gravity_CH_dust_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ad2ef827-0591-45c7-8798-868513c81898"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+			"Visibility input minimum" "float" "1"
+			"Visibility Radius Scale maximum" "float" "0.6000000238"
+			"animation rate" "float" "1"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "fd989a8c-7d9c-4408-8824-34d72e424be6"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+			"drag" "float" "0.1000000015"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3ce6e26c-2cb1-411c-9fb0-a9051fc61dc7"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "57a68aa3-13ef-4a37-a432-8085da9f20aa"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.4976229966 1",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "dec0fa0a-31dc-4c43-88c6-e97d28292567"
+			"name" "string" "Color Fade"
+			"functionName" "string" "Color Fade"
+			"fade_end_time" "float" "0.5"
+			"color_fade" "color" "255 156 112 255"
+			"fade_start_time" "float" "0.25"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "855d462f-9422-4309-9490-1af4696fd036"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1061810032 0.2850469947",
+				"0.2757529914 0.6191589832",
+				"0.4896990061 0.8271030188",
+				"0.7389240265 0.651868999",
+				"1 0"
+			]
+			"output op" "int" "1"
+			"output minimum" "float" "1"
+			"output maximum" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9e1ba1ef-cba3-40e1-993a-c22cdbc14849"
+			"name" "string" "Rotation Spin Yaw"
+			"functionName" "string" "Rotation Spin Yaw"
+			"mute" "bool" "1"
+			"yaw_rate_degrees" "int" "45"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7233e0ba-6cb7-42db-b7e4-f513c5711bfe"
+			"name" "string" "Lerp EndCap Scalar"
+			"functionName" "string" "Lerp EndCap Scalar"
+			"value to lerp to" "float" "0"
+			"output field" "int" "1"
+			"lerp time" "float" "0.5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a07a4abf-bc47-4183-84ba-eb71a11c4023"
+			"name" "string" "Lerp EndCap Scalar"
+			"functionName" "string" "Lerp EndCap Scalar"
+			"lerp time" "float" "0.5"
+			"output field" "int" "16"
+			"value to lerp to" "float" "0"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "18f96b7e-3e77-4af0-bb17-31aa277bcf89"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_max" "int" "15"
+			"alpha_min" "int" "20"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2088114c-1055-46f1-b6f5-26bd59ea803b"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "1.5"
+			"lifetime_min" "float" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "48134d95-ddd4-406a-b614-909052b56645"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "50"
+			"radius_max" "float" "50"
+			"radius_random_exponent" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "db6bae1a-91f7-49a6-b986-168064593170"
+			"name" "string" "Scalar Random"
+			"functionName" "string" "Scalar Random"
+			"min" "float" "0.0500000007"
+			"max" "float" "0.1000000015"
+			"output field" "int" "24"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "049dc8f9-b560-4fdd-a210-ef15a7c3f42c"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e22799be-f50f-41ac-b8f6-e3c589f4b451"
+			"name" "string" "Position Modify Place On Ground"
+			"functionName" "string" "Position Modify Place On Ground"
+			"mute" "bool" "1"
+			"include water" "bool" "1"
+			"set normal" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6397bdd9-152d-453d-8df2-a8da69e1ceff"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"speed_max" "float" "100"
+			"speed_min" "float" "100"
+			"distance_max" "float" "200"
+			"distance_min" "float" "150"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "42af1043-749d-4086-8a77-5e3f6d0d5652"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"speed_in_local_coordinate_system_max" "vector3" "1000 1000 1000"
+			"speed_in_local_coordinate_system_min" "vector3" "-1000 -1000 -1000"
+			"mute" "bool" "1"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7677eb58-fdf8-4bf7-9248-641a6fad45ab"
+			"name" "string" "Color Random"
+			"functionName" "string" "Color Random"
+			"light sky scale" "float" "1.1000000238"
+			"light amplification amount" "float" "1.1000000238"
+			"tint blend mode" "int" "4"
+			"tint_perc" "float" "0.8999999762"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "7ddc12ed-fbb0-44de-8c95-ac40c09d0405"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+			"emission_rate" "float" "50"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "76881c02-b76d-46a2-8e39-36b426ab02ff"
+			"name" "string" "twist around axis"
+			"functionName" "string" "twist around axis"
+			"object local space axis 0/1" "bool" "1"
+			"amount of force" "float" "450"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2c224ba8-9cdd-4adc-b0d5-bcba20006c8e"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0.2399999946"
+			"amount of force" "float" "450"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cf73f7a7-68b6-49df-9ab6-7b09ff8e85ba"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"amount of force" "float" "-4000"
+			"falloff power" "float" "0"
+			"operator end cap state" "int" "1"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\smoke\\smoke_puff_01_db60_nearcull.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "597a892a-39aa-4df2-bdc0-b81084482e6f"
+	"name" "string" "grav_ent_FLARE_core_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "42241d7b-9950-45f7-8c1f-62588d563bce"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+			"Visibility Proxy Radius" "float" "6"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "81e40b77-1efa-428d-97a1-2dfb78af2112"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "93920a8f-8cb2-42d6-b31c-e06efa6ca559"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "0fd6e796-913f-4941-a40c-af1f8e1f5c3c"
+			"name" "string" "Rotation Spin Roll"
+			"functionName" "string" "Rotation Spin Roll"
+			"mute" "bool" "1"
+			"spin_rate_degrees" "int" "30"
+			"spin_rate_min" "int" "30"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c5f58c88-5c4a-46d1-ad53-3a5ae529084d"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c64e5912-bbe9-4b28-95ab-39f32c6bf921"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"1 1"
+			]
+			"graph time" "float" "0.25"
+			"output op" "int" "1"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5cac592e-83bf-44b4-b89e-fe9701741b8d"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "120"
+			"radius_max" "float" "120"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a91d47dd-9954-4886-be5d-a712e84d1c0d"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_bias" "vector3" "0 0 0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "921a817b-5c6d-402c-82c7-dbd1469ce147"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_min" "float" "1"
+			"lifetime_max" "float" "1"
+			"run for killed parent particles" "bool" "0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6ca2abce-0170-4567-867d-74ed27e58e64"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "025a66a8-c232-402f-835c-57a7dbef4ccc"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+			"rotation_offset_max" "float" "0"
+			"rotation_initial" "float" "45"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "dd3fddf9-d483-4cce-bb44-234dfa096cb8"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "1"
+		}
+	]
+	"children" "element_array" 
+	[
+		"DmeParticleChild"
+		{
+			"id" "elementid" "d2c6b936-e95d-4ec5-b6c1-2b4f187a17f6"
+			"name" "string" "grav_ent_FLARE_CH_star_rock"
+			"child" "element" "94c304ad-de8f-47c8-bd51-76e643854a81"
+		},
+		"DmeParticleChild"
+		{
+			"id" "elementid" "9af4a295-6dbc-4a1d-afcd-0e7cf8cba483"
+			"name" "string" "grav_ent_FLARE_CH_streak_blur_rock"
+			"child" "element" "da476e95-2af4-4655-afa0-32a996753c3b"
+		},
+		"DmeParticleChild"
+		{
+			"id" "elementid" "b726d41e-9281-4801-b7af-2fda71967835"
+			"name" "string" "grav_ent_FLARE_CH_streak_rock"
+			"child" "element" "e7f233a7-5099-4d7a-a7e1-c29a7e03d765"
+		}
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "3"
+	"material" "string" "particle\\glows\\pfx_glow_05_add_noz.vmt"
+	"fallback replacement definition" "string" ""
+	"color" "color" "229 126 70 255"
+	"color HDR scale" "float" "2"
+	"Sort particles" "bool" "0"
+	"draw with screen space" "bool" "1"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "94c304ad-de8f-47c8-bd51-76e643854a81"
+	"name" "string" "grav_ent_FLARE_CH_star_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2f33e918-4a0d-45bc-825d-1118d04507be"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Radius Scale maximum" "float" "2"
+			"Visibility Radius Scale minimum" "float" "0.1000000015"
+			"Visibility Proxy Radius" "float" "6"
+			"Visibility input dot maximum" "float" "-0.200000003"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6b05d3ab-2ebd-4baf-8265-25babf674e97"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "61ac8e06-e81f-4cdb-91c4-fb21744ba0bc"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "aad94d39-af10-4195-b5b8-25340c4908ed"
+			"name" "string" "Remap Distance Between Two Control Points to Scalar"
+			"functionName" "string" "Remap Distance Between Two Control Points to Scalar"
+			"output is scalar of initial random range" "bool" "1"
+			"distance maximum" "float" "80"
+			"output field" "int" "7"
+			"output minimum" "float" "1"
+			"output maximum" "float" "0"
+			"starting control point" "int" "2"
+			"ending control point" "int" "2"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6a729967-f5b8-4fb7-b449-62dc3109c93d"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "fff37f51-9eb8-4a27-9d70-de866bfdb204"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0602219999 0",
+				"0.1267829984 0.023364",
+				"0.2155310065 0.0864489973",
+				"0.3977810144 0.2663550079",
+				"1 1"
+			]
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "76b6a523-0761-4af8-ad33-767a36034f8a"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_max" "float" "50"
+			"radius_min" "float" "50"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "bcf7034b-b5a9-418f-8ce0-70617405a6ff"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_bias" "vector3" "0 0 0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "212cfdbc-07c3-4cec-b27c-533764a289de"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"run for killed parent particles" "bool" "0"
+			"lifetime_max" "float" "1"
+			"lifetime_min" "float" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "81ee6487-8a80-4ab6-8de0-466774de0814"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "406bd93c-625d-41e4-90c8-97caf8dcb7b3"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "1"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "1"
+	"material" "string" "particle\\glows\\flare_streak01_add_noz.vmt"
+	"fallback replacement definition" "string" ""
+	"color" "color" "255 73 73 255"
+	"Sort particles" "bool" "0"
+	"inherit alpha visibility" "bool" "1"
+	"inherit proxy visibility" "bool" "1"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "da476e95-2af4-4655-afa0-32a996753c3b"
+	"name" "string" "grav_ent_FLARE_CH_streak_blur_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c0eee6b1-a26b-4966-b07a-be76b9f0c37a"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Radius Scale maximum" "float" "2"
+			"Visibility Proxy Radius" "float" "5"
+			"Visibility Radius Scale minimum" "float" "0.25"
+			"Visibility input dot minimum" "float" "0.0199999996"
+			"Visibility input dot maximum" "float" "-0.1000000015"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5e5c0fb3-8ec0-4efa-9df1-06391e4b4d76"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "8001d0ed-fe3b-4156-afd9-815e302ec40f"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "9ad06b86-5652-4bf2-9b26-db77aa97b812"
+			"name" "string" "Set Position Between Two Control Points"
+			"functionName" "string" "Set Position Between Two Control Points"
+			"ending control point" "int" "10"
+			"starting control point" "int" "2"
+			"input minimum" "float" "-10"
+			"input maximum" "float" "10"
+			"output minimum" "float" "-10"
+			"output maximum" "float" "10"
+			"input field" "int" "18"
+			"clamp delta factor" "vector3" "1 0 1"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "060e9726-f380-44b6-9654-a8a932798f3c"
+			"name" "string" "Remap Distance Between Two Control Points to Scalar"
+			"functionName" "string" "Remap Distance Between Two Control Points to Scalar"
+			"output is scalar of initial random range" "bool" "1"
+			"distance maximum" "float" "180"
+			"output minimum" "float" "1"
+			"output maximum" "float" "0"
+			"starting control point" "int" "2"
+			"ending control point" "int" "10"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "0f995762-9978-4c6f-bc34-3ca5c9c61f55"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+			"operator end cap state" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "4a13246d-54ce-465f-a7e1-fb9432ea70ed"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"graph time" "float" "0.25"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"1 1"
+			]
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "fbccdd86-9ba1-45e8-8c24-d58678d5cfe1"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "120"
+			"radius_max" "float" "120"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "80ff2074-1425-427c-a4a2-522c7677ddd5"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_min" "float" "1"
+			"lifetime_max" "float" "1"
+			"run for killed parent particles" "bool" "0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d2d49300-0750-4c23-8096-8534e9a6e022"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+			"alpha_max" "int" "128"
+			"alpha_min" "int" "128"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e6e6fef9-0ce4-4e9f-be1d-93dfb8d51e13"
+			"name" "string" "Color Random"
+			"functionName" "string" "Color Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "0a384950-9d41-43f5-b3f7-49c31b865cb4"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_bias" "vector3" "1 0 0"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "623fb9bd-11cb-4792-9c19-6ef45373391a"
+			"name" "string" "Remap Initial Scalar"
+			"functionName" "string" "Remap Initial Scalar"
+			"output maximum" "float" "40"
+			"output minimum" "float" "40"
+			"output field" "int" "12"
+			"input field" "int" "12"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ed14090c-bed5-49b6-977f-b04b07c648e5"
+			"name" "string" "Inherit Initial Value From Parent Particle"
+			"functionName" "string" "Inherit Initial Value From Parent Particle"
+			"Inherited Field" "int" "6"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2bd9f3e4-943e-4194-bc6f-09466f8b68ec"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "1"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "25"
+	"material" "string" "particle\\glows\\glow_pointlight_noz.vmt"
+	"bounding_box_min" "vector3" "-100 -100 -100"
+	"bounding_box_max" "vector3" "100 100 100"
+	"fallback replacement definition" "string" ""
+	"color" "color" "254 229 216 255"
+	"Sort particles" "bool" "0"
+	"use height in yaw" "bool" "1"
+	"inherit alpha visibility" "bool" "1"
+	"inherit proxy visibility" "bool" "1"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "8df0d464-9893-4ff6-a753-e1ef60fb83f8"
+	"name" "string" "gravity_CH_arcs_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "81919054-9393-481b-baee-19175679a812"
+			"name" "string" "render_sprite_trail"
+			"functionName" "string" "render_sprite_trail"
+			"constrain radius to length" "bool" "0"
+			"max length" "float" "400"
+			"animation rate" "float" "5"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "925358c9-df5c-4e70-9283-0ad8c75ff3c7"
+			"name" "string" "Lifespan Decay"
+			"functionName" "string" "Lifespan Decay"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "85ea4804-b6c0-4ee4-93ee-940a380facf3"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "14778fca-5a54-4099-aabf-009c85658a49"
+			"name" "string" "Movement Lock to Control Point"
+			"functionName" "string" "Movement Lock to Control Point"
+			"lock rotation" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cd128c0a-818d-48ef-b276-00f062295baf"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.5673530102 0.25",
+				"0.8082410097 0.5116819739",
+				"1 1"
+			]
+			"output op" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f1421aab-efd1-46ee-b784-33286a7e0347"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"1 1"
+			]
+			"output field" "int" "10"
+			"output maximum" "float" "30"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1d16d0fa-add8-4182-b0d0-564a54f699f2"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.1473850012 0.1705610007",
+				"0.3676699996 0.9392520189",
+				"0.5 1",
+				"0.6244059801 0.9205610156",
+				"0.7892230153 0.1308410019",
+				"1 0"
+			]
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "87f90168-d5b4-433e-a150-d19f20fb3686"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"output field" "int" "16"
+			"graph time is in lifespans" "bool" "0"
+			"graph time" "float" "0.400000006"
+			"graph loop" "bool" "1"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0697309971 0.7429909706",
+				"0.1410460025 0.9205610156",
+				"0.2805069983 1",
+				"0.4675120115 0.8971959949",
+				"0.6196510196 0.0934579968",
+				"0.7670360208 0.0280370004",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "ea650588-a4d0-44f0-9f5e-a120229ca90e"
+			"name" "string" "Set Control Point Positions"
+			"functionName" "string" "Set Control Point Positions"
+			"mute" "bool" "1"
+			"First Control Point Location" "vector3" "0 0 0"
+			"Fourth Control Point Location" "vector3" "0 0 0"
+			"Second Control Point Number" "int" "-1"
+			"Third Control Point Location" "vector3" "0 0 0"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c518b591-5c4a-40dc-9b24-427750b0cc70"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_min" "float" "4"
+			"distance_max" "float" "8"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "352dd36d-d4b4-4062-aac5-0d60327dcc96"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "0.75"
+			"lifetime_min" "float" "0.3000000119"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "c8ea5f8f-9814-43cb-bad5-f856f1415233"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "30"
+			"radius_max" "float" "60"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "cbd60b57-c2b2-4950-b171-f54d0adb5ab2"
+			"name" "string" "Trail Length Random"
+			"functionName" "string" "Trail Length Random"
+			"length_max" "float" "0.200000003"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6d131535-d428-4dbd-a215-b2c5b25aeb93"
+			"name" "string" "emit noise"
+			"functionName" "string" "emit noise"
+			"emission maximum" "float" "15"
+			"emission minimum" "float" "40"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "54f8537a-99e9-4d98-a8dd-01d296d6d3dc"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0.1000000015"
+			"amount of force" "float" "25"
+		}
+	]
+	"constraints" "element_array" 
+	[
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "120"
+	"material" "string" "particle\\electric_arc\\electric_arc_trail_ob3.vmt"
+	"bounding_box_min" "vector3" "-40 -40 -40"
+	"bounding_box_max" "vector3" "40 40 40"
+	"fallback replacement definition" "string" ""
+	"radius" "float" "1"
+	"color" "color" "229 119 70 255"
+	"color HDR scale" "float" "2"
+	"maximum sim tick rate" "float" "0.0099999979"
+	"minimum sim tick rate" "float" "0.0250000004"
+	"Sort particles" "bool" "0"
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "3887e102-5773-4bc4-811a-09da560b5388"
+	"name" "string" "gravity_CH_chunks_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "917bacde-dc90-4021-b09d-1f1290755d6d"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+			"Visibility input minimum" "float" "1"
+			"Visibility Radius Scale maximum" "float" "0.6000000238"
+			"animation rate" "float" "1"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1d3c1872-db44-4cc3-a58c-8ef1b1665601"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+			"drag" "float" "0.1000000050"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3f5b4d39-501b-4628-a72c-d89bb967c124"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "18ed015d-5c2c-438e-8051-fc0b655294bd"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output field" "int" "7"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0330189988 1",
+				"0.7527729869 1",
+				"1 1"
+			]
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "0d7a1894-70f0-4a17-9ddb-6ab155b3839d"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"graph" "vector2_array" 
+			[
+				"0 1",
+				"0.0681459978 1",
+				"0.8985739946 1",
+				"1 0"
+			]
+			"output op" "int" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "289f749a-0d33-48c0-a5cc-2b3209f19820"
+			"name" "string" "Rotation Spin Yaw"
+			"functionName" "string" "Rotation Spin Yaw"
+			"yaw_rate_degrees" "int" "45"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "367f9105-3ba9-489f-a1ac-0bb1afe966f9"
+			"name" "string" "Lerp EndCap Scalar"
+			"functionName" "string" "Lerp EndCap Scalar"
+			"value to lerp to" "float" "0"
+			"output field" "int" "1"
+			"lerp time" "float" "0.70"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d1a09220-ab62-40d8-8b8c-04b1d12b2b40"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5a441dc8-2b99-4d8f-89ba-bd523dda8587"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_max" "float" "3"
+			"lifetime_min" "float" "2"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f79834d4-a6cc-4af1-b725-f3d9b89b512d"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_min" "float" "6"
+			"radius_max" "float" "6"
+			"radius_random_exponent" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "f6a7f6e3-4f9a-4268-9c2b-c2d817b31d8a"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "478f98eb-c7d9-43ca-a286-9f5ddb697e4e"
+			"name" "string" "Normal Align to CP"
+			"functionName" "string" "Normal Align to CP"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "26437d91-efe9-4e3c-ab8f-216b428e4f10"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"speed_in_local_coordinate_system_max" "vector3" "0 0 200"
+			"speed_in_local_coordinate_system_min" "vector3" "0 0 200"
+			"distance_min" "float" "150"
+			"distance_max" "float" "200"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "58fb601a-91bb-47e3-8849-d89f5b91a513"
+			"name" "string" "Position Modify Place On Ground"
+			"functionName" "string" "Position Modify Place On Ground"
+			"collision group" "string" "DEBRIS"
+			"mute" "bool" "1"
+			"kill on no collision" "bool" "1"
+			"include water" "bool" "1"
+			"set normal" "bool" "1"
+			"max trace length" "float" "150"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "104f1a6a-f502-4f16-a3ff-a88d4b6e4b12"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"speed_in_local_coordinate_system_max" "vector3" "1000 1000 1000"
+			"speed_in_local_coordinate_system_min" "vector3" "-1000 -1000 -1000"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "35c4ae06-ff9a-4226-a713-b5df2380fe61"
+			"name" "string" "Color Lit Per Particle"
+			"functionName" "string" "Color Lit Per Particle"
+			"tint perc" "float" "1"
+			"tint blend mode" "int" "4"
+			"color2" "color" "96 96 96 255"
+			"color1" "color" "209 209 209 255"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "5c6623b2-5745-4cfe-a050-96881b14f7e9"
+			"name" "string" "Sequence Random"
+			"functionName" "string" "Sequence Random"
+			"sequence_max" "int" "30"
+			"sequence_min" "int" "24"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "2c5bd7d8-959c-4e2a-924f-8aafca1c1723"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+			"emission_rate" "float" "150"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e4cf5ed8-6904-4894-b2d6-f47df155859c"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "50"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b88a93b8-aeb2-4ae9-8c0c-f2e25db62e8a"
+			"name" "string" "twist around axis"
+			"functionName" "string" "twist around axis"
+			"object local space axis 0/1" "bool" "1"
+			"amount of force" "float" "200"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "48a75469-b9b2-496e-93df-cbf365c3b562"
+			"name" "string" "Pull towards control point"
+			"functionName" "string" "Pull towards control point"
+			"falloff power" "float" "0.2399999946"
+			"amount of force" "float" "900"
+		}
+	]
+	"constraints" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b33f53f5-9b70-4b2a-9ac4-27f4f1f7fe76"
+			"name" "string" "Constrain distance to control point"
+			"functionName" "string" "Constrain distance to control point"
+			"maximum distance" "float" "300"
+			"minimum distance" "float" "15"
+		}
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\impact\\fleks.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+}
+
+"DmeParticleSystemDefinition"
+{
+	"id" "elementid" "32c592c6-4176-4643-87cc-35a36e630262"
+	"name" "string" "gravity_CH_chunks_endcap_rock"
+	"renderers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "4d72ca94-0df8-47d9-8e05-06209429a326"
+			"name" "string" "render_animated_sprites"
+			"functionName" "string" "render_animated_sprites"
+			"animation rate" "float" "1"
+			"Visibility Radius Scale maximum" "float" "0.6000000238"
+			"Visibility input minimum" "float" "1"
+			"Visibility Proxy Input Control Point Number" "int" "0"
+		}
+	]
+	"operators" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "1eb5f763-b238-4b37-bfa3-578bb244acad"
+			"name" "string" "Movement Basic"
+			"functionName" "string" "Movement Basic"
+			"gravity" "vector3" "0 0 -600"
+			"drag" "float" "0.0500000007"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a3cab983-5d5b-4fc6-bec8-1e538a97d5ec"
+			"name" "string" "Alpha Fade and Decay"
+			"functionName" "string" "Alpha Fade and Decay"
+			"end_fade_in_time" "float" "0.75"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b7ae312f-75e5-4c07-8628-03a949cb92ba"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"mute" "bool" "1"
+			"graph" "vector2_array" 
+			[
+				"0 0",
+				"0.0330189988 1",
+				"0.7527729869 1",
+				"1 1"
+			]
+			"output field" "int" "7"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "3091a60a-f9f1-4ee9-9c63-591cf869b93f"
+			"name" "string" "Graph Scalar"
+			"functionName" "string" "Graph Scalar"
+			"output op" "int" "1"
+			"graph" "vector2_array" 
+			[
+				"0 1",
+				"0.0681459978 1",
+				"0.8985739946 1",
+				"1 0"
+			]
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e9d43734-1125-42ab-8237-2ab7a4fef61a"
+			"name" "string" "Rotation Spin Yaw"
+			"functionName" "string" "Rotation Spin Yaw"
+			"yaw_rate_degrees" "int" "45"
+			"mute" "bool" "1"
+		}
+	]
+	"initializers" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "e128bcf0-2f8e-42e7-adcb-aa346c581a57"
+			"name" "string" "Alpha Random"
+			"functionName" "string" "Alpha Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6364c636-c708-40f9-b4ae-57fc20d15a64"
+			"name" "string" "Lifetime Random"
+			"functionName" "string" "Lifetime Random"
+			"lifetime_min" "float" "1"
+			"lifetime_max" "float" "2"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "0ac9a162-9618-4730-ba37-633e5d3e438c"
+			"name" "string" "Radius Random"
+			"functionName" "string" "Radius Random"
+			"radius_random_exponent" "float" "5"
+			"radius_max" "float" "6"
+			"radius_min" "float" "3"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "41cf6b43-c530-481e-ab75-37ce2b6760e4"
+			"name" "string" "Rotation Random"
+			"functionName" "string" "Rotation Random"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "b80a42ff-d4d0-425b-b38c-c4179f76738a"
+			"name" "string" "Position Modify Place On Ground"
+			"functionName" "string" "Position Modify Place On Ground"
+			"max trace length" "float" "256"
+			"set normal" "bool" "1"
+			"include water" "bool" "1"
+			"kill on no collision" "bool" "1"
+			"mute" "bool" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "4eefe812-24c0-4f0d-bc29-46160a87a8a2"
+			"name" "string" "Position Within Sphere Random"
+			"functionName" "string" "Position Within Sphere Random"
+			"distance_max" "float" "64"
+			"speed_min" "float" "200"
+			"speed_max" "float" "1000"
+			"distance_min" "float" "5"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a2138cca-91a8-4ee6-b40a-8364dece7be8"
+			"name" "string" "Velocity Random"
+			"functionName" "string" "Velocity Random"
+			"mute" "bool" "1"
+			"speed_in_local_coordinate_system_min" "vector3" "-1000 -1000 -1000"
+			"speed_in_local_coordinate_system_max" "vector3" "1000 1000 1000"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a6c97f98-a59e-4978-9ae6-9d489b233833"
+			"name" "string" "Color Lit Per Particle"
+			"functionName" "string" "Color Lit Per Particle"
+			"color1" "color" "209 209 209 255"
+			"color2" "color" "96 96 96 255"
+			"tint blend mode" "int" "4"
+			"tint perc" "float" "1"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "6e3eeea7-a288-4054-a5ec-aa2e68461ff3"
+			"name" "string" "Sequence Random"
+			"functionName" "string" "Sequence Random"
+			"sequence_min" "int" "5"
+			"sequence_max" "int" "24"
+		}
+	]
+	"emitters" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "d703565f-9733-4c04-83e0-9a8645cc5019"
+			"name" "string" "emit_continuously"
+			"functionName" "string" "emit_continuously"
+			"mute" "bool" "1"
+			"emission_rate" "float" "50"
+		},
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "66ac3e5d-88e9-4c94-a7cb-9d78b87e82b7"
+			"name" "string" "emit_instantaneously"
+			"functionName" "string" "emit_instantaneously"
+			"num_to_emit" "int" "50"
+		}
+	]
+	"children" "element_array" 
+	[
+	]
+	"scripts" "element_array" 
+	[
+	]
+	"forces" "element_array" 
+	[
+	]
+	"constraints" "element_array" 
+	[
+		"DmeParticleOperator"
+		{
+			"id" "elementid" "a5106539-d2d4-4bd8-a397-ec6a5a0901db"
+			"name" "string" "Collision via traces"
+			"functionName" "string" "Collision via traces"
+			"collision group" "string" "DEBRIS"
+			"bounce is proportional to incoming speed" "bool" "1"
+			"amount of slide" "float" "0.5"
+			"amount of bounce" "float" "0.8000000119"
+		}
+	]
+	"preventNameBasedLookup" "bool" "0"
+	"scripted" "bool" "0"
+	"max_particles" "int" "100"
+	"material" "string" "particle\\impact\\fleks.vmt"
+	"bounding_box_min" "vector3" "-64 -64 0"
+	"bounding_box_max" "vector3" "64 64 128"
+	"fallback replacement definition" "string" ""
+}
+
