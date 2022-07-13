@@ -14,7 +14,7 @@ void function TremorPrimeTitanPlus_Init() {
 
     #if SERVER
 
-		//AddSpawnCallback("npc_titan", SetTitanLoadout );
+		AddSpawnCallback("npc_titan", SetTitanLoadout );
 		
     #endif
 
@@ -89,34 +89,33 @@ void function SetTitanLoadout( entity titan )
 				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
 				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
 				
-			}
+			} */
 			//Shocker
 			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_legion_prime.mdl")
 			{
 				SendHudMessage(player, "Shocker Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
-				 */
 				//Offence
-				//titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
-				//titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_ANTIRODEO ) 
-				
-				
+				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
+				titan.GiveOffhandWeapon("exrill_titanweapon_rock_yeet", OFFHAND_ANTIRODEO ) 
+			
+			
 				//Defence
 				//titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
-				//titan.GiveOffhandWeapon("pp_mp_titanweapon_point_defence", OFFHAND_SPECIAL )
-				
+				//titan.GiveOffhandWeapon("exrill_titanweapon_rock_yeet", OFFHAND_SPECIAL )
+			
 				//Tactical
-				//titan.TakeOffhandWeapon(OFFHAND_RIGHT)
-				//titan.GiveOffhandWeapon("exrill_mp_titanweapon_rod_from_god", OFFHAND_RIGHT )
+				titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+				titan.GiveOffhandWeapon("exrill_titanweapon_shock_wave", OFFHAND_RIGHT )
 
 				//Weapon
 				//titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
-				//titan.GiveWeapon ("pp_mp_titanweapon_energy_cannon")
-				
+				//titan.GiveWeapon ("exrill_titanweapon_titanshotgun")
+			
 				//Titan Core
 				//titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
 				//titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
 				
-			//}
+			}
 		}
 	}
 	#endif

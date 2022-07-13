@@ -203,7 +203,7 @@ WeaponData
 	"charge_cooldown_delay"   						"0.0"
 	"charge_is_triggered_by_ADS"					"0"
 	"charge_end_forces_fire"						"1"
-	"charge_require_input"							"1"
+	"charge_require_input"							"0"
 	"charge_sound_1p"								"Weapon_Titan_Sniper_WindUp"
 	"charge_sound_stop_when_full"					"0"
 	"charge_sound_seek_to_charge_fraction"			"0"
