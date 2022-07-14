@@ -77,9 +77,9 @@ WeaponData
 	"vortex_drain"									"0.0" //Vortex should ignore this core
 	
 	// TEMP: SCRIPT WAVE SETTINGS
-	"wave_max_count"								"20"
+	"wave_max_count"								"10"
 	"wave_step_dist"								"100.0"
-	"charge_wave_max_count"							"20"
+	"charge_wave_max_count"							"10"
 	"charge_wave_step_dist"							"100.0"
 
 	"special_3p_attack_anim" 						"1"

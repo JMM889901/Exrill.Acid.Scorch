@@ -54,7 +54,8 @@ void function ViralShot_DamagedTarget( entity target, var damageInfo )
 {
 	entity weapon = DamageInfo_GetWeapon( damageInfo )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
-
+	if(!IsPlayer(target) || !target.IsTitan())
+		return
 	if ( attacker == target )
 	{
 		DamageInfo_SetDamage( damageInfo, 0 )

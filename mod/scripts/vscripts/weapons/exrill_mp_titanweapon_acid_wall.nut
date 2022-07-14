@@ -91,7 +91,6 @@ var function OnWeaponPrimaryAttack_AcidWall( entity weapon, WeaponPrimaryAttackP
 	#if SERVER
 	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, true, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
-	print(weapon.GetWeaponChargeLevel())
 		if ( deployable )
 		{
 			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
@@ -152,8 +151,6 @@ void function OnPoisonWallPlanted( entity projectile )
 			inflictor.SetParent( movingGeo, "", true, 0 )}
 	
 			vector direction = AnglesToForward( <angles.x,angles.y+90,angles.z> )
-			print("direction "+direction)
-			print("initial angles "+angles)
 			const float FUSE_TIME = 0.0
 			projectile.SetModel( $"models/dev/empty_model.mdl" )
 			thread SpawnPoisonWave( projectile, 0, inflictor, origin-100*direction, direction )
@@ -314,7 +311,7 @@ void function AcidWall_DamagedTarget( entity ent, var damageInfo )
 	Thermite_DamagePlayerOrNPCSounds( ent )
 	Scorch_SelfDamageReduction( ent, damageInfo )
 
-	StatusEffect_AddTimed( ent, eStatusEffect.move_slow, 0.7, 1, 1 )
+	StatusEffect_AddTimed( ent, eStatusEffect.damage_received_multiplier, 2, 1, 1 )
 	DamageInfo_ScaleDamage( damageInfo, 0.2 )
 	entity attacker = DamageInfo_GetAttacker( damageInfo )
 	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() )
