@@ -39,9 +39,9 @@ void function pp_OnWeaponActivate_titanability_VentHeat(entity weapon)
     if(energy < 50)
     {
         ValidMod = "HeatLevel5"
-        #if SERVER
-        player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
-        #endif
+        //#if SERVER
+        //player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
+        //#endif
         Duration = 5
     }
 
@@ -53,6 +53,10 @@ void function pp_OnWeaponActivate_titanability_VentHeat(entity weapon)
         else if(!Mods.contains(mod))
             Mods.append(mod)
     }
+    #if CLIENT
+    if(player != GetLocalClientPlayer())
+        return
+    #endif
     weapon.SetMods(Mods)
     weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.turn_slow, 0.3, Duration, 0 ) )
     weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.move_slow, 0.5, Duration, 0 ) )

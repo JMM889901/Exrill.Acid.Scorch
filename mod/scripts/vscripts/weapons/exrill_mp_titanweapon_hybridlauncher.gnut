@@ -82,8 +82,8 @@ void function exrill_MpTitanWeapon_hybidlauncherInit()
 
 void function OnHit_CuttingBeam( entity victim, var damageInfo )
 {
-	if ( victim.IsTitan() )
-		CuttingBeamAddOrUpdateStacks(victim, damageInfo)
+	//if ( victim.IsTitan() )
+	//	CuttingBeamAddOrUpdateStacks(victim, damageInfo)
 }
 
 void function CuttingBeamAddOrUpdateStacks(entity victim, var damageInfo)
@@ -123,7 +123,7 @@ void function AcidStackThink(ActiveViralStacksStruct ActiveStruct)
     int StackCount = ActiveStruct.StackCount
     while(ActiveStruct.duration > 0)
     {
-		target.TakeDamage( 0.5*ActiveStruct.StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+		target.TakeDamage( 1*ActiveStruct.StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
         //print(ActiveStruct.StackCount)
 		wait TICKTIME
         ActiveStruct.duration = ActiveStruct.duration - TICKTIME

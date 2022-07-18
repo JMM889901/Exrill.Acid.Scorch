@@ -8,7 +8,7 @@ array<string> ModdedTitanClasses
 void function ExampleScript(){
 	RegisterNewItemInitCallback(ExampleScriptP2)
 	RegisterModdedTitan("Venom", "pp_mp_titanweapon_cutting_beam", 
-	"mp_titanweapon_homing_rockets", "pp_mp_titanability_viral_matrix",
+	"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
 	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
 	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
 	eItemTypes.TITAN_SCORCH_EXECUTION
@@ -25,13 +25,14 @@ void function ExampleScript(){
 }
 void function ExampleScriptP2(){
 	print("/////////GENERATING ITEMS FOR VENOM")
-	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "pp_mp_titanability_viral_matrix", "Viral Matrix", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "exrill_mp_titanability_acid_pool", "Viral Matrix", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
 	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_cutting_beam", "Cutting beam", "The pain does not stop", "please stop", $"ui/temp", 0, false)
 	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "exrill_mp_titancore_acid_river", "Acid core", "AAAAAAAA", "My sanity is rapidly dwindling", $"rui/titan_loadout/core/titan_core_flame_wave", 0, false)
 	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "exrill_mp_titanweapon_acid_wall", "Acid wall", "im out of funny things to say", ":)", $"ui/temp", 0, false)
+	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanability_viral_shot", "Disrupter shell", "Smol railgun", "A small railgun that can shatter shields, generates a significant amount of heat", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
 
 	RegisterModdedTitanItems("Venom", "pp_mp_titanweapon_cutting_beam", 
-	"mp_titanweapon_homing_rockets", "pp_mp_titanability_viral_matrix",
+	"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
 	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
 	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
 	eItemTypes.TITAN_SCORCH_EXECUTION

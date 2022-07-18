@@ -30,7 +30,7 @@ table<entity, PlayerStacksStruct> PlayerStackStuff
 void function pp_OnProjectileCollision_weapon_parasite_launcher( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
 { //SetWeaponPrimaryClipCount(0)
     #if SERVER
-    if(!hitEnt.IsTitan())
+    if(!hitEnt.IsTitan() && !(hitEnt.GetClassName() == ( "npc_super_spectre" )))
         return
     entity Owner = projectile.GetOwner()
     entity Target = hitEnt

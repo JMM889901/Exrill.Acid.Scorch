@@ -5,7 +5,33 @@ global function OnWeaponPrimaryAttack_titanweapon_virus_shot
 #if SERVER
 global function OnWeaponNPCPrimaryAttack_titanweapon_virus_shot
 #endif
+struct InactiveViralStackStruct
+{
+    entity target
+    entity owner
+    float duration
+    int ID
+}
+struct ActiveViralStacksStruct
+{
+    entity target
+    entity owner
+    float duration
+    int StackCount
+    int ID
+}
+struct PlayerStacksStruct
+{
+    entity owner //Just for sanity check really
+    array<InactiveViralStackStruct> InactiveStacks
+    array<ActiveViralStacksStruct> ActiveStacks
+}
 
+const TICKTIME = 0.1
+table<entity, PlayerStacksStruct> PlayerStackStuff
+struct {
+	float chargeDownSoundDuration = 1.0 //"charge_cooldown_time"
+} file
 void function MpTitanWeaponVirus_shot()
 {
 	RegisterSignal("VirusSpreadStart")
@@ -52,66 +78,57 @@ var function OnWeaponNPCPrimaryAttack_titanweapon_virus_shot( entity weapon, Wea
 
 void function ViralShot_DamagedTarget( entity target, var damageInfo )
 {
-	entity weapon = DamageInfo_GetWeapon( damageInfo )
-	entity attacker = DamageInfo_GetAttacker( damageInfo )
-
-	if ( attacker == target )
-	{
-		DamageInfo_SetDamage( damageInfo, 0 )
-		return
-	}
-
-	DamageInfo_SetDamage( damageInfo, 2 )
-	thread StartVirus(attacker, target, 10.0)
-	if(target.IsTitan())
-	{
-	thread StartVirusSpread(attacker, target, 10.0)
-	thread CreateSmoke(attacker, target, 10.0)
-	}
+	if ( target.IsTitan() )
+		CuttingBeamAddOrUpdateStacks(target, damageInfo)
 }
 
-void function StartVirus(entity attacker, entity target, float duration){
-	if(!IsValid(target))
-		return
-	target.EndSignal("OnDestroy")
-	target.EndSignal("OnDeath")
-	float timeleft = duration 
-	while(timeleft > 0){
-		wait 0.5
-		timeleft = timeleft - 0.5
-		target.TakeDamage( 7, attacker, attacker, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
-	}
-}
-void function StartVirusSpread(entity attacker, entity target, float duration){
-	if(!IsValid(target))
-		return
-	target.Signal("VirusSpreadStart")
-	target.EndSignal("VirusSpreadStart")
-	target.EndSignal("OnDestroy")
-	target.EndSignal("OnDeath")
-	float timeleft = duration 
-	while(timeleft > 0){
-		wait 0.5
-		timeleft = timeleft - 0.5
-		foreach(entity player in GetTitanArrayOfEnemies( attacker.GetTeam() )){
-			if(Distance( target.GetOrigin(), player.GetOrigin() ) < 1000){
-				thread StartVirus(attacker, player, timeleft)
-				thread StartVirusSpread(attacker  ,player, timeleft)
-				if(attacker != player)
-					thread CreateSmoke(attacker, player, timeleft)
-			}
-		}
-	}
-}
-table<entity, array<entity> > ToxinFXArrays = {}
-const asset TOXIC_FUMES_FX 	= $"P_meteor_trap_gas_acid"
-entity function CreateSmoke(entity attacker, entity titan, float timeleft)
+void function CuttingBeamAddOrUpdateStacks(entity victim, var damageInfo)
 {
-	int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
-	int attachID = titan.LookupAttachment( "exp_torso_front" )
-	entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( titan, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )
-	wait timeleft
-	if ( IsValid( particleSystem ) ){
-		particleSystem.Destroy()}
-		}
+	entity Owner = DamageInfo_GetAttacker(damageInfo)
+    if(!(victim in PlayerStackStuff))
+    {
+        PlayerStacksStruct NewStackStruct
+        PlayerStackStuff[victim] <- NewStackStruct
+    }
+	if(PlayerStackStuff[victim].ActiveStacks.len() < 1)
+	{
+		ActiveViralStacksStruct HitStruct
+		HitStruct.target = victim
+		HitStruct.owner = Owner
+		HitStruct.StackCount = 1
+		HitStruct.duration = 5
+		PlayerStackStuff[victim].ActiveStacks.append(HitStruct)
+		thread AcidStackThink(HitStruct)
+	} 
+	else
+	{
+		PlayerStackStuff[victim].ActiveStacks[0].duration = 5
+		PlayerStackStuff[victim].ActiveStacks[0].StackCount++
+	}
+}
+
+void function AcidStackThink(ActiveViralStacksStruct ActiveStruct)
+{
+    entity owner = ActiveStruct.owner
+    entity target = ActiveStruct.target
+
+    #if SERVER  
+    int fxID = GetParticleSystemIndex( $"P_meteor_trap_burn_acid" )
+	int attachID = target.LookupAttachment( "exp_torso_front" )
+    entity particleSystem = StartParticleEffectOnEntityWithPos_ReturnEntity( target, fxID, FX_PATTACH_POINT_FOLLOW, attachID, <0,0,0>, <0,0,0> )
+    int StackCount = ActiveStruct.StackCount
+    while(ActiveStruct.duration > 0)
+    {
+		target.TakeDamage( 10*ActiveStruct.StackCount, owner, owner, eDamageSourceId.exrill_mp_titanability_viral_shot_secondary)	
+        //print(ActiveStruct.StackCount)
+		wait TICKTIME
+        ActiveStruct.duration = ActiveStruct.duration - TICKTIME
+    }
+    if ( IsValid( particleSystem ) )
+    {
+		particleSystem.Destroy()
+    }
+    PlayerStackStuff[target].ActiveStacks.fastremovebyvalue(ActiveStruct)
+    #endif
+}
 #endif
