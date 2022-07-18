@@ -10,9 +10,9 @@ const LASER_MODEL = $"models/weapons/empty_handed/w_laser_cannon.mdl"
 
 
 #if SP
-const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P_extended"
+const LASER_FIRE_SOUND_1P = "heat_shield_1p_loop"
 #else
-const LASER_FIRE_SOUND_1P = "Titan_Core_Laser_FireBeam_1P"
+const LASER_FIRE_SOUND_1P = "heat_shield_1p_loop"
 #endif
 global function exrill_OnAbilityChargeEnd_HybridCannon
 global function exrill_OnAbilityEnd_HybridCannon
@@ -349,7 +349,7 @@ bool function exrill_OnAbilityCharge_HybridLauncher( entity weapon )
 	}
 #endif // #if SERVER
 
-	weapon.EmitWeaponSound_1p3p( "diag_sp_bossFight_STS676_01_01_imc_viper", "diag_sp_bossFight_STS676_02_01_imc_viper" )
+	weapon.EmitWeaponSound_1p3p( "heat_shield_1p_loop", "heat_shield_1p_loop" )
 
 	return true
 }
@@ -392,15 +392,15 @@ bool function exrill_OnAbilityStart_hybridlauncher( entity weapon )
 	{
 	//	player.Server_TurnDodgeDisabledOn()
 	//	player.Server_TurnOffhandWeaponsDisabledOn()
-		EmitSoundOnEntityOnlyToPlayer( player, player, "diag_sp_bossFight_STS676_03_01_imc_viper" )
-		EmitSoundOnEntityOnlyToPlayer( player, player, "diag_sp_bossFight_STS676_03_01_imc_viper" )
-		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireStart_3P" )
-		EmitSoundOnEntityExceptToPlayer( player, player, "Titan_Core_Laser_FireBeam_3P" )
+		EmitSoundOnEntityOnlyToPlayer( player, player, "heat_shield_1p_start" )
+		EmitSoundOnEntityOnlyToPlayer( player, player, "heat_shield_1p_loop" )
+		EmitSoundOnEntityExceptToPlayer( player, player, "heat_shield_1p_start" )
+		EmitSoundOnEntityExceptToPlayer( player, player, "heat_shield_1p_loop" )
 	}
 	else
 	{
-		EmitSoundOnEntity( player, "Titan_Core_Laser_FireStart_3P" )
-		EmitSoundOnEntity( player, "Titan_Core_Laser_FireBeam_3P" )
+		EmitSoundOnEntity( player, "heat_shield_1p_start" )
+		EmitSoundOnEntity( player, "heat_shield_1p_loop" )
 	}
 
 	if ( player.IsNPC() )
@@ -452,7 +452,7 @@ void function exrill_OnAbilityEnd_HybridCannon( entity weapon )
 		player.Anim_ScriptedPlayActivityByName( "ACT_SPECIAL_ATTACK_END", true, 0.0 )
 	}
 
-	StopSoundOnEntity( player, "Titan_Core_Laser_FireBeam_3P" )
+	StopSoundOnEntity( player, "heat_shield_1p_loop" )
 	StopSoundOnEntity( player, LASER_FIRE_SOUND_1P )
 	#endif
 }
