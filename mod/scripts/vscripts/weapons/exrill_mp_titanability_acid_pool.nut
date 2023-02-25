@@ -130,7 +130,6 @@ void function OnSlowTrapPlanted( entity projectile )
 #if SERVER
 void function OnPoisonWallPlanted( entity projectile )
 {
-	#if SERVER
 		//thread DeployPoisonWall( projectile )
 		
 		vector origin = OriginToGround( projectile.GetOrigin() )
@@ -162,9 +161,7 @@ void function OnPoisonWallPlanted( entity projectile )
 			}
 			wait 5
 			projectile.Destroy()
-	#endif
-		}
-#if SERVER
+}
 void function SpawnPoisonWave( entity projectile, int projectileCount, entity inflictor, vector origin, vector direction )
 {
 	projectile.EndSignal( "OnDestroy" )
@@ -259,7 +256,6 @@ bool function CreateAcidPoolSegment( entity projectile, int projectileCount, ent
 	return true
 }
 
-#endif
 
 
 void function IncendiaryTrapFireSounds( entity inflictor )

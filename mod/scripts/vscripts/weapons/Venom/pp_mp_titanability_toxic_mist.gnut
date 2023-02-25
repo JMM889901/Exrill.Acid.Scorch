@@ -1,0 +1,247 @@
+#if SERVER
+untyped
+#endif
+
+global function MpTitanAbilityToxicMist_Init
+global function OnWeaponPrimaryAttack_titanweapon_toxic_mist
+global function getPlayerDebuffs
+#if SERVER
+global function OnWeaponNPCPrimaryAttack_titanweapon_toxic_mist
+#endif
+global struct debuff {
+	float intensity
+	float timeLast
+}
+global struct playerDebuffs {
+	debuff damageVuln
+	debuff damageOverTime
+}
+void function MpTitanAbilityToxicMist_Init()
+{
+
+
+
+	#if SERVER
+		AddDamageCallbackSourceID( eDamageSourceId.pp_mp_titanability_toxic_mist, ToxicMistDamaged )
+		AddDamageCallback( "player", handleDamageVuln )
+		AddDamageCallback( "npc_titan", handleDamageVuln )
+		#endif
+}
+
+
+
+#if SERVER
+var function OnWeaponNPCPrimaryAttack_titanweapon_toxic_mist( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	return OnWeaponPrimaryAttack_titanweapon_slow_trap( weapon, attackParams )
+}
+#endif
+
+var function OnWeaponPrimaryAttack_titanweapon_toxic_mist( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	entity weaponOwner = weapon.GetWeaponOwner() 
+	if ( weaponOwner.IsPlayer() )
+		PlayerUsedOffhand( weaponOwner, weapon )
+
+	//ThrowDeployable( weapon, attackParams, 0.63, OnSlowTrapPlanted, <90,0,0> )
+	entity player = weapon.GetWeaponOwner()
+	vector attackPos
+	if ( IsValid( player ) )
+		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
+	vector angles = VectorToAngles( attackParams.dir )
+	attackPos.z = attackPos.z +25
+	vector angularVelocity = <0,0,0>
+	float fuseTime = 0.0
+	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
+	vector forward = AnglesToForward( angles )
+	if ( forward.x < 80 )
+		speed = GraphCapped( forward.x, 0, 80, speed, speed * 3 )
+
+	vector velocity = forward * speed
+	//if((weapon.GetWeaponChargeLevel() > 0))
+	//	weaponOwner.TakeSharedEnergy( 250 )
+	#if SERVER
+	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
+	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
+		if ( deployable )
+		{
+			deployable.proj.isChargedShot = (weapon.GetWeaponChargeLevel() > 0)
+			deployable.proj.savedAngles = Vector( 0, angles.y, 0 )
+			Grenade_Init( deployable, weapon )
+			thread OnProjectilePlanted( deployable, OnSlowTrapPlanted )
+		}
+	#endif
+	return weapon.GetWeaponSettingInt( eWeaponVar.ammo_per_shot )
+}
+#if SERVER
+void function OnProjectilePlanted( entity projectile, void functionref(entity) deployFunc )
+{
+	projectile.EndSignal( "OnDestroy" )
+	projectile.WaitSignal( "Planted" )
+	deployFunc( projectile )
+}
+#endif
+vector function GetDeployableThrowStartPos( entity player, vector baseStartPos )
+{
+	if ( player.IsTitan() )
+	{
+		int attachID = player.LookupAttachment( "TITAN_GRENADE" )
+		vector attackPos = player.GetAttachmentOrigin( attachID )
+		vector attackDir = player.GetAttachmentForward( attachID )
+		return attackPos + ( attackDir * 50 )
+	}
+
+	vector attackPos = player.OffsetPositionFromView( baseStartPos, Vector( 15.0, 0.0, 0.0 ) )	// forward, right, up
+	return attackPos
+}
+
+void function OnSlowTrapPlanted( entity projectile )
+{
+	#if SERVER
+		thread DeployToxicMist( projectile )
+	#endif
+}
+#if SERVER
+void function DeployToxicMist( entity projectile )
+{
+		//thread DeployPoisonWall( projectile )
+		
+        SmokescreenStruct smokescreen
+        smokescreen.isElectric = true
+        smokescreen.ownerTeam = projectile.GetTeam()
+        smokescreen.attacker = projectile.GetOwner()
+        smokescreen.inflictor = projectile.GetOwner()
+        smokescreen.weaponOrProjectile = projectile
+        smokescreen.damageInnerRadius = 320.0
+        smokescreen.damageOuterRadius = 375.0
+        smokescreen.dpsPilot = 20
+        smokescreen.dpsTitan = 225
+        smokescreen.damageDelay = 0
+        smokescreen.lifetime = 10
+
+		smokescreen.damageSource = eDamageSourceId.pp_mp_titanability_toxic_mist
+        smokescreen.angles = <90,0,0>
+    
+
+        vector basePos = projectile.GetOrigin()
+    
+        float fxOffset = 200.0
+        float fxHeightOffset = 148.0
+    
+        smokescreen.origin = basePos
+    
+        smokescreen.fxOffsets = [ < -fxOffset, 0.0, 20.0>,
+                                  <0.0, fxOffset, 20.0>,
+                                  <0.0, -fxOffset, 20.0>,
+                                  <0.0, 0.0, fxHeightOffset>,
+                                  < -fxOffset, 0.0, fxHeightOffset> ]
+    
+        Smokescreen( smokescreen )
+        wait 10
+        projectile.Destroy()
+}
+
+#endif
+
+
+
+table<entity, playerDebuffs > PlayerStacks
+playerDebuffs function getPlayerDebuffs(entity player)
+{
+	if(!(player in PlayerStacks))
+	{
+		playerDebuffs debuffTrack
+		PlayerStacks[player] <- debuffTrack
+	}
+	return PlayerStacks[player]
+}
+
+void function ToxicMistDamaged( entity hit, var damageInfo )
+{//damage_reduction
+	if(!hit.IsTitan())
+		return
+	if(hit.GetTeam() == DamageInfo_GetAttacker(damageInfo).GetTeam())
+	{
+		#if SERVER
+		DamageInfo_SetDamage(damageInfo, 0)
+		#endif
+		return
+	}
+	float intensity = StatusEffect_Get( hit, eStatusEffect.damage_reduction )
+	#if SERVER
+	thread EMP_FX($" P_dot_body_titan_g", hit, "exp_torso_front", 5 )
+	#endif
+	if(!(hit in PlayerStacks))
+	{
+		playerDebuffs debuffTrack
+		PlayerStacks[hit] <- debuffTrack
+	}
+	if(Time() - PlayerStacks[hit].damageVuln.timeLast < 5)
+	{
+		PlayerStacks[hit].damageVuln.timeLast = Time()
+		PlayerStacks[hit].damageVuln.intensity += 0.05
+	}
+	else
+	{
+		PlayerStacks[hit].damageVuln.timeLast = Time()
+		PlayerStacks[hit].damageVuln.intensity = 1.2
+	}
+}
+#if SERVER
+void function handleDamageVuln( entity hit, var damageInfo )
+{
+	if(!hit.IsTitan())
+		return
+	if(hit.GetTeam() == DamageInfo_GetAttacker(damageInfo).GetTeam())
+		DamageInfo_SetDamage(damageInfo, 0)
+	if((hit in PlayerStacks))
+	{
+		if(Time() - PlayerStacks[hit].damageVuln.timeLast < 5)
+		{
+			DamageInfo_ScaleDamage(damageInfo, PlayerStacks[hit].damageVuln.intensity)	
+		}
+		else
+		{
+			PlayerStacks[hit].damageVuln.intensity = 1
+		}
+	}
+	//print(DamageInfo_GetDamage(damageInfo))
+}
+#endif
+//void function AcidPool_DamagedPlayerOrNPC( entity ent, var damageInfo )
+//{
+//	if ( !IsValid( ent ) )
+//		return
+//	entity inflictor = DamageInfo_GetInflictor( damageInfo )
+//	if ( !IsValid( inflictor ) )
+//		return
+//	if ( DamageInfo_GetCustomDamageType( damageInfo ) & DF_DOOMED_HEALTH_LOSS )
+//		return
+//	Thermite_DamagePlayerOrNPCSounds( ent )
+//
+//	float originDistance2D = Distance2D( inflictor.GetOrigin(), DamageInfo_GetDamagePosition( damageInfo ) )
+//	if ( originDistance2D > SLOW_TRAP_RADIUS )
+//		DamageInfo_SetDamage( damageInfo, 0 )
+//	else
+//		Scorch_SelfDamageReduction( ent, damageInfo )
+//
+//	DamageInfo_ScaleDamage( damageInfo, 0.3 )
+//	StatusEffect_AddTimed( ent, eStatusEffect.damage_received_multiplier, 2, 1, 1 )
+//	entity attacker = DamageInfo_GetAttacker( damageInfo )
+//	if ( !IsValid( attacker ) || attacker.GetTeam() == ent.GetTeam() ){
+//		return}
+//
+//	array<entity> weapons = attacker.GetMainWeapons()
+//	if ( weapons.len() > 0 )
+//	{
+//		if ( weapons[0].HasMod( "fd_fire_damage_upgrade" )  )
+//			DamageInfo_ScaleDamage( damageInfo, FD_FIRE_DAMAGE_SCALE )
+//		if ( weapons[0].HasMod( "fd_hot_streak" ) )
+//			UpdateScorchHotStreakCoreMeter( attacker, DamageInfo_GetDamage( damageInfo ) )
+//	}
+//	
+//}
+//#endif
+
+//	TODO:
+//	Reassign damage to person who triggers the trap for FF reasons.

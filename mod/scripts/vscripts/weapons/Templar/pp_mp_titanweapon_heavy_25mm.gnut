@@ -43,23 +43,34 @@ void function HeatManagement(entity player, entity weapon)
         string ValidMod = ""
         int energy = player.GetSharedEnergyCount()
 
+        if(Mods.contains("OverHeat"))
+        {
+            if(energy > 900)
+            {
+                weapon.RemoveMod("OverHeat")
+            }
+            wait 0.1
+            continue
+        }
         if(Mods.contains("RampageCore"))
         {
             wait(0.1)
             continue
         }
-            if(energy < 800)
+            if(energy < 900)
             ValidMod = "HeatLevel1"
-        if(energy < 600)
+        if(energy < 700)
             ValidMod = "HeatLevel2"
-        if(energy < 400)
+        if(energy < 500)
             ValidMod = "HeatLevel3"
-        if(energy < 200)
+        if(energy < 300)
             ValidMod = "HeatLevel4"
+        if(energy < 150)
+            ValidMod = "HeatLevel5"
         if(energy < 50)
         {
-            ValidMod = "HeatLevel5"
-            player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
+            ValidMod = "OverHeat"
+            //player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
         }
 
 

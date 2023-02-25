@@ -66,6 +66,7 @@ particles_manifest
 	"file"		"particles/impact_fx_exp_XS.pcf"
 	"file"		"particles/impact_fx_exp_emp.pcf"
 	"file"		"particles/impact_fx_exp_emp2.pcf"
+	"file"		"particles/P_dot_body_titan_g.pcf"
 	"file"		"particles/impact_fx_bomber.pcf"
 	"file"		"particles/impact_fx_exp.pcf"
 	"file"		"particles/impact_fx_large.pcf"

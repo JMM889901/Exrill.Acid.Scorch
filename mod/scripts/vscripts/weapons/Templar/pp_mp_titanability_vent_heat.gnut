@@ -1,63 +1,50 @@
+untyped
 global function pp_OnWeaponPrimaryAttack_VentHeat
+global function pp_OnWeaponDeactivate_titanability_VentHeat
 global function pp_OnWeaponActivate_titanability_VentHeat
 var function pp_OnWeaponPrimaryAttack_VentHeat(entity weapon, WeaponPrimaryAttackParams attackParams)
 {
-    entity player = weapon.GetWeaponOwner()
-    player.AddSharedEnergy(player.GetSharedEnergyTotal() - player.GetSharedEnergyCount())
-    player.SetSharedEnergyRegenRate(50)
+    //entity player = weapon.GetWeaponOwner()
+    //player.AddSharedEnergy(player.GetSharedEnergyTotal() - player.GetSharedEnergyCount())
+    //player.SetSharedEnergyRegenRate(50)
 }
 void function pp_OnWeaponActivate_titanability_VentHeat(entity weapon)
 {
-    array<string> Mods = weapon.GetMods()
-    array<string> HeatMods = ["HeatLevel4", "HeatLevel3", "HeatLevel2", "HeatLevel1", "HeatLevel5"]
-    string ValidMod = ""
-    entity player = weapon.GetWeaponOwner()
-    int energy = player.GetSharedEnergyCount()
+    entity owner = weapon.GetWeaponOwner()
+    weapon.s.initialEnergy <- owner.GetSharedEnergyCount()    
+    thread VentHeatThink(weapon)
 
-    float Duration
-
-    if(energy < 800)
+    //weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.turn_slow, 0.3, Duration, 0 ) )
+    //weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.move_slow, 0.5, Duration, 0 ) )
+}
+void function pp_OnWeaponDeactivate_titanability_VentHeat(entity weapon)
+{
+    entity owner = weapon.GetWeaponOwner()
+    owner.SetSharedEnergyRegenRate(50)
+    //handleDashReward
+}//	owner.Server_SetDodgePower( 100.0 )
+void function VentHeatThink(entity weapon)
+{
+    entity owner = weapon.GetWeaponOwner()
+    while(IsValid(owner) && owner.GetActiveWeapon() == weapon)
     {
-        ValidMod = "HeatLevel1"
-        Duration = 1
+        owner.SetSharedEnergyRegenRate(50 + ((owner.GetSharedEnergyTotal() - owner.GetSharedEnergyCount()) * 0.5) )
+        wait 0.1
+        #if SERVER
+        RadiusDamage(
+            owner.GetOrigin(),												// origin
+            owner,												// owner
+            weapon,		 									// inflictor
+            ((owner.GetSharedEnergyTotal() - owner.GetSharedEnergyCount())/100),		// pilot damage
+            ((owner.GetSharedEnergyTotal() - owner.GetSharedEnergyCount())/5),		// heavy armor damage
+            100,					// inner radius
+            300,					// outer radius
+            SF_ENVEXPLOSION_NO_NPC_SOUND_EVENT,					// explosion flags
+            0, 													// distanceFromAttacker
+            0, 													// explosionForce
+            DF_EXPLOSION,										// damage flags
+            eDamageSourceId.mp_titanweapon_meteor_thermite			// damage source id
+        )
+        #endif
     }
-    if(energy < 600)
-    {
-        ValidMod = "HeatLevel2"
-        Duration = 2
-    }
-        if(energy < 400)
-    {
-        ValidMod = "HeatLevel3"
-        Duration = 3
-    }
-    if(energy < 200)
-    {
-        ValidMod = "HeatLevel4"
-        Duration = 4
-    }
-    if(energy < 50)
-    {
-        ValidMod = "HeatLevel5"
-        //#if SERVER
-        //player.SetActiveWeaponByName( "pp_mp_titanability_vent_heat" )
-        //#endif
-        Duration = 5
-    }
-
-
-    foreach(string mod in HeatMods)
-    {
-        if(mod != ValidMod)
-            Mods.fastremovebyvalue(mod)
-        else if(!Mods.contains(mod))
-            Mods.append(mod)
-    }
-    #if CLIENT
-    if(player != GetLocalClientPlayer())
-        return
-    #endif
-    weapon.SetMods(Mods)
-    weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.turn_slow, 0.3, Duration, 0 ) )
-    weapon.w.statusEffects.append( StatusEffect_AddTimed( player, eStatusEffect.move_slow, 0.5, Duration, 0 ) )
 }

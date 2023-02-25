@@ -23,6 +23,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_titan_sniper3_tem")
 	PrecacheParticleSystem( $"P_wpn_defender_charge_FP_burn_tem")
 	PrecacheParticleSystem( $"P_wpn_meteor_exp_acid")
+	PrecacheParticleSystem( $" P_dot_body_titan_g" )
 	//PrecacheParticleSystem( $"wpn_rocket_fx_mod_acid")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
@@ -37,6 +38,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("exrill_mp_titanweapon_colder_war")
 	PrecacheWeapon("exrill_mp_titanweapon_150mm")
 	PrecacheWeapon("exrill_mp_titanweapon_rod_from_god")
+	PrecacheWeapon("pp_mp_titanweapon_templar_microgun")
 	//PrecacheWeapon("pp_mp_titanweapon_point_defence")
 	PrecacheWeapon("pp_mp_titanweapon_energy_cannon")
 	PrecacheWeapon("pp_mp_titanability_viral_matrix")
@@ -45,8 +47,15 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("pp_mp_titanability_vent_heat")
 	PrecacheWeapon("pp_mp_titancore_rampage_core")
 	PrecacheWeapon("pp_mp_titanability_point_defense_turret")
+	PrecacheWeapon("pp_mp_titanweapon_bioLauncher")
+	PrecacheWeapon("pp_mp_titanability_trail_of_rot")
+	PrecacheWeapon("pp_mp_titanability_toxic_mist")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
+	WeaponIds["pp_mp_titanability_vent_heat"] <- "Heat vent"
+	WeaponIds["pp_mp_titanability_toxic_mist"] <- "Toxic Mist"
+	WeaponIds["pp_mp_titanweapon_bioLauncher"] <- "Bio Launcher"
+	WeaponIds["pp_mp_titanweapon_bioLauncher_secondary"] <- "Bio Launcher"
 	WeaponIds["exrill_mp_titanweapon_acid_wall"] <- "Acid_wall"
 	WeaponIds["exrill_mp_titanability_acid_pool"] <- "Acid_pool"
 	WeaponIds["exrill_mp_titancore_acid_river"] <- "Acid_river"
@@ -58,19 +67,43 @@ void function VenomPrimeTitanPlus_Init() {
 	WeaponIds["exrill_mp_titanweapon_colder_war_acid"] <- "Acid"
 	WeaponIds["pp_mp_titanweapon_cutting_beam"] <- "Cutting beam"
 	WeaponIds["exrill_mp_titanweapon_mortar_2"] <-"Mortar"
+	#if SERVER
 	RegisterWeaponDamageSources(WeaponIds)
+	#endif
+	//AddDamageCallbackSourceID( eDamageSourceId.pp_mp_titanability_toxic_mist, ToxicMistDamaged )
 	RegisterNewVortexIgnoreClassname("exrill_mp_titancore_acid_river", true)
 	RegisterNewVortexIgnoreClassname("exrill_mp_titanweapon_rod_from_god", true)
 	
     #if SERVER
 
 		//AddSpawnCallback("npc_titan", SetTitanLoadout );
-		
+		AddCallback_OnTitanGetsNewTitanLoadout( ApplyVenomTemplarPassives )
+		AddDamageCallbackSourceID( eDamageSourceId.pp_mp_titanweapon_bioLauncher, pp_bioLauncherDamagedTarget )
     #endif
 }
 
 //Apply loadout
-
+#if SERVER
+void function ApplyVenomTemplarPassives( entity titan, TitanLoadoutDef loadout )
+{
+	if(loadout.titanClass != "Venom" && loadout.titanClass != "Templar")
+		return
+	if(loadout.titanClass == "Templar")
+	{
+		entity soul = titan.GetTitanSoul()
+		if(SoulHasPassive( soul, ePassives["Minigun"] ) )
+		{
+			titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+			titan.GiveOffhandWeapon("pp_mp_titanweapon_templar_microgun", OFFHAND_RIGHT, ["usable"] )
+		}
+		if(SoulHasPassive( soul, ePassives["Mortar"] ) )
+		{
+			titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+			titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_RIGHT )
+		}
+	}
+}
+#endif
 void function SetTitanLoadout( entity titan )
 {
 	#if SERVER
@@ -113,36 +146,36 @@ void function SetTitanLoadout( entity titan )
 			} */
 
 			//Templar
-			if (titan.GetModelName() == $"models/titans/medium/titan_medium_tone_prime.mdl")
-			{
-				SendHudMessage(player, "Templar Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
-				
-				//Offence
-				titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
-				titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_ANTIRODEO ) 
-				
-				
-				//Defence
-				titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
-				titan.GiveOffhandWeapon("pp_mp_titanweapon_point_defence", OFFHAND_SPECIAL )
-				
-				//Tactical
-				titan.TakeOffhandWeapon(OFFHAND_RIGHT)
-				titan.GiveOffhandWeapon("exrill_mp_titanweapon_rod_from_god", OFFHAND_RIGHT )
-
-				//Weapon
-				titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
-				titan.GiveWeapon ("pp_mp_titanweapon_energy_cannon")
-				
-				//Titan Core
-				titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
-				titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
-				
-			}
-			//PLACEHOLDER
-			if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_legion_prime.mdl")
-			{
-				SendHudMessage(player, "PLACEHOLDER Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+			//if (titan.GetModelName() == $"models/titans/medium/titan_medium_tone_prime.mdl")
+			//{
+			//	SendHudMessage(player, "Templar Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
+			//	
+			//	//Offence
+			//	titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
+			//	titan.GiveOffhandWeapon("exrill_mp_titanweapon_mortar_2", OFFHAND_ANTIRODEO ) 
+			//	
+			//	
+			//	//Defence
+			//	titan.TakeOffhandWeapon(OFFHAND_SPECIAL)
+			//	titan.GiveOffhandWeapon("pp_mp_titanweapon_point_defence", OFFHAND_SPECIAL )
+			//	
+			//	//Tactical
+			//	titan.TakeOffhandWeapon(OFFHAND_RIGHT)
+			//	titan.GiveOffhandWeapon("exrill_mp_titanweapon_rod_from_god", OFFHAND_RIGHT )
+//
+			//	//Weapon
+			//	titan.TakeWeaponNow( weapons[0].GetWeaponClassName() )
+			//	titan.GiveWeapon ("pp_mp_titanweapon_energy_cannon")
+			//	
+			//	//Titan Core
+			//	titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
+			//	titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
+			//	
+			//}
+			////PLACEHOLDER
+			//if (titan.GetModelName() == $"models/titans/heavy/titan_heavy_legion_prime.mdl")
+			//{
+			//	SendHudMessage(player, "PLACEHOLDER Loadout Applied\n To use regular loadout, unequip prime titan skin.",  -1, 0.2, 200, 200, 225, 255, 0.15, 6, 1);
 				
 				//Offence
 				//titan.TakeOffhandWeapon(OFFHAND_ANTIRODEO)	
@@ -165,7 +198,6 @@ void function SetTitanLoadout( entity titan )
 				//titan.TakeOffhandWeapon(OFFHAND_EQUIPMENT)
 				//titan.GiveOffhandWeapon( "exrill_mp_titancore_acid_river", OFFHAND_EQUIPMENT )
 				
-			}
 		}
 	}
 	#endif

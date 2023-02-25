@@ -2,51 +2,181 @@
 
 
 global function ExampleScript
-global function ExampleScriptP2
+//global function ExampleScriptP2
 
 array<string> ModdedTitanClasses
 void function ExampleScript(){
-	RegisterNewItemInitCallback(ExampleScriptP2)
-	RegisterModdedTitan("Venom", "pp_mp_titanweapon_cutting_beam", 
-	"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
-	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
-	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
-	eItemTypes.TITAN_SCORCH_EXECUTION
-	)
-	RegisterModdedTitan("Templar", "pp_mp_titanweapon_heavy_25mm", 
-	"pp_mp_titanability_point_defense_turret", "pp_mp_titanability_vent_heat",
-	"exrill_mp_titanweapon_rod_from_god", "pp_mp_titancore_rampage_core", 
-	"titan_atlas_tracker", "tone", 2, "TITAN_TONE_PASSIVE",
-	eItemTypes.TITAN_TONE_EXECUTION
-	)
-	#if MP
-	ExampleScriptP2()
+	#if VENOM_HAS_TITANFRAMEWORK
+	ModdedTitanData Templar
+	Templar.Name = "Templar"
+	Templar.Description = "This is the description for templar"
+	Templar.BaseSetFile = "titan_atlas_vanguard"
+	Templar.BaseName = "vanguard"
+
+	ModdedTitanWeaponAbilityData RetaliatorCannon
+	RetaliatorCannon.custom = true
+	RetaliatorCannon.displayName = "Retaliator Cannon"
+	RetaliatorCannon.weaponName = "pp_mp_titanweapon_heavy_25mm"
+	RetaliatorCannon.description = "High caliber repeater, builds heat while firing"
+	Templar.Primary = RetaliatorCannon
+
+	ModdedTitanWeaponAbilityData PointDefence
+	PointDefence.custom = true
+	PointDefence.displayName = "Point defence turret"
+	PointDefence.weaponName = "pp_mp_titanability_point_defense_turret"
+	PointDefence.description = "Best way to stop a bullet is more bullet"
+	Templar.Mid = PointDefence
+
+	ModdedTitanWeaponAbilityData RampageCore
+	RampageCore.custom = true
+	RampageCore.displayName = "Rampage core"
+	RampageCore.weaponName = "pp_mp_titancore_rampage_core"
+	RampageCore.description = "By forcing emergency heat venting Templar overclocks all his systems for a limited time"
+	Templar.Core = RampageCore
+
+	ModdedTitanWeaponAbilityData MultipurposeMount
+	MultipurposeMount.custom = true
+	MultipurposeMount.displayName = "Multipurpose mount"
+	MultipurposeMount.weaponName = "exrill_mp_titanweapon_rod_from_god"
+	MultipurposeMount.description = "A multipurpose mount designed for a variety of weapons"
+	Templar.Right = MultipurposeMount
+
+	ModdedTitanWeaponAbilityData VentHeat
+	VentHeat.custom = true
+	VentHeat.displayName = "Heat vent"
+	VentHeat.weaponName = "pp_mp_titanability_vent_heat"
+	VentHeat.description = "Temporarily disable systems to rapidly vent excess heat while dealing proximity damage"
+	Templar.Left = VentHeat
+
+
+	ModdedPassiveData Minigun
+	Minigun.Name = "Minigun"
+	Minigun.description = "BRRRRRRRRT"
+	Minigun.image = $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_predator"
+	Templar.passive4Array.append(Minigun)
+
+	ModdedPassiveData DisrupterShell
+	DisrupterShell.Name = "Disrupter Shell"
+	DisrupterShell.description = "A light railgun firing a charged disrupter shell to pass through and destroy the first shield it comes into contact with"
+	DisrupterShell.image = $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun"
+	Templar.passive4Array.append(DisrupterShell)
+
+	ModdedPassiveData Mortar
+	Mortar.Name = "Mortar"
+	Mortar.description = "YEEEEEEEEEET"
+	Mortar.image = $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_quad"
+	Templar.passive4Array.append(Mortar)
+
+	CreateModdedTitanSimple(Templar)
+
+	ModdedTitanData Venom
+	Venom.Name = "Venom"
+	Venom.Description = "This is the description for venom"
+	Venom.BaseSetFile = "titan_atlas_tracker"
+	Venom.BaseName = "tone"
+
+	ModdedTitanWeaponAbilityData CuttingBeam
+	CuttingBeam.custom = true
+	CuttingBeam.displayName = "Cutting beam"
+	CuttingBeam.weaponName = "pp_mp_titanweapon_bioLauncher"
+	CuttingBeam.description = "A high intensity cutting beam for salvaging the hulls of ships"
+	Venom.Primary = CuttingBeam
+
+	ModdedTitanWeaponAbilityData AcidWall
+	AcidWall.custom = true
+	AcidWall.displayName = "Acid wall"
+	AcidWall.weaponName = "exrill_mp_titanweapon_acid_wall"
+	AcidWall.description = "Placeholder"
+	Venom.Mid = AcidWall
+
+	ModdedTitanWeaponAbilityData AcidRiver
+	AcidRiver.custom = true
+	AcidRiver.displayName = "Acid River"
+	AcidRiver.weaponName = "exrill_mp_titancore_acid_river"
+	AcidRiver.description = "Placeholder"
+	Venom.Core = AcidRiver
+
+	ModdedTitanWeaponAbilityData ViralShot
+	ViralShot.custom = true
+	ViralShot.displayName = "Trail of rot"
+	ViralShot.weaponName = "pp_mp_titanability_trail_of_rot"
+	ViralShot.description = "Placeholder"
+	Venom.Right = ViralShot
+
+	ModdedTitanWeaponAbilityData AcidPool
+	AcidPool.custom = true
+	AcidPool.displayName = "Toxic mist"
+	AcidPool.weaponName = "pp_mp_titanability_toxic_mist"
+	AcidPool.description = "Placeholder"
+	Venom.Left = AcidPool
+
+	CreateModdedTitanSimple(Venom)
+
+	//RegisterNewItemInitCallback(ExampleScriptP2)
+	//RegisterModdedTitan("Venom", "pp_mp_titanweapon_cutting_beam", 
+	//"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
+	//"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
+	//"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
+	//eItemTypes.TITAN_SCORCH_EXECUTION
+	//)
+	////RegisterModdedTitan("Templar", "pp_mp_titanweapon_heavy_25mm", 
+	////"pp_mp_titanability_point_defense_turret", "pp_mp_titanability_vent_heat",
+	////"exrill_mp_titanweapon_rod_from_god", "pp_mp_titancore_rampage_core", 
+	////"titan_atlas_vanguard", "vanguard", 2, "TITAN_VANGUARD_PASSIVE",
+	////eItemTypes.TITAN_VANGUARD_EXECUTION
+	////)
+	//#if MP
+	//ExampleScriptP2()
+	//#endif
 	#endif
 }
-void function ExampleScriptP2(){
-	print("/////////GENERATING ITEMS FOR VENOM")
-	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "exrill_mp_titanability_acid_pool", "Viral Matrix", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_cutting_beam", "Cutting beam", "The pain does not stop", "please stop", $"ui/temp", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "exrill_mp_titancore_acid_river", "Acid core", "AAAAAAAA", "My sanity is rapidly dwindling", $"rui/titan_loadout/core/titan_core_flame_wave", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "exrill_mp_titanweapon_acid_wall", "Acid wall", "im out of funny things to say", ":)", $"ui/temp", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanability_viral_shot", "Disrupter shell", "Smol railgun", "A small railgun that can shatter shields, generates a significant amount of heat", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
-
-	RegisterModdedTitanItems("Venom", "pp_mp_titanweapon_cutting_beam", 
-	"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
-	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
-	"titan_ogre_meteor", "scorch", 2, "TITAN_SCORCH_PASSIVE",
-	eItemTypes.TITAN_SCORCH_EXECUTION
-	)
-	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "pp_mp_titanability_vent_heat", "Heat vent", "I am in pain", "Temporarily disable systems to rapidly vent excess heat while dealing proximity damage", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_heavy_25mm", "Heavy 25mm repeater", "The pain does not stop", "High caliber repeater, builds heat while firing", $"ui/temp", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "pp_mp_titancore_rampage_core", "Rampage core", "AAAAAAAA", "By forcing emergency heat venting Templar overclocks all his systems for a limited time", $"rui/titan_loadout/core/titan_core_burst_core", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "pp_mp_titanability_point_defense_turret", "Point defence", "Use gun to stop gun", "Best way to stop a bullet is more bullet", $"ui/temp", 0, false)
-	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanweapon_rod_from_god", "Disrupter shell", "Smol railgun", "A small railgun that can shatter shields, generates a significant amount of heat", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
-
-	RegisterModdedTitanItems("Templar", "pp_mp_titanweapon_heavy_25mm", 
-	"pp_mp_titanability_point_defense_turret", "pp_mp_titanability_vent_heat",
-	"exrill_mp_titanweapon_rod_from_god", "pp_mp_titancore_rampage_core", 
-	"titan_atlas_tracker", "tone", 2, "TITAN_TONE_PASSIVE",
-	eItemTypes.TITAN_TONE_EXECUTION
-	)
-}
+//void function ExampleScriptP2(){
+//
+//	print("/////////GENERATING ITEMS FOR VENOM")
+//
+//
+//	CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "exrill_mp_titanability_acid_pool", "Viral Matrix", "I am in pain", "So much pain", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
+//	CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_cutting_beam", "Cutting beam", "The pain does not stop", "please stop", $"ui/temp", 0, false)
+//	CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "exrill_mp_titancore_acid_river", "Acid core", "AAAAAAAA", "My sanity is rapidly dwindling", $"rui/titan_loadout/core/titan_core_flame_wave", 0, false)
+//	CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "exrill_mp_titanweapon_acid_wall", "Acid wall", "im out of funny things to say", ":)", $"ui/temp", 0, false)
+//	CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanability_viral_shot", "Disrupter shell", "Smol railgun", "A small railgun that can shatter shields, generates a significant amount of heat", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
+//	
+//	//CreateGenericItem(999, eItemTypes.TITAN_ANTIRODEO, "pp_mp_titanability_vent_heat", "Heat vent", "I am in pain", "Temporarily disable systems to rapidly vent excess heat while dealing proximity damage", $"rui/titan_loadout/tactical/titan_tactical_rearm_menu", 0, false)
+//	//CreateGenericItem(999, eItemTypes.TITAN_PRIMARY, "pp_mp_titanweapon_heavy_25mm", "Retaliator cannon", "The pain does not stop", "High caliber repeater, builds heat while firing", $"ui/temp", 0, false)
+//	//CreateGenericItem(999, eItemTypes.TITAN_CORE_ABILITY, "pp_mp_titancore_rampage_core", "Rampage core", "AAAAAAAA", "By forcing emergency heat venting Templar overclocks all his systems for a limited time", $"rui/titan_loadout/core/titan_core_burst_core", 0, false)
+//	//CreateGenericItem(999, eItemTypes.TITAN_ORDNANCE, "pp_mp_titanability_point_defense_turret", "Point defence", "Use gun to stop gun", "Best way to stop a bullet is more bullet", $"ui/temp", 0, false)
+//	//CreateGenericItem(999, eItemTypes.TITAN_SPECIAL, "exrill_mp_titanweapon_rod_from_god", "Disrupter shell", "Smol railgun", "A small railgun that can shatter shields, generates a significant amount of heat", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
+//
+//
+//	RegisterModdedTitanItems("Venom", "pp_mp_titanweapon_cutting_beam", 
+//	"exrill_mp_titanability_viral_shot", "exrill_mp_titanability_acid_pool",
+//	"exrill_mp_titanweapon_acid_wall", "exrill_mp_titancore_acid_river", 
+//	"titan_ogre_meteor", "scorch", "TITAN_SCORCH_PASSIVE",
+//	eItemTypes.TITAN_SCORCH_EXECUTION
+//	)
+//
+//
+//	//RegisterModdedTitanItems("Templar", "pp_mp_titanweapon_heavy_25mm", 
+//	//"pp_mp_titanability_point_defense_turret", "pp_mp_titanability_vent_heat",
+//	//"exrill_mp_titanweapon_rod_from_god", "pp_mp_titancore_rampage_core", 
+//	//"titan_atlas_vanguard", "vanguard", "TITAN_VANGUARD_PASSIVE",
+//	//eItemTypes.TITAN_VANGUARD_EXECUTION
+//	//)
+//
+//
+//	//ItemData APDS_Shell = CreateGenericItem(999, eItemTypes.Templarpassive4, "APDS_Shell", "Armour piercing discarding sabot", "no", "High velocity shells that focus on penetrating armour, No explosive payload",$"rui/titan_loadout/passive/northstar_piercing_shot", 0, false)
+//	//ItemData HESH_Shell = CreateGenericItem(999, eItemTypes.Templarpassive4, "HESH_Shell", "High explosive squash head", "no", "Low velocity shells that carry an explosive payload", $"rui/titan_loadout/passive/scorch_wildfire_launcher", 0, false)
+//	//ItemData APHE_Shell = CreateGenericItem(999, eItemTypes.Templarpassive4, "APHE_Shell", "Armour piercing high explosive", "no", "high velocity shells with a light explosive payload", $"rui/titan_loadout/passive/ion_grand_canon", 0, false)
+//	//RegisterModdedTitanCustomPassiveType("Templar", [APDS_Shell, HESH_Shell, APHE_Shell], "passive4")
+//
+//	//ItemData Minigun = CreateGenericItem(999, eItemTypes.Templarpassive4, "Minigun", "Minigun", "no", "Rapid fire anti infantry machine gun", , 0, false)
+//	//ItemData DisrupterShell = CreateGenericItem(999, eItemTypes.Templarpassive4, "DisrupterShell", "Disrupter shell railgun", "no", "A light railgun firing a charged disrupter shell to pass through and destroy the first shield it comes into contact with", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_railgun", 0, false)
+//	//ItemData Mortar = CreateGenericItem(999, eItemTypes.Templarpassive4, "Mortar", "Mortar", "no", "Launch a volatile energy core that will detonate on impact", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_quad", 0, false)
+//	//RegisterModdedTitanCustomPassiveType("Templar", [Minigun, DisrupterShell, Mortar], "passive4")
+////
+//	//CreateModdedItemType("Templarpassive2")//MUST FOLLOW THIS NAMING SCHEME: name+passive+number
+//	//ItemData sizeDown = CreateGenericItem(999, eItemTypes.Templarpassive2, "15mmReconfigure", "15MM Reconfiguration", "no", "Modified retaliator cannon with a smaller shell, greatly increases firerate but decreases damage and explosive payload", $"rui/titan_loadout/passive/legion_enhanced_ammo", 0, false)
+//	//ItemData sizeUp = CreateGenericItem(999, eItemTypes.Templarpassive2, "50mmReconfigure", "50MM Reconfiguration", "no", "Modified retaliator cannon with a larger shell, greatly decreases firerate but increases damage and explosive payload", $"r2_ui/menus/loadout_icons/titan_weapon/titan_weapon_40mm", 0, false)	
+//	//ItemData TempManagement = CreateGenericItem(999, eItemTypes.Templarpassive2, "TempManagement", "Improved TCS", "no", "Improved heat management systems improve heat dissipation", $"rui/titan_loadout/passive/nuke_eject", 0, false)	
+//	//RegisterModdedTitanCustomPassiveType("Templar", [sizeDown, sizeUp, TempManagement], "passive2", eItemTypes.TITAN_VANGUARD_PASSIVE)
+//}

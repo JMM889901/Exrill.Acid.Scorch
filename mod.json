@@ -126,6 +126,25 @@
 			"RunOn": "SERVER || CLIENT"	
 		},
 		{
+			"Path": "weapons/Venom/pp_mp_titanability_acid_tick.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Venom/pp_mp_titanweapon_bioLauncher.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Venom/pp_mp_titanability_trail_of_rot.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Venom/pp_mp_titanability_toxic_mist.gnut",
+			"RunOn": "SERVER || CLIENT",
+			"ServerCallback": {
+				"After": "MpTitanAbilityToxicMist_Init"
+			}
+		},
+		{
 			"Path": "weapons/Templar/pp_mp_titancore_rampage_core.nut",
 			"RunOn": "SERVER || CLIENT"	
 		},
@@ -133,5 +152,9 @@
 			"Path": "weapons/Templar/pp_mp_titanability_vent_heat.gnut",
 			"RunOn": "SERVER || CLIENT"	
 		}
-	]
+	],
+	"Dependencies":
+    {
+      "VENOM_HAS_TITANFRAMEWORK": "Peepee.TitanFramework"
+    }
 }

@@ -1,0 +1,107 @@
+global function pp_OnProjectileCollision_bioLauncher
+global function pp_OnWeaponStartZoomIn_titanweapon_bioLauncher
+global function pp_OnWeaponStartZoomOut_titanweapon_bioLauncher
+global function pp_OnWeaponPrimaryAttack_titanweapon_bioLauncher
+#if SERVER
+global function pp_bioLauncherDamagedTarget
+#endif
+const damagePerTick = 5
+const tickTime = 0.2
+const Duration = 2
+var function pp_OnWeaponPrimaryAttack_titanweapon_bioLauncher( entity weapon, WeaponPrimaryAttackParams attackParams )
+{
+	entity owner = weapon.GetWeaponOwner()
+	float zoomFrac = owner.GetZoomFrac()
+	if ( zoomFrac < 1 && zoomFrac > 0)
+		return 0
+
+	weapon.EmitWeaponNpcSound( LOUD_WEAPON_AI_SOUND_RADIUS_MP, 0.2 )
+	return pp_FireBioLauncher( weapon, attackParams, true )
+}
+var function pp_FireBioLauncher( entity weapon, WeaponPrimaryAttackParams attackParams, bool playerFired )
+{
+    bool shouldCreateProjectile = false
+    if ( IsServer() || weapon.ShouldPredictProjectiles() )
+        shouldCreateProjectile = true
+
+    #if CLIENT
+        if ( !playerFired )
+            shouldCreateProjectile = false
+    #endif
+
+    entity owner = weapon.GetWeaponOwner()
+
+    if ( shouldCreateProjectile )
+    {
+        //weapon.ResetWeaponToDefaultEnergyCost()
+        //int cost = weapon.GetWeaponCurrentEnergyCost()
+        //int currentEnergy = owner.GetSharedEnergyCount()
+        //bool outOfEnergy = (currentEnergy < cost) || (currentEnergy == 0)
+
+
+       //#if CLIENT
+       //    if ( outOfEnergy )
+       //        FlashEnergyNeeded_Bar( cost )
+       //#endif
+        //Single Shots
+        weapon.EmitWeaponSound_1p3p( "Weapon_Particle_Accelerator_Fire_1P", "Weapon_Particle_Accelerator_SecondShot_3P" )
+
+        int damageType = damageTypes.largeCaliber | DF_STOPS_TITAN_REGEN
+
+        float speed = 8000
+        if ( owner.IsNPC() )
+            speed = 5000
+
+        entity bolt = weapon.FireWeaponBolt( attackParams.pos,  attackParams.dir, speed, damageType, damageType, playerFired, 0 )
+        if ( bolt )
+        {
+            //bolt.kv.gravity = -0.1
+            bolt.kv.rendercolor = "0 0 0"
+            bolt.kv.renderamt = 0
+            bolt.kv.fadedist = 1
+            //thread boltMoves(bolt,)
+        }
+    }
+    return 1
+}
+
+void function pp_OnProjectileCollision_bioLauncher( entity weapon, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+{
+
+}
+void function pp_OnWeaponStartZoomIn_titanweapon_bioLauncher( entity weapon )
+{
+    weapon.AddMod("aimIn")
+}
+void function pp_OnWeaponStartZoomOut_titanweapon_bioLauncher( entity weapon )
+{
+    weapon.RemoveMod("aimIn")
+}
+#if SERVER
+void function pp_bioLauncherDamagedTarget( entity target, var damageInfo )
+{
+    if(!IsValid(target) || !IsAlive(target))
+        return
+    entity owner = DamageInfo_GetAttacker(damageInfo)
+    if(Time() - getPlayerDebuffs(target).damageOverTime.timeLast < Duration)
+    {
+        getPlayerDebuffs(target).damageOverTime.timeLast = Time()
+        getPlayerDebuffs(target).damageOverTime.intensity += damagePerTick
+    }
+    else
+    {
+        getPlayerDebuffs(target).damageOverTime.timeLast = Time()
+        getPlayerDebuffs(target).damageOverTime.intensity = damagePerTick
+        thread takeDamageOverTime(target, owner, tickTime)
+    }
+    
+}
+void function takeDamageOverTime( entity target, entity owner, float tickTime)
+{
+    while(Time() - getPlayerDebuffs(target).damageOverTime.timeLast < Duration && IsValid(target) && IsAlive(target))
+    {
+        target.TakeDamage( getPlayerDebuffs(target).damageOverTime.intensity, owner, owner, eDamageSourceId.pp_mp_titanweapon_bioLauncher_secondary)
+        wait tickTime
+    }
+}
+#endif
