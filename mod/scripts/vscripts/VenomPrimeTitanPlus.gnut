@@ -16,6 +16,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_wpn_HeatShield_acid" )
 	PrecacheParticleSystem( $"P_wpn_hand_laser_beam_acid" )
 	PrecacheParticleSystem( $"Rocket_Smoke_SMALL_Titan_mod_acid")
+      PrecacheParticleSystem( $"mTrap_start_CH_jet_acid")
 	PrecacheParticleSystem( $"P_grenade_arc_proto_red")
 	PrecacheParticleSystem( $"wpn_arc_cannon_electricity_fp")
 	PrecacheParticleSystem( $"P_titan_sniper1_tem")
