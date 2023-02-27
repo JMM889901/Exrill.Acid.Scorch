@@ -23,7 +23,8 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheParticleSystem( $"P_titan_sniper3_tem")
 	PrecacheParticleSystem( $"P_wpn_defender_charge_FP_burn_tem")
 	PrecacheParticleSystem( $"P_wpn_meteor_exp_acid")
-	PrecacheParticleSystem( $" P_dot_body_titan_g" )
+	PrecacheParticleSystem( $"P_dot_body_titan_g" )
+	PrecacheParticleSystem( $"P_wpn_dot_electric" )
 	//PrecacheParticleSystem( $"wpn_rocket_fx_mod_acid")
 	#if CLIENT
 	PrecacheHUDMaterial( $"vgui/HUD/sram/bcore" )
@@ -50,6 +51,7 @@ void function VenomPrimeTitanPlus_Init() {
 	PrecacheWeapon("pp_mp_titanweapon_bioLauncher")
 	PrecacheWeapon("pp_mp_titanability_trail_of_rot")
 	PrecacheWeapon("pp_mp_titanability_toxic_mist")
+	PrecacheWeapon("pp_mp_titanweapon_point_defence")
 	table<string,string> WeaponIds = {}
 	WeaponIds["empty_weapon"] <- "empty_weapon"
 	WeaponIds["pp_mp_titanability_vent_heat"] <- "Heat vent"

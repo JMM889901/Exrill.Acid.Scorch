@@ -33,8 +33,8 @@ WeaponData
 	// Menu Stats
 
 	// Models
-	"viewmodel"   									"models/weapons/titan_raptor_rocket_pod/atpov_titan_raptor_rocket_pod_core.mdl"
-	//"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod_core.mdl"
+	//"viewmodel"   									"models/weapons/titan_raptor_rocket_pod/atpov_titan_raptor_rocket_pod_core.mdl"
+	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod_core.mdl"
 	"projectilemodel" 								"models/weapons/bullets/projectile_rocket.mdl"
 
 	//Sounds

@@ -5,6 +5,7 @@ untyped
 global function MpTitanAbilityToxicMist_Init
 global function OnWeaponPrimaryAttack_titanweapon_toxic_mist
 global function getPlayerDebuffs
+global function OnProjectileCollision_toxic_mist
 #if SERVER
 global function OnWeaponNPCPrimaryAttack_titanweapon_toxic_mist
 #endif
@@ -46,10 +47,10 @@ var function OnWeaponPrimaryAttack_titanweapon_toxic_mist( entity weapon, Weapon
 	//ThrowDeployable( weapon, attackParams, 0.63, OnSlowTrapPlanted, <90,0,0> )
 	entity player = weapon.GetWeaponOwner()
 	vector attackPos
-	if ( IsValid( player ) )
-		attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
+	//if ( IsValid( player ) )
+	//	attackPos = GetDeployableThrowStartPos( player, attackParams.pos )
 	vector angles = VectorToAngles( attackParams.dir )
-	attackPos.z = attackPos.z +25
+	//attackPos.z = attackPos.z +25
 	vector angularVelocity = <0,0,0>
 	float fuseTime = 0.0
 	float speed = weapon.GetWeaponSettingFloat(eWeaponVar.projectile_launch_speed)/2200
@@ -61,7 +62,7 @@ var function OnWeaponPrimaryAttack_titanweapon_toxic_mist( entity weapon, Weapon
 	//if((weapon.GetWeaponChargeLevel() > 0))
 	//	weaponOwner.TakeSharedEnergy( 250 )
 	#if SERVER
-	entity deployable = weapon.FireWeaponGrenade( attackPos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
+	entity deployable = weapon.FireWeaponGrenade( attackParams.pos, attackParams.dir, angularVelocity, fuseTime, damageTypes.explosive, damageTypes.explosive, false, true, true )
 	//entity deployable = Grenade_Launch( weapon, attackParams.pos, (attackParams.dir * 1), projectilePredicted, projectileLagCompensated )
 		if ( deployable )
 		{
@@ -115,9 +116,10 @@ void function DeployToxicMist( entity projectile )
         smokescreen.damageInnerRadius = 320.0
         smokescreen.damageOuterRadius = 375.0
         smokescreen.dpsPilot = 20
-        smokescreen.dpsTitan = 225
+        smokescreen.dpsTitan = 100
         smokescreen.damageDelay = 0
         smokescreen.lifetime = 10
+		smokescreen.smokescreenFX = $"P_wpn_dot_electric"
 
 		smokescreen.damageSource = eDamageSourceId.pp_mp_titanability_toxic_mist
         smokescreen.angles = <90,0,0>
@@ -138,7 +140,8 @@ void function DeployToxicMist( entity projectile )
     
         Smokescreen( smokescreen )
         wait 10
-        projectile.Destroy()
+		if(IsValid(projectile))
+	        projectile.Destroy()
 }
 
 #endif
@@ -169,7 +172,7 @@ void function ToxicMistDamaged( entity hit, var damageInfo )
 	}
 	float intensity = StatusEffect_Get( hit, eStatusEffect.damage_reduction )
 	#if SERVER
-	thread EMP_FX($" P_dot_body_titan_g", hit, "exp_torso_front", 5 )
+	thread EMP_FX($"P_dot_body_titan_g", hit, "exp_torso_front", 5 )
 	#endif
 	if(!(hit in PlayerStacks))
 	{
@@ -185,6 +188,29 @@ void function ToxicMistDamaged( entity hit, var damageInfo )
 	{
 		PlayerStacks[hit].damageVuln.timeLast = Time()
 		PlayerStacks[hit].damageVuln.intensity = 1.2
+	}
+	print(PlayerStacks[hit].damageVuln.intensity)
+}
+void function OnProjectileCollision_toxic_mist( entity projectile, vector pos, vector normal, entity hitEnt, int hitbox, bool isCritical )
+{
+	#if SERVER
+	if ( projectile.proj.projectileBounceCount > 5 )
+		projectile.Destroy()
+	projectile.proj.projectileBounceCount++
+	#endif
+	table collisionParams =
+	{
+		pos = pos,
+		normal = normal,
+		hitEnt = hitEnt,
+		hitbox = hitbox
+	}
+
+	if(!hitEnt && hitEnt.IsTitan())
+		PlantStickyEntityOnWorldThatBouncesOffWalls(projectile, collisionParams, 0.7)
+	else
+	{
+		PlantStickyEntityThatBouncesOffWalls(projectile, collisionParams, 0.7)
 	}
 }
 #if SERVER

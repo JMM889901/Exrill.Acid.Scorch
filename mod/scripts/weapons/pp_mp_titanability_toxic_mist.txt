@@ -16,7 +16,7 @@ WeaponData
 
 	"OnWeaponPrimaryAttack"							"OnWeaponPrimaryAttack_titanweapon_toxic_mist"
 	"OnWeaponNPCPrimaryAttack"						"OnWeaponNPCPrimaryAttack_titanweapon_toxic_mist"
-	"OnProjectileCollision"							"OnProjectileCollision_weapon_deployable"
+	"OnProjectileCollision"							"OnProjectileCollision_toxic_mist"
 	//"OnWeaponAttemptOffhandSwitch" 					"OnWeaponAttemptOffhandSwitch_titanweapon_acid_wall"
 
 	"offhand_default_inventory_slot"				"1"
@@ -32,8 +32,7 @@ WeaponData
 	"projectile_ignores_vortex"						"mirror"
 
 	// Models
-      "viewmodel"                                                      "models/weapons/titan_vortex_blocker/atpov_vortexblocker.mdl"
-       "playermodel" 									"models/weapons/titan_vortex_blocker/w_vortexblocker.mdl"
+	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod.mdl"
 	"projectilemodel" 								"models/dev/empty_model.mdl"
 
 	// Effects

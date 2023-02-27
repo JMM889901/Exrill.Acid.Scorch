@@ -66,6 +66,7 @@ var function OnAbilityStart_Rampage_Core( entity weapon, WeaponPrimaryAttackPara
         Mods.fastremovebyvalue(mod)
     }
 	Mods.append("RampageCore")
+	
 	owner.GetMainWeapons()[0].SetMods(Mods)
 	
 	foreach(entity weapon in owner.GetOffhandWeapons())

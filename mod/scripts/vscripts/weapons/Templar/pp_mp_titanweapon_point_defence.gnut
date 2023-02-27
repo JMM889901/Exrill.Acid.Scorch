@@ -107,8 +107,8 @@ function StartHeatShield( entity weapon )
 	#if CLIENT
 		if ( weaponOwner != GetLocalViewPlayer() )
 			return
-	if ( IsFirstTimePredicted() )
-		Rumble_Play( "rumble_titan_heatshield_start", {} )
+	//if ( IsFirstTimePredicted() )
+	//	Rumble_Play( "rumble_titan_heatshield_start", {} )
 	#endif
 
 	int sphereRadius = 120

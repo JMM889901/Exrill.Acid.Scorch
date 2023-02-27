@@ -129,6 +129,7 @@
 			"Path": "weapons/Venom/pp_mp_titanability_acid_tick.gnut",
 			"RunOn": "SERVER || CLIENT"	
 		},
+
 		{
 			"Path": "weapons/Venom/pp_mp_titanweapon_bioLauncher.gnut",
 			"RunOn": "SERVER || CLIENT"	
@@ -150,6 +151,10 @@
 		},
 		{
 			"Path": "weapons/Templar/pp_mp_titanability_vent_heat.gnut",
+			"RunOn": "SERVER || CLIENT"	
+		},
+		{
+			"Path": "weapons/Templar/pp_mp_titanweapon_point_defence.gnut",
 			"RunOn": "SERVER || CLIENT"	
 		}
 	],
