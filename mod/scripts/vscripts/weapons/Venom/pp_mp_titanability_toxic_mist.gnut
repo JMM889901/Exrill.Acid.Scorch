@@ -139,9 +139,12 @@ void function DeployToxicMist( entity projectile )
                                   < -fxOffset, 0.0, fxHeightOffset> ]
     
         Smokescreen( smokescreen )
+		entity FX = StartParticleEffectInWorld_ReturnEntity(GetParticleSystemIndex( /* Put FX here */ ), projectile.GetOrigin(), <90,0,0>)
         wait 10
 		if(IsValid(projectile))
 	        projectile.Destroy()
+		if(IsValid(FX))
+			FX.Destroy() //Will cause instant deletion probably, feel free to mess with 
 }
 
 #endif
