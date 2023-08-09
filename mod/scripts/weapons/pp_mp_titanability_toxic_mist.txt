@@ -33,14 +33,14 @@ WeaponData
 
 	// Models
 	"viewmodel"   									"models/weapons/titan_bt_rocket_pod/atpov_titan_bt_rocket_pod.mdl"
-	"projectilemodel" 								"models/dev/empty_model.mdl"
+	"projectilemodel" 								"models/weapons/bullets/triple_threat_projectile.mdl"
 
 	// Effects
 	"bounce_effect_table"							"titan_footstep"
 	"impact_effect_table" 							"triplethreat_frag"
 	"projectile_trail_attachment" 					"fx_top"
-	"projectile_trail_effect_0" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
-	"projectile_trail_effect_1" 					"Rocket_Smoke_SMALL_Titan_mod_acid"
+	"projectile_trail_effect_0" 					"P_meteor_trap_trail"
+	"projectile_trail_effect_1" 					"P_meteor_trap_trail"
       "fx_muzzle_flash_view"							"Rocket_Smoke_SMALL_Titan_mod_acid"
 	"vortex_absorb_effect"							"wpn_vortex_projectile_trip_FP"
 	"vortex_absorb_effect_third_person"				"wpn_vortex_projectile_trip"
